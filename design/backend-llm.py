@@ -253,4 +253,69 @@ def get_ai_finding_details(finding_id: str):
         }
     return details
 
+# --- Ask Screen Chat Endpoints ---
+
+chat_history = []
+
+from datetime import datetime
+from fastapi import Request
+
+@app.post("/api/ask")
+def ask_llm(request: Request):
+    import asyncio
+    async def get_body():
+        return await request.json()
+    body = asyncio.run(get_body())
+    user_message = body.get("message", "")
+    timestamp = datetime.utcnow().isoformat() + "Z"
+    chat_history.append({"role": "user", "content": user_message, "timestamp": timestamp})
+    prompt = (
+        f"You are VISTA's regulatory assistant AI for Indian compliance. Answer the following user question with regulatory accuracy and context, markdown formatting, and XAI explanations if relevant.\n"
+        f"User: {user_message}"
+    )
+    llm_response = call_groq(prompt)
+    response_timestamp = datetime.utcnow().isoformat() + "Z"
+    chat_history.append({"role": "assistant", "content": llm_response, "timestamp": response_timestamp})
+
+    # Generate next-stage suggested questions based on the answer
+    def generate_suggested_questions(answer):
+        # For demo: simple logic to suggest follow-ups based on keywords
+        if "aadhaar" in answer.lower():
+            return [
+                "What are the penalties for Aadhaar data exposure?",
+                "How can I mask Aadhaar numbers in my system?",
+                "What are UIDAI's latest compliance guidelines?"
+            ]
+        elif "pci" in answer.lower():
+            return [
+                "How do I achieve PCI DSS certification?",
+                "What are the key PCI DSS controls?",
+                "How to handle PCI DSS audits in India?"
+            ]
+        elif "rbi" in answer.lower():
+            return [
+                "What is RBI's data localization policy?",
+                "How do I comply with RBI security guidelines?",
+                "What are RBI's requirements for payment data?"
+            ]
+        else:
+            return [
+                "What are my current critical compliance violations?",
+                "How do I remediate Aadhaar exposure findings?",
+                "Explain RBI data localization requirements"
+            ]
+
+    suggested_questions = generate_suggested_questions(llm_response)
+
+    return {
+        "role": "assistant",
+        "content": llm_response,
+        "timestamp": response_timestamp,
+        "suggested_questions": suggested_questions
+    }
+
+@app.get("/api/ask/history")
+def get_chat_history():
+    return chat_history[-20:]  # return last 20 messages
+
 # To run the server, use: uvicorn backend-llm:app --reload
