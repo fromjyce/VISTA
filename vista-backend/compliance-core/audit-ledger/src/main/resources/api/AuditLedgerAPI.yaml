@@ -1,0 +1,25 @@
+openapi: 3.0.0
+info:
+  title: Audit Ledger API
+  version: 1.0.0
+paths:
+  /audit-ledger:
+    get:
+      summary: Retrieve all audit logs
+      responses:
+        '200':
+          description: A list of audit logs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    action:
+                      type: string
+                    timestamp:
+                      type: string
+                      format: date-time

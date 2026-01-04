@@ -1,0 +1,95 @@
+vista-backend/
+│
+├── gateway/
+│   ├── GatewayApplication.java
+│   ├── controller/
+│   │   └── ApiGatewayController.java
+│   └── security/
+│       └── AuthConfig.java
+│
+├── agents/
+│   ├── watcher-agent/
+│   │   ├── WatcherApplication.java
+│   │   ├── scheduler/
+│   │   │   └── RegulationPoller.java
+│   │   └── publisher/
+│   │       └── RegulationEventPublisher.java
+│   │
+│   ├── interpreter-agent/
+│   │   ├── InterpreterApplication.java
+│   │   ├── listener/
+│   │   │   └── RegulationEventListener.java
+│   │   ├── ai/
+│   │   │   └── GeminiPolicyInterpreter.java
+│   │   └── service/
+│   │       └── ControlMappingService.java
+│   │
+│   ├── monitor-agent/
+│   │   ├── MonitorApplication.java
+│   │   ├── listener/
+│   │   │   └── DataIngestListener.java
+│   │   └── detector/
+│   │       ├── PanRegexDetector.java
+│   │       ├── LuhnValidator.java
+│   │       └── ViolationClassifier.java
+│   │
+│   ├── remediator-agent/
+│   │   ├── RemediatorApplication.java
+│   │   ├── listener/
+│   │   │   └── ViolationListener.java
+│   │   ├── masking/
+│   │   │   └── DataMaskingService.java
+│   │   └── explainability/
+│   │       └── GeminiExplanationService.java
+│
+├── compliance-core/
+│   ├── control-library/
+│   │   ├── entity/
+│   │   │   └── ControlEntity.java
+│   │   ├── repository/
+│   │   │   └── ControlRepository.java
+│   │   └── service/
+│   │       └── ControlService.java
+│   │
+│   ├── compliance-state/
+│   │   ├── ComplianceScoreService.java
+│   │   └── RiskAggregator.java
+│   │
+│   ├── evidence-service/
+│   │   ├── EvidenceAssembler.java
+│   │   ├── EvidenceExporter.java
+│   │   └── EvidenceController.java
+│   │
+│   ├── audit-ledger/
+│   │   ├── entity/
+│   │   │   └── AgentActionEntity.java
+│   │   ├── repository/
+│   │   │   └── AgentActionRepository.java
+│   │   └── service/
+│   │       └── AuditTrailService.java
+│
+├── intelligence/
+│   ├── rag-service/
+│   │   ├── app.py
+│   │   ├── indexer.py
+│   │   └── retriever.py
+│
+├── messaging/
+│   ├── kafka/
+│   │   ├── topics.md
+│   │   ├── producer-config.yaml
+│   │   └── consumer-config.yaml
+│
+├── storage/
+│   ├── postgres/
+│   │   ├── schema.sql
+│   │   └── seed-data.sql
+│   └── vector-store/
+│       └── faiss.index
+│
+├── infra/
+│   ├── docker-compose.yaml
+│   ├── Dockerfile
+│   └── application.yaml
+│
+└── README.md

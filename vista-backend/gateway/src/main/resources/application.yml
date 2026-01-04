@@ -1,0 +1,55 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      default-filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 10
+            redis-rate-limiter.burstCapacity: 20
+      routes:
+        - id: actuator-route
+          uri: lb://gateway-service
+          predicates:
+            - Path=/actuator/**
+        - id: health-route
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/test
+          filters:
+            - name: RewritePath
+              args:
+                regexp: /test/?(?<segment>.*)
+                replacement: /test/$\{segment}
+
+#   security:
+#     oauth2:
+#       resourceserver:
+#         jwt:
+#           issuer-uri: ${JWT_ISSUER_URI:http://localhost:8080/auth/realms/vista}
+#           jwk-set-uri: ${JWT_JWKS_URI:http://localhost:8080/auth/realms/vista/protocol/openid-connect/certs}
+
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+      base-path: /actuator
+      path-mapping:
+        health: health
+  endpoint:
+    health:
+      show-details: always
+      show-components: always

@@ -1,0 +1,24 @@
+openapi: 3.0.0
+info:
+  title: Control Library API
+  version: 1.0.0
+paths:
+  /controls:
+    get:
+      summary: Retrieve all compliance controls
+      responses:
+        '200':
+          description: A list of compliance controls
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    description:
+                      type: string
