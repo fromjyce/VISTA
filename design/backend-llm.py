@@ -145,6 +145,112 @@ def get_recent_findings():
         ]
     return findings
 
-# Add more endpoints for other dashboard data as needed
+import uuid
+from datetime import datetime, timedelta
+
+@app.get("/api/data_sources")
+def get_data_sources():
+    prompt = (
+        "Generate a JSON list of 3-5 data sources for a compliance dashboard. "
+        "Each source should have id (string), name (string), type (email, chat, database, api, file, transaction), content (string), and addedAt (ISO timestamp). "
+        "Example: [{\"id\": \"src1\", \"name\": \"Customer Support Chat Logs\", \"type\": \"chat\", \"content\": \"...\", \"addedAt\": \"2024-01-01T12:00:00Z\"}, ...]"
+    )
+    result = call_groq(prompt)
+    try:
+        data_sources = json.loads(result)
+    except Exception:
+        now = datetime.utcnow()
+        data_sources = [
+            {"id": str(uuid.uuid4()), "name": "Customer Support Chat Logs", "type": "chat", "content": "[10:30] Customer: I need help with UPI payment\n[10:31] Agent: Can you share your mobile number for verification?\n[10:32] Customer: Sure, it's +91-98765-43210", "addedAt": (now - timedelta(minutes=10)).isoformat() + "Z"},
+            {"id": str(uuid.uuid4()), "name": "Email Inquiries", "type": "email", "content": "From: customer@gmail.com\nSubject: KYC Verification\nHi Support, my Aadhaar is 7294-8361-7842 and PAN is ABCDE1234F...", "addedAt": (now - timedelta(minutes=20)).isoformat() + "Z"},
+            {"id": str(uuid.uuid4()), "name": "KYC Database", "type": "database", "content": "ID,CUSTOMER_NAME,PAN_NUMBER,AADHAAR_LAST4,MOBILE,ACCOUNT_NUMBER\n234,Priya Sharma,BMPPS1234K,7842,+91-9876543210,50100123456789", "addedAt": (now - timedelta(minutes=30)).isoformat() + "Z"}
+        ]
+    return data_sources
+
+@app.post("/api/add_source")
+def add_source(source: dict):
+    # This endpoint would normally persist the source, but for demo just echo back with a new id and timestamp
+    source["id"] = str(uuid.uuid4())
+    source["addedAt"] = datetime.utcnow().isoformat() + "Z"
+    return source
+
+@app.get("/api/compliance_findings")
+def get_compliance_findings():
+    prompt = (
+        "Generate a JSON list of 3-5 compliance findings for a compliance dashboard. Each finding should have: "
+        "id (string), type (string), source (string), severity (critical/warning/success), status (open/fixing/reviewing/fixed), extracted (string), "
+        "requirement (string), reasoningChain (list of strings), remediation (string), xaiExplanation (string), autoRemediated (bool), timestamp (ISO or relative string). "
+        "Example: [{\"id\": \"F001\", \"type\": \"Aadhaar Number Exposure\", ...}]"
+    )
+    result = call_groq(prompt)
+    try:
+        findings = json.loads(result)
+    except Exception:
+        now = datetime.utcnow()
+        findings = [
+            {
+                "id": "F001",
+                "type": "Aadhaar Number Exposure",
+                "source": "Customer Support Chat Logs",
+                "severity": "critical",
+                "status": "open",
+                "extracted": "XXXX-XXXX-7842",
+                "requirement": "DPDP Act Section 8(6) - Aadhaar is Sensitive Personal Data",
+                "reasoningChain": [
+                    "Detection: Regex matched 12-digit Aadhaar pattern in chat",
+                    "Context Analysis: Found in Customer Support Chat Logs without encryption",
+                    "Severity: CRITICAL - Aadhaar exposure violates UIDAI guidelines",
+                    "Remediation: Immediate masking, UIDAI notification assessment"
+                ],
+                "remediation": "Auto-mask Aadhaar (show only last 4 digits). Implement input validation to prevent Aadhaar capture. Create audit trail.",
+                "xaiExplanation": "Aadhaar numbers are classified as Sensitive Personal Data under DPDP Act 2023 and UIDAI guidelines. This 12-digit unique identifier linked to biometric data was detected in plaintext.",
+                "autoRemediated": True,
+                "timestamp": (now - timedelta(minutes=5)).isoformat() + "Z"
+            },
+            {
+                "id": "F002",
+                "type": "PAN Card Exposure",
+                "source": "Email Inquiries",
+                "severity": "critical",
+                "status": "fixing",
+                "extracted": "ABXXXX34F",
+                "requirement": "IT Act SPDI Rules - PAN is financial sensitive data",
+                "reasoningChain": [
+                    "Detection: PAN format matched in email",
+                    "Context: PAN found in Email Inquiries - likely part of KYC data",
+                    "Severity: HIGH - PAN exposure enables financial fraud"
+                ],
+                "remediation": "Encrypt PAN in storage. Mask in all non-production exports. Review access permissions.",
+                "xaiExplanation": "PAN (Permanent Account Number) is classified as sensitive financial information under IT Act SPDI Rules.",
+                "autoRemediated": False,
+                "timestamp": (now - timedelta(minutes=15)).isoformat() + "Z"
+            }
+        ]
+    return findings
+
+@app.get("/api/ai_findings/{finding_id}")
+def get_ai_finding_details(finding_id: str):
+    # For demo, just echo a detailed LLM explanation for the finding
+    prompt = (
+        f"Given the compliance finding with id {finding_id}, generate a JSON object with: "
+        "reasoningChain (list of strings), xaiExplanation (string), remediation (string), autoRemediated (bool). "
+        "Example: {\"reasoningChain\": [...], \"xaiExplanation\": \"...\", \"remediation\": \"...\", \"autoRemediated\": true}"
+    )
+    result = call_groq(prompt)
+    try:
+        details = json.loads(result)
+    except Exception:
+        details = {
+            "reasoningChain": [
+                "Detection: Regex matched pattern in content",
+                "Context: Found in source without encryption",
+                "Severity: CRITICAL - Data exposure violates compliance",
+                "Remediation: Mask and notify"
+            ],
+            "xaiExplanation": "Sensitive data was detected in plaintext. This violates compliance requirements.",
+            "remediation": "Mask and audit trail.",
+            "autoRemediated": True
+        }
+    return details
 
 # To run the server, use: uvicorn backend-llm:app --reload
