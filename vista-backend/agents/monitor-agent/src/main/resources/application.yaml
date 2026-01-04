@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: monitor-agent
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: monitor-agent
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+logging:
+  level:
+    root: INFO
