@@ -29,6 +29,14 @@ spring:
               args:
                 regexp: /test/?(?<segment>.*)
                 replacement: /test/$\{segment}
+        - id: compliance-core
+          uri: lb://compliance-core
+          predicates:
+            - Path=/compliance/**
+        - id: integration-ai
+          uri: lb://integration-ai
+          predicates:
+            - Path=/integration/**
 
 #   security:
 #     oauth2:
