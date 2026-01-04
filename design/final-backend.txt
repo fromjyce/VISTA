@@ -1,0 +1,187 @@
+vista-backend/
+│
+├── pom.xml
+├── README.md
+│
+├── gateway/
+│   ├── pom.xml
+│   └── src/main/java/com/vista/gateway/
+│       ├── GatewayApplication.java
+│       ├── controller/
+│       │   ├── ApiGatewayController.java
+│       │   └── HealthCheckController.java
+│       ├── dto/
+│       │   ├── DashboardSummaryDTO.java
+│       │   ├── RegulationDTO.java
+│       │   └── EvidenceRequestDTO.java
+│       ├── security/
+│       │   ├── AuthConfig.java
+│       │   ├── JwtFilter.java
+│       │   └── RoleConstants.java
+│       ├── config/
+│       │   ├── CorsConfig.java
+│       │   └── WebConfig.java
+│       └── exception/
+│           ├── GlobalExceptionHandler.java
+│           └── ApiError.java
+│
+├── agents/
+│   │
+│   ├── watcher-agent/
+│   │   ├── pom.xml
+│   │   └── src/main/java/com/vista/agent/watcher/
+│   │       ├── WatcherApplication.java
+│   │       ├── scheduler/
+│   │       │   └── RegulationPoller.java
+│   │       ├── service/
+│   │       │   └── RegulationDiffService.java
+│   │       ├── publisher/
+│   │       │   └── RegulationEventPublisher.java
+│   │       ├── model/
+│   │       │   └── RegulationSourceModel.java
+│   │       └── config/
+│   │           └── SchedulerConfig.java
+│   │
+│   ├── interpreter-agent/
+│   │   ├── pom.xml
+│   │   └── src/main/java/com/vista/agent/interpreter/
+│   │       ├── InterpreterApplication.java
+│   │       ├── listener/
+│   │       │   └── RegulationEventListener.java
+│   │       ├── ai/
+│   │       │   ├── GeminiPolicyInterpreter.java
+│   │       │   └── PromptTemplateBuilder.java
+│   │       ├── service/
+│   │       │   ├── ControlMappingService.java
+│   │       │   └── ControlVersioningService.java
+│   │       ├── model/
+│   │       │   └── ParsedControlModel.java
+│   │       └── config/
+│   │           └── GeminiConfig.java
+│   │
+│   ├── monitor-agent/
+│   │   ├── pom.xml
+│   │   └── src/main/java/com/vista/agent/monitor/
+│   │       ├── MonitorApplication.java
+│   │       ├── listener/
+│   │       │   └── DataIngestListener.java
+│   │       ├── detector/
+│   │       │   ├── PanRegexDetector.java
+│   │       │   ├── LuhnValidator.java
+│   │       │   ├── PiiPatternDetector.java
+│   │       │   └── ViolationClassifier.java
+│   │       ├── service/
+│   │       │   └── ScanExecutionService.java
+│   │       ├── model/
+│   │       │   └── ViolationModel.java
+│   │       └── config/
+│   │           └── ScanConfig.java
+│   │
+│   ├── remediator-agent/
+│   │   ├── pom.xml
+│   │   └── src/main/java/com/vista/agent/remediator/
+│   │       ├── RemediatorApplication.java
+│   │       ├── listener/
+│   │       │   └── ViolationListener.java
+│   │       ├── masking/
+│   │       │   └── DataMaskingService.java
+│   │       ├── explainability/
+│   │       │   └── GeminiExplanationService.java
+│   │       ├── service/
+│   │       │   └── RemediationDecisionService.java
+│   │       └── model/
+│   │           └── RemediationActionModel.java
+│
+├── compliance-core/
+│   │
+│   ├── control-library/
+│   │   ├── pom.xml
+│   │   └── src/main/java/com/vista/compliance/control/
+│   │       ├── entity/
+│   │       │   └── ControlEntity.java
+│   │       ├── repository/
+│   │       │   └── ControlRepository.java
+│   │       ├── service/
+│   │       │   └── ControlService.java
+│   │       └── model/
+│   │           └── ControlSeverity.java
+│   │
+│   ├── compliance-state/
+│   │   ├── pom.xml
+│   │   └── src/main/java/com/vista/compliance/state/
+│   │       ├── ComplianceScoreService.java
+│   │       ├── RiskAggregator.java
+│   │       ├── dto/
+│   │       │   └── ComplianceSnapshotDTO.java
+│   │       └── controller/
+│   │           └── ComplianceStateController.java
+│   │
+│   ├── evidence-service/
+│   │   ├── pom.xml
+│   │   └── src/main/java/com/vista/compliance/evidence/
+│   │       ├── EvidenceAssembler.java
+│   │       ├── EvidenceExporter.java
+│   │       ├── EvidenceController.java
+│   │       └── model/
+│   │           └── EvidenceBundleModel.java
+│   │
+│   ├── audit-ledger/
+│   │   ├── pom.xml
+│   │   └── src/main/java/com/vista/compliance/audit/
+│   │       ├── entity/
+│   │       │   └── AgentActionEntity.java
+│   │       ├── repository/
+│   │       │   └── AgentActionRepository.java
+│   │       ├── service/
+│   │       │   └── AuditTrailService.java
+│   │       └── controller/
+│   │           └── AuditQueryController.java
+│
+├── intelligence/
+│   └── rag-service/
+│       ├── app.py
+│       ├── indexer.py
+│       ├── retriever.py
+│       ├── embeddings.py
+│       └── requirements.txt
+│
+├── messaging/
+│   └── kafka/
+│       ├── topics.md
+│       ├── events/
+│       │   ├── regulation-updated.json
+│       │   ├── controls-updated.json
+│       │   ├── data-ingested.json
+│       │   ├── violation-detected.json
+│       │   └── evidence-generated.json
+│       ├── producer-config.yaml
+│       └── consumer-config.yaml
+│
+├── storage/
+│   ├── postgres/
+│   │   ├── schema.sql
+│   │   ├── indexes.sql
+│   │   └── seed-data.sql
+│   └── vector-store/
+│       └── faiss.index
+│
+├── observability/
+│   ├── logging/
+│   │   └── logback.xml
+│   ├── tracing/
+│   │   └── opentelemetry.yaml
+│   └── metrics/
+│       └── prometheus.yaml
+│
+├── infra/
+│   ├── docker-compose.yaml
+│   ├── Dockerfile.gateway
+│   ├── Dockerfile.agent
+│   ├── Dockerfile.core
+│   ├── application.yaml
+│   └── env.example
+│
+└── scripts/
+    ├── bootstrap.sh
+    ├── migrate-db.sh
+    └── seed-regulations.sh
