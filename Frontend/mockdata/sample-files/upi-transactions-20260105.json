@@ -1,0 +1,248 @@
+{
+  "metadata": {
+    "exportDate": "2026-01-05",
+    "exportTime": "10:00:00",
+    "totalTransactions": 156789,
+    "exportedBy": "payment-gateway-service",
+    "version": "2.1.0"
+  },
+  "transactions": [
+    {
+      "txn_id": "UPI2026010500001",
+      "txn_ref": "401234567890123456",
+      "payer_vpa": "amit.sharma@okaxis",
+      "payer_name": "Amit Sharma",
+      "payee_vpa": "merchant.store@paytm",
+      "payee_name": "Krishna Electronics",
+      "amount": 15999,
+      "currency": "INR",
+      "txn_type": "P2M",
+      "status": "SUCCESS",
+      "timestamp": "2026-01-05T00:05:23.456Z",
+      "settlement_time": "2026-01-05T00:05:25.123Z",
+      "device_info": {
+        "device_id": "DEV-ANDROID-12345",
+        "app_version": "5.2.1",
+        "os": "Android 14"
+      }
+    },
+    {
+      "txn_id": "UPI2026010500002",
+      "txn_ref": "401234567890123457",
+      "payer_vpa": "priya.nair@oksbi",
+      "payer_name": "Priya Nair",
+      "payee_vpa": "grocery.mart@ybl",
+      "payee_name": "Fresh Grocery Mart",
+      "amount": 2450,
+      "currency": "INR",
+      "txn_type": "P2M",
+      "status": "SUCCESS",
+      "timestamp": "2026-01-05T00:12:45.789Z",
+      "settlement_time": "2026-01-05T00:12:47.234Z",
+      "device_info": {
+        "device_id": "DEV-IOS-67890",
+        "app_version": "5.2.0",
+        "os": "iOS 17.2"
+      }
+    },
+    {
+      "txn_id": "UPI2026010500003",
+      "txn_ref": "401234567890123458",
+      "payer_vpa": "vikram.singh@okhdfcbank",
+      "payer_name": "Vikram Singh",
+      "payee_vpa": "rajesh.kumar@okicici",
+      "payee_name": "Rajesh Kumar",
+      "amount": 50000,
+      "currency": "INR",
+      "txn_type": "P2P",
+      "status": "SUCCESS",
+      "timestamp": "2026-01-05T00:25:12.345Z",
+      "settlement_time": "2026-01-05T00:25:14.567Z",
+      "device_info": {
+        "device_id": "DEV-ANDROID-11111",
+        "app_version": "5.2.1",
+        "os": "Android 13"
+      }
+    },
+    {
+      "txn_id": "UPI2026010500004",
+      "txn_ref": "401234567890123459",
+      "payer_vpa": "ananya.reddy@okaxis",
+      "payer_name": "Ananya Reddy",
+      "payee_vpa": "petrol.pump@ybl",
+      "payee_name": "HP Petrol Pump Sector 45",
+      "amount": 3500,
+      "currency": "INR",
+      "txn_type": "P2M",
+      "status": "FAILED",
+      "failure_reason": "INSUFFICIENT_BALANCE",
+      "timestamp": "2026-01-05T00:35:00.123Z",
+      "device_info": {
+        "device_id": "DEV-IOS-22222",
+        "app_version": "5.1.9",
+        "os": "iOS 16.5"
+      }
+    },
+    {
+      "txn_id": "UPI2026010500005",
+      "txn_ref": "401234567890123460",
+      "payer_vpa": "karthik.iyer@okkotak",
+      "payer_name": "Karthik Iyer",
+      "payee_vpa": "electricity.bill@paytm",
+      "payee_name": "BESCOM Bangalore",
+      "amount": 4250,
+      "currency": "INR",
+      "txn_type": "BILL_PAY",
+      "status": "SUCCESS",
+      "timestamp": "2026-01-05T00:45:30.567Z",
+      "settlement_time": "2026-01-05T00:45:32.890Z",
+      "bill_details": {
+        "consumer_no": "BES1234567890",
+        "bill_date": "2025-12-15",
+        "due_date": "2026-01-10"
+      },
+      "device_info": {
+        "device_id": "DEV-ANDROID-33333",
+        "app_version": "5.2.1",
+        "os": "Android 14"
+      }
+    },
+    {
+      "txn_id": "UPI2026010512345",
+      "txn_ref": "401234567890123461",
+      "payer_vpa": "user@okaxis",
+      "payer_name": "Test User",
+      "payee_vpa": "merchant@ybl",
+      "payee_name": "Test Merchant",
+      "amount": 1500,
+      "currency": "INR",
+      "txn_type": "P2M",
+      "status": "SUCCESS",
+      "timestamp": "2026-01-05T07:30:00.000Z",
+      "settlement_time": "2026-01-05T07:30:02.345Z",
+      "fallback_card_details": {
+        "card_number": "4532889122343456",
+        "card_type": "VISA",
+        "issuer": "HDFC Bank",
+        "fallback_reason": "UPI_LIMIT_EXCEEDED"
+      },
+      "device_info": {
+        "device_id": "DEV-WEB-44444",
+        "app_version": "WEB-3.0.0",
+        "os": "Chrome 120"
+      }
+    },
+    {
+      "txn_id": "UPI2026010500006",
+      "txn_ref": "401234567890123462",
+      "payer_vpa": "mohan.lal@oksbi",
+      "payer_name": "Mohan Lal",
+      "payee_vpa": "mobile.recharge@paytm",
+      "payee_name": "Jio Prepaid Recharge",
+      "amount": 999,
+      "currency": "INR",
+      "txn_type": "RECHARGE",
+      "status": "SUCCESS",
+      "timestamp": "2026-01-05T08:00:15.234Z",
+      "settlement_time": "2026-01-05T08:00:17.567Z",
+      "recharge_details": {
+        "mobile_number": "+91-9876543210",
+        "operator": "Jio",
+        "plan_name": "Unlimited 84 Days"
+      },
+      "device_info": {
+        "device_id": "DEV-ANDROID-55555",
+        "app_version": "5.2.1",
+        "os": "Android 12"
+      }
+    },
+    {
+      "txn_id": "UPI2026010500007",
+      "txn_ref": "401234567890123463",
+      "payer_vpa": "geeta.rani@okpnb",
+      "payer_name": "Geeta Rani",
+      "payee_vpa": "insurance.lic@ybl",
+      "payee_name": "LIC Premium Payment",
+      "amount": 12500,
+      "currency": "INR",
+      "txn_type": "BILL_PAY",
+      "status": "PENDING",
+      "timestamp": "2026-01-05T08:15:00.000Z",
+      "bill_details": {
+        "policy_number": "123456789012",
+        "premium_month": "January 2026"
+      },
+      "device_info": {
+        "device_id": "DEV-IOS-66666",
+        "app_version": "5.2.0",
+        "os": "iOS 17.1"
+      }
+    },
+    {
+      "txn_id": "UPI2026010500008",
+      "txn_ref": "401234567890123464",
+      "payer_vpa": "suresh.babu@okcanara",
+      "payer_name": "Suresh Babu",
+      "payee_vpa": "railway.ticket@irctc",
+      "payee_name": "IRCTC Ticket Booking",
+      "amount": 2845,
+      "currency": "INR",
+      "txn_type": "P2M",
+      "status": "SUCCESS",
+      "timestamp": "2026-01-05T08:30:45.678Z",
+      "settlement_time": "2026-01-05T08:30:47.901Z",
+      "booking_details": {
+        "pnr": "2345678901",
+        "train": "12345 Rajdhani Express",
+        "journey_date": "2026-01-15"
+      },
+      "device_info": {
+        "device_id": "DEV-ANDROID-77777",
+        "app_version": "5.2.1",
+        "os": "Android 14"
+      }
+    },
+    {
+      "txn_id": "UPI2026010500009",
+      "txn_ref": "401234567890123465",
+      "payer_vpa": "neha.agarwal@okhdfc",
+      "payer_name": "Neha Agarwal",
+      "payee_vpa": "swiggy.order@ybl",
+      "payee_name": "Swiggy Food Delivery",
+      "amount": 756,
+      "currency": "INR",
+      "txn_type": "P2M",
+      "status": "SUCCESS",
+      "timestamp": "2026-01-05T09:00:00.000Z",
+      "settlement_time": "2026-01-05T09:00:02.234Z",
+      "device_info": {
+        "device_id": "DEV-IOS-88888",
+        "app_version": "5.2.0",
+        "os": "iOS 17.2"
+      }
+    },
+    {
+      "txn_id": "UPI2026010500010",
+      "txn_ref": "401234567890123466",
+      "payer_vpa": "vijay.malhotra@okicici",
+      "payer_name": "Vijay Malhotra",
+      "payee_vpa": "amazon.pay@apl",
+      "payee_name": "Amazon India",
+      "amount": 24999,
+      "currency": "INR",
+      "txn_type": "P2M",
+      "status": "SUCCESS",
+      "timestamp": "2026-01-05T09:15:30.123Z",
+      "settlement_time": "2026-01-05T09:15:32.456Z",
+      "order_details": {
+        "order_id": "402-1234567-8901234",
+        "product": "Samsung Galaxy S25"
+      },
+      "device_info": {
+        "device_id": "DEV-ANDROID-99999",
+        "app_version": "5.2.1",
+        "os": "Android 14"
+      }
+    }
+  ]
+}

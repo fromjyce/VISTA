@@ -1,0 +1,126 @@
+{
+  "dataSources": [
+    {
+      "id": "DS-2026-001",
+      "name": "Customer Support Tickets Export",
+      "type": "file",
+      "subType": "csv",
+      "description": "Weekly export from Freshdesk containing customer support ticket data",
+      "addedAt": "2026-01-05T08:00:00.000Z",
+      "lastScanned": "2026-01-05T09:15:00.000Z",
+      "status": "scanned",
+      "findingsCount": 1,
+      "recordCount": 2847,
+      "fileInfo": {
+        "fileName": "support-tickets-jan2026.csv",
+        "fileSize": 1245678,
+        "mimeType": "text/csv"
+      },
+      "sampleContent": "ticket_id,customer_name,customer_email,customer_message,agent_response,status,created_at\nTKT-2026-4521,Amit Verma,amit.v@email.com,\"Please help, my Aadhaar is 7294-8361-7842 and I cannot verify my account\",\"We will assist you shortly\",OPEN,2026-01-05T08:30:00Z"
+    },
+    {
+      "id": "DS-2026-002",
+      "name": "KYC Pending Verification Queue",
+      "type": "database",
+      "subType": "postgresql",
+      "description": "Real-time export of customers pending KYC verification",
+      "addedAt": "2026-01-04T14:00:00.000Z",
+      "lastScanned": "2026-01-05T08:30:00.000Z",
+      "status": "scanned",
+      "findingsCount": 1,
+      "recordCount": 1523,
+      "connectionInfo": {
+        "host": "kyc-db.internal.fintech.in",
+        "database": "kyc_production",
+        "table": "pending_verifications"
+      },
+      "sampleContent": "id,full_name,pan_number,aadhaar_last4,dob,status,created_at\n234,Priya Sharma,BMPPS1234K,7842,1990-05-15,PENDING,2026-01-04T10:00:00Z"
+    },
+    {
+      "id": "DS-2026-003",
+      "name": "UPI Transaction Logs",
+      "type": "api",
+      "subType": "json",
+      "description": "Real-time transaction logs from UPI payment gateway",
+      "addedAt": "2026-01-03T10:00:00.000Z",
+      "lastScanned": "2026-01-05T07:45:00.000Z",
+      "status": "scanned",
+      "findingsCount": 2,
+      "recordCount": 156789,
+      "apiInfo": {
+        "endpoint": "https://api.upi-gateway.fintech.in/v2/transactions/logs",
+        "method": "GET",
+        "authType": "Bearer Token"
+      },
+      "sampleContent": "{\"txn_id\":\"UPI2026010512345\",\"payer_vpa\":\"amit@okaxis\",\"payee_vpa\":\"merchant@ybl\",\"amount\":1500,\"status\":\"SUCCESS\",\"timestamp\":\"2026-01-05T07:30:00Z\"}"
+    },
+    {
+      "id": "DS-2026-004",
+      "name": "Customer Chat Transcripts",
+      "type": "file",
+      "subType": "json",
+      "description": "Daily export of customer chat conversations from support platform",
+      "addedAt": "2026-01-02T09:00:00.000Z",
+      "lastScanned": "2026-01-04T16:20:00.000Z",
+      "status": "scanned",
+      "findingsCount": 1,
+      "recordCount": 4521,
+      "fileInfo": {
+        "fileName": "customer-chat-logs.json",
+        "fileSize": 8945623,
+        "mimeType": "application/json"
+      },
+      "sampleContent": "{\"chat_id\":\"CHAT-2026-8901\",\"customer_id\":\"CUST-45678\",\"messages\":[{\"role\":\"agent\",\"content\":\"How can I reach you?\"},{\"role\":\"customer\",\"content\":\"Please call me on +91-98765-43210\"}]}"
+    },
+    {
+      "id": "DS-2026-005",
+      "name": "Refund Processing Queue",
+      "type": "database",
+      "subType": "mysql",
+      "description": "Pending refund transactions awaiting NEFT processing",
+      "addedAt": "2026-01-01T11:00:00.000Z",
+      "lastScanned": "2026-01-03T11:30:00.000Z",
+      "status": "scanned",
+      "findingsCount": 1,
+      "recordCount": 892,
+      "connectionInfo": {
+        "host": "refund-db.internal.fintech.in",
+        "database": "refund_service",
+        "table": "pending_neft_queue"
+      },
+      "sampleContent": "refund_id,customer_name,beneficiary_account,ifsc_code,amount,status\nREF-2026-4521,Rajesh Kumar,1234567890123456,HDFC0001234,25000,PENDING"
+    }
+  ],
+  "availableForUpload": [
+    {
+      "type": "csv",
+      "extensions": [".csv"],
+      "description": "Comma-separated values files",
+      "maxSize": 50000000,
+      "example": "Support tickets, KYC data, Transaction logs"
+    },
+    {
+      "type": "json",
+      "extensions": [".json"],
+      "description": "JSON formatted data",
+      "maxSize": 100000000,
+      "example": "API responses, Chat logs, Configuration files"
+    },
+    {
+      "type": "xml",
+      "extensions": [".xml"],
+      "description": "XML formatted data",
+      "maxSize": 50000000,
+      "example": "Bank statements, NACH mandates"
+    },
+    {
+      "type": "log",
+      "extensions": [".log", ".txt"],
+      "description": "Plain text log files",
+      "maxSize": 100000000,
+      "example": "Application logs, Server logs"
+    }
+  ],
+  "lastUpdated": "2026-01-05T10:00:00.000Z",
+  "version": "1.0.0"
+}

@@ -130,7 +130,7 @@ export default function LandingPage() {
                     </div>
                     <h3 className="font-[family-name:var(--font-audiowide)] text-lg font-bold mb-2">WATCHER</h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Tracks regulatory feeds from PCI SSC, GDPR, FinCEN
+                      Tracks RBI, DPDP Act, CERT-In, PCI DSS, NPCI feeds
                     </p>
                     <div className="text-xs bg-[#1A1F71]/10 rounded px-3 py-2 font-mono">
                       Every 6 hours

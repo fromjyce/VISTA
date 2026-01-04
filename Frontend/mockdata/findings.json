@@ -1,0 +1,376 @@
+{
+  "findings": [
+    {
+      "id": "FND-2026-001",
+      "timestamp": "2026-01-05T09:15:00.000Z",
+      "type": "Aadhaar Number Exposure",
+      "source": "customer_support_tickets",
+      "sourceFile": "support-tickets-jan2026.csv",
+      "severity": "critical",
+      "status": "open",
+      "extracted": "XXXX-XXXX-7842",
+      "fullMatch": "7294-8361-7842",
+      "requirement": "DPDP Act Section 8(6) - Aadhaar is Sensitive Personal Data requiring enhanced protection",
+      "regulation": "DPDP Act 2023 / IT Act SPDI Rules",
+      "reasoningChain": [
+        {
+          "step": 1,
+          "phase": "Detection",
+          "detail": "Regex pattern matched 12-digit Aadhaar format (XXXX-XXXX-XXXX) in support ticket #TKT-2026-4521",
+          "timestamp": "2026-01-05T09:15:01.000Z"
+        },
+        {
+          "step": 2,
+          "phase": "Validation",
+          "detail": "Verhoeff checksum validation passed - confirmed valid Aadhaar number structure",
+          "timestamp": "2026-01-05T09:15:02.000Z"
+        },
+        {
+          "step": 3,
+          "phase": "Context Analysis",
+          "detail": "Aadhaar found in plaintext CSV export from Freshdesk - no encryption applied",
+          "timestamp": "2026-01-05T09:15:03.000Z"
+        },
+        {
+          "step": 4,
+          "phase": "Risk Assessment",
+          "detail": "CRITICAL: Aadhaar exposure violates UIDAI guidelines and DPDP Act. Potential penalty up to Rs. 250 crore",
+          "timestamp": "2026-01-05T09:15:04.000Z"
+        },
+        {
+          "step": 5,
+          "phase": "Remediation Planning",
+          "detail": "Immediate masking required. Audit trail creation. UIDAI notification assessment needed",
+          "timestamp": "2026-01-05T09:15:05.000Z"
+        }
+      ],
+      "remediation": {
+        "action": "Auto-mask Aadhaar in source file. Implement input validation to prevent Aadhaar capture in support tickets.",
+        "scheduled": "2026-01-05T21:00:00.000Z",
+        "assignee": "Security Operations Team",
+        "ticket": "SEC-2026-0142"
+      },
+      "xaiExplanation": "This finding was flagged because Aadhaar numbers are classified as Sensitive Personal Data under India's IT Act SPDI Rules and the DPDP Act 2023. The 12-digit unique identity number was detected in an unencrypted customer support ticket export. Under UIDAI regulations, Aadhaar must never be stored in plaintext or displayed in full. The Verhoeff checksum validation confirmed this is a structurally valid Aadhaar number, not a false positive. Immediate masking is required to prevent identity theft and regulatory penalties.",
+      "autoRemediated": true,
+      "matchLocation": {
+        "file": "support-tickets-jan2026.csv",
+        "row": 847,
+        "column": "customer_message",
+        "context": "Please help, my Aadhaar is 7294-8361-7842 and I cannot..."
+      }
+    },
+    {
+      "id": "FND-2026-002",
+      "timestamp": "2026-01-05T08:30:00.000Z",
+      "type": "PAN Card Exposure",
+      "source": "kyc_database_export",
+      "sourceFile": "kyc-pending-verification.csv",
+      "severity": "critical",
+      "status": "fixing",
+      "extracted": "BXXXX1234X",
+      "fullMatch": "BMPPS1234K",
+      "requirement": "IT Act SPDI Rules - PAN is financial sensitive data requiring encryption at rest",
+      "regulation": "IT Act 2000 / PCI DSS 3.4",
+      "reasoningChain": [
+        {
+          "step": 1,
+          "phase": "Detection",
+          "detail": "Regex pattern matched PAN format (5 letters, 4 digits, 1 letter) in KYC export",
+          "timestamp": "2026-01-05T08:30:01.000Z"
+        },
+        {
+          "step": 2,
+          "phase": "Validation",
+          "detail": "PAN structure validated - 4th character 'P' indicates Individual category",
+          "timestamp": "2026-01-05T08:30:02.000Z"
+        },
+        {
+          "step": 3,
+          "phase": "Context Analysis",
+          "detail": "PAN found in CSV file exported from KYC system - file stored in shared drive without encryption",
+          "timestamp": "2026-01-05T08:30:03.000Z"
+        },
+        {
+          "step": 4,
+          "phase": "Risk Assessment",
+          "detail": "HIGH: PAN exposure enables financial fraud. Combined with name creates identity theft risk",
+          "timestamp": "2026-01-05T08:30:04.000Z"
+        },
+        {
+          "step": 5,
+          "phase": "Remediation Planning",
+          "detail": "Encrypt file at rest. Implement PAN masking in exports. Review access permissions",
+          "timestamp": "2026-01-05T08:30:05.000Z"
+        }
+      ],
+      "remediation": {
+        "action": "Encrypt CSV file. Mask PAN in all non-production exports. Restrict shared drive access to authorized personnel only.",
+        "scheduled": "2026-01-05T18:00:00.000Z",
+        "assignee": "Data Protection Team",
+        "ticket": "SEC-2026-0141"
+      },
+      "xaiExplanation": "PAN (Permanent Account Number) is classified as sensitive financial information under IT Act SPDI Rules. This 10-character alphanumeric identifier was found in a KYC database export stored without encryption. The PAN format 'BMPPS1234K' reveals the holder is an Individual (4th char 'P') with surname starting with 'S'. Combined with other KYC data, this creates significant identity theft and financial fraud risk. IT Act mandates encryption of such data at rest.",
+      "autoRemediated": false,
+      "matchLocation": {
+        "file": "kyc-pending-verification.csv",
+        "row": 234,
+        "column": "pan_number",
+        "context": "Sharma,Priya,BMPPS1234K,1990-05-15,..."
+      }
+    },
+    {
+      "id": "FND-2026-003",
+      "timestamp": "2026-01-05T07:45:00.000Z",
+      "type": "Card Number (PAN) Exposure",
+      "source": "transaction_logs",
+      "sourceFile": "upi-transactions-20260105.json",
+      "severity": "critical",
+      "status": "open",
+      "extracted": "4XXX-XXXX-XXXX-3456",
+      "fullMatch": "4532-8891-2234-3456",
+      "requirement": "PCI DSS 3.4 - Render PAN unreadable anywhere it is stored",
+      "regulation": "PCI DSS v4.0 / RBI Card Storage Guidelines",
+      "reasoningChain": [
+        {
+          "step": 1,
+          "phase": "Detection",
+          "detail": "Regex matched 16-digit card number pattern in UPI fallback transaction log",
+          "timestamp": "2026-01-05T07:45:01.000Z"
+        },
+        {
+          "step": 2,
+          "phase": "Validation",
+          "detail": "Luhn algorithm checksum passed. BIN 453288 identifies as Visa card issued by HDFC Bank",
+          "timestamp": "2026-01-05T07:45:02.000Z"
+        },
+        {
+          "step": 3,
+          "phase": "Context Analysis",
+          "detail": "Full card number logged during UPI-to-card fallback transaction. Debug logging was enabled in production",
+          "timestamp": "2026-01-05T07:45:03.000Z"
+        },
+        {
+          "step": 4,
+          "phase": "Risk Assessment",
+          "detail": "CRITICAL: Full PAN in logs is direct PCI DSS violation. QSA audit would result in immediate non-compliance",
+          "timestamp": "2026-01-05T07:45:04.000Z"
+        },
+        {
+          "step": 5,
+          "phase": "Remediation Planning",
+          "detail": "Disable debug logging. Truncate existing logs. Implement PAN detection in logging pipeline",
+          "timestamp": "2026-01-05T07:45:05.000Z"
+        }
+      ],
+      "remediation": {
+        "action": "Immediately disable debug logging in production. Truncate card numbers in historical logs to first 6 and last 4 digits. Add PCI-DSS compliant logging filter.",
+        "scheduled": "2026-01-05T12:00:00.000Z",
+        "assignee": "PCI Compliance Team",
+        "ticket": "PCI-2026-0089"
+      },
+      "xaiExplanation": "Credit/Debit card Primary Account Numbers (PAN) must never be stored in plaintext per PCI DSS Requirement 3.4. The detection algorithm identified a valid Luhn-checksum card number in transaction debug logs. BIN analysis confirms this is an HDFC Bank Visa card. Under RBI's card storage guidelines and PCI DSS, only the first 6 and last 4 digits may be displayed. Full PAN storage in logs represents a critical compliance violation that could result in penalties, mandatory breach notification, and loss of card processing privileges.",
+      "autoRemediated": true,
+      "matchLocation": {
+        "file": "upi-transactions-20260105.json",
+        "row": null,
+        "column": "fallback_card_details.card_number",
+        "context": "{\"txn_id\": \"UPI2026010512345\", \"fallback_card_details\": {\"card_number\": \"4532889122343456\", ...}}"
+      }
+    },
+    {
+      "id": "FND-2026-004",
+      "timestamp": "2026-01-04T16:20:00.000Z",
+      "type": "Mobile Number Exposure",
+      "source": "chat_transcripts",
+      "sourceFile": "customer-chat-logs.json",
+      "severity": "warning",
+      "status": "open",
+      "extracted": "+91-98XXX-XXXXX",
+      "fullMatch": "+91-98765-43210",
+      "requirement": "DPDP Act - Mobile number is Personal Data requiring consent for processing",
+      "regulation": "DPDP Act 2023 / TRAI DND Regulations",
+      "reasoningChain": [
+        {
+          "step": 1,
+          "phase": "Detection",
+          "detail": "Pattern matched Indian mobile number format (+91-XXXXX-XXXXX) in chat transcript",
+          "timestamp": "2026-01-04T16:20:01.000Z"
+        },
+        {
+          "step": 2,
+          "phase": "Validation",
+          "detail": "Mobile number starts with 9/8/7/6 - valid Indian mobile prefix. Operator identified as Jio",
+          "timestamp": "2026-01-04T16:20:02.000Z"
+        },
+        {
+          "step": 3,
+          "phase": "Context Analysis",
+          "detail": "Customer shared mobile number in chat for callback request. Number stored in plaintext transcript",
+          "timestamp": "2026-01-04T16:20:03.000Z"
+        },
+        {
+          "step": 4,
+          "phase": "Risk Assessment",
+          "detail": "MEDIUM: Mobile number is personal data under DPDP. Storage requires documented consent and purpose limitation",
+          "timestamp": "2026-01-04T16:20:04.000Z"
+        },
+        {
+          "step": 5,
+          "phase": "Remediation Planning",
+          "detail": "Mask mobile numbers in chat logs. Document consent for callback purpose. Implement auto-redaction",
+          "timestamp": "2026-01-04T16:20:05.000Z"
+        }
+      ],
+      "remediation": {
+        "action": "Implement auto-redaction of mobile numbers in chat transcripts. Document lawful basis for callback processing. Add consent checkpoint before collecting mobile numbers.",
+        "scheduled": null,
+        "assignee": "Customer Experience Team",
+        "ticket": "CX-2026-0234"
+      },
+      "xaiExplanation": "Under DPDP Act 2023, mobile phone numbers constitute Personal Data as they can directly identify an individual. The number was shared by a customer in a chat conversation for callback purposes. While this has implied consent for the callback, storing the number in plaintext chat transcripts without documented purpose limitation violates the data minimization principle. Additionally, TRAI DND regulations require documented consent before using mobile numbers for any communication.",
+      "autoRemediated": false,
+      "matchLocation": {
+        "file": "customer-chat-logs.json",
+        "row": null,
+        "column": "messages[12].content",
+        "context": "Agent: How can I reach you? Customer: Please call me on +91-98765-43210"
+      }
+    },
+    {
+      "id": "FND-2026-005",
+      "timestamp": "2026-01-04T14:00:00.000Z",
+      "type": "UPI VPA Pattern",
+      "source": "api_response_logs",
+      "sourceFile": "payment-api-logs.json",
+      "severity": "warning",
+      "status": "fixed",
+      "extracted": "user***@okaxis",
+      "fullMatch": "priya.sharma@okaxis",
+      "requirement": "NPCI UPI Guidelines - VPA should be masked in logs to prevent targeted fraud",
+      "regulation": "NPCI Circular / RBI Digital Payment Security",
+      "reasoningChain": [
+        {
+          "step": 1,
+          "phase": "Detection",
+          "detail": "Pattern matched UPI VPA format (xxx@provider) in API response logs",
+          "timestamp": "2026-01-04T14:00:01.000Z"
+        },
+        {
+          "step": 2,
+          "phase": "Validation",
+          "detail": "VPA suffix @okaxis is valid NPCI registered handle (Axis Bank)",
+          "timestamp": "2026-01-04T14:00:02.000Z"
+        },
+        {
+          "step": 3,
+          "phase": "Context Analysis",
+          "detail": "Full VPA logged in payment API debug response. Enables targeted vishing attacks",
+          "timestamp": "2026-01-04T14:00:03.000Z"
+        },
+        {
+          "step": 4,
+          "phase": "Risk Assessment",
+          "detail": "MEDIUM: VPA exposure aids social engineering attacks. Fraudsters can impersonate bank officials",
+          "timestamp": "2026-01-04T14:00:04.000Z"
+        },
+        {
+          "step": 5,
+          "phase": "Remediation Planning",
+          "detail": "Mask VPA in logs showing only first 3 chars and provider. Update logging configuration",
+          "timestamp": "2026-01-04T14:00:05.000Z"
+        }
+      ],
+      "remediation": {
+        "action": "VPA masking implemented in logging pipeline. Historical logs sanitized. Deployed to production on 2026-01-05.",
+        "scheduled": null,
+        "assignee": "Platform Engineering",
+        "ticket": "ENG-2026-0567",
+        "completedAt": "2026-01-05T06:00:00.000Z"
+      },
+      "xaiExplanation": "UPI Virtual Payment Addresses (VPA) like priya.sharma@okaxis uniquely identify a user's bank account. While not as sensitive as card numbers, exposed VPAs enable targeted vishing (voice phishing) attacks where fraudsters impersonate bank officials knowing the victim's exact UPI handle. NPCI guidelines recommend masking VPAs in all non-essential contexts. This finding was remediated by implementing VPA masking in the logging pipeline.",
+      "autoRemediated": true,
+      "matchLocation": {
+        "file": "payment-api-logs.json",
+        "row": null,
+        "column": "response.payer_vpa",
+        "context": "{\"status\": \"SUCCESS\", \"payer_vpa\": \"priya.sharma@okaxis\", \"amount\": 15000}"
+      }
+    },
+    {
+      "id": "FND-2026-006",
+      "timestamp": "2026-01-03T11:30:00.000Z",
+      "type": "Bank Account Number",
+      "source": "refund_processing_queue",
+      "sourceFile": "pending-refunds.csv",
+      "severity": "critical",
+      "status": "reviewing",
+      "extracted": "XXXX-XXXX-XXXX-7890",
+      "fullMatch": "1234567890123456",
+      "requirement": "RBI Master Direction - Account numbers must be encrypted in transit and at rest",
+      "regulation": "RBI IT Framework / IT Act SPDI Rules",
+      "reasoningChain": [
+        {
+          "step": 1,
+          "phase": "Detection",
+          "detail": "Pattern matched bank account number format in refund queue CSV",
+          "timestamp": "2026-01-03T11:30:01.000Z"
+        },
+        {
+          "step": 2,
+          "phase": "Validation",
+          "detail": "Account number length (16 digits) consistent with HDFC/ICICI format",
+          "timestamp": "2026-01-03T11:30:02.000Z"
+        },
+        {
+          "step": 3,
+          "phase": "Context Analysis",
+          "detail": "Full account number stored in refund processing queue for NEFT transfer",
+          "timestamp": "2026-01-03T11:30:03.000Z"
+        },
+        {
+          "step": 4,
+          "phase": "Risk Assessment",
+          "detail": "HIGH: Bank account + IFSC enables fraudulent debits. Must be encrypted in processing queues",
+          "timestamp": "2026-01-03T11:30:04.000Z"
+        },
+        {
+          "step": 5,
+          "phase": "Remediation Planning",
+          "detail": "Tokenize account numbers in queue. Use encrypted references. Decrypt only during NEFT processing",
+          "timestamp": "2026-01-03T11:30:05.000Z"
+        }
+      ],
+      "remediation": {
+        "action": "Implement tokenization for bank account numbers in processing queues. Currently under security review.",
+        "scheduled": null,
+        "assignee": "Security Architecture Team",
+        "ticket": "SEC-2026-0098"
+      },
+      "xaiExplanation": "Bank account numbers combined with IFSC codes provide complete information needed to initiate fraudulent NEFT/IMPS transfers. The RBI IT Framework mandates encryption of such data at rest. This finding identified full account numbers stored in a plaintext CSV file used for refund processing. While operational access is needed for NEFT transfers, the data should be tokenized with decryption only at the point of actual transfer initiation.",
+      "autoRemediated": false,
+      "matchLocation": {
+        "file": "pending-refunds.csv",
+        "row": 56,
+        "column": "beneficiary_account",
+        "context": "REF-2026-4521,Rajesh Kumar,1234567890123456,HDFC0001234,25000,PENDING"
+      }
+    }
+  ],
+  "summary": {
+    "total": 6,
+    "bySeverity": {
+      "critical": 4,
+      "warning": 2,
+      "info": 0
+    },
+    "byStatus": {
+      "open": 3,
+      "fixing": 1,
+      "reviewing": 1,
+      "fixed": 1
+    },
+    "autoRemediatedCount": 3
+  },
+  "lastScan": "2026-01-05T09:15:00.000Z",
+  "version": "1.0.0"
+}
