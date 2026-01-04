@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: remediator-agent
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: remediator-agent
+      auto-offset-reset: earliest
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+logging:
+  level:
+    root: INFO
