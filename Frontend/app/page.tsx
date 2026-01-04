@@ -313,8 +313,8 @@ export default function LandingPage() {
             {/* Point 1 */}
             <Card className="p-6 border-l-4 border-l-[#1A1F71] hover:shadow-lg transition-all bg-white">
               <Network className="w-10 h-10 text-[#1A1F71] mb-4" />
-              <h3 className="font-bold text-lg mb-2">Network Liability</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="font-bold text-xl mb-2">Network Liability</h3>
+              <p className="text-m text-muted-foreground">
                 Visa guarantees trust across the entire network. VISTA provides proactive network-wide assurance.
               </p>
             </Card>
@@ -322,8 +322,8 @@ export default function LandingPage() {
             {/* Point 2 */}
             <Card className="p-6 border-l-4 border-l-[#F7B600] hover:shadow-lg transition-all bg-white">
               <TrendingUp className="w-10 h-10 text-[#F7B600] mb-4" />
-              <h3 className="font-bold text-lg mb-2">Regulatory Velocity</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="font-bold text-xl mb-2">Regulatory Velocity</h3>
+              <p className="text-m text-muted-foreground">
                 Continuous loop triggers re-interpretation within hours. Compliance becomes a state, not an event.
               </p>
             </Card>
@@ -331,8 +331,8 @@ export default function LandingPage() {
             {/* Point 3 */}
             <Card className="p-6 border-l-4 border-l-[#10B981] hover:shadow-lg transition-all bg-white">
               <Brain className="w-10 h-10 text-[#10B981] mb-4" />
-              <h3 className="font-bold text-lg mb-2">Explainability</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="font-bold text-xl mb-2">Explainability</h3>
+              <p className="text-m text-muted-foreground">
                 Constitutional AI Debate produces defensible reasoning chains. Show your work, not just confidence scores.
               </p>
             </Card>
@@ -340,8 +340,8 @@ export default function LandingPage() {
             {/* Point 4 */}
             <Card className="p-6 border-l-4 border-l-[#F59E0B] hover:shadow-lg transition-all bg-white">
               <Clock className="w-10 h-10 text-[#F59E0B] mb-4" />
-              <h3 className="font-bold text-lg mb-2">65,000 TPS Scale</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="font-bold text-xl mb-2">65,000 TPS Scale</h3>
+              <p className="text-m text-muted-foreground">
                 Agents self-trigger on events. No analyst queue. The loop runs 24/7 without human intervention.
               </p>
             </Card>
@@ -349,8 +349,8 @@ export default function LandingPage() {
             {/* Point 5 */}
             <Card className="p-6 border-l-4 border-l-[#8B5CF6] hover:shadow-lg transition-all bg-white">
               <DollarSign className="w-10 h-10 text-[#8B5CF6] mb-4" />
-              <h3 className="font-bold text-lg mb-2">Risk Prevention</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="font-bold text-xl mb-2">Risk Prevention</h3>
+              <p className="text-m text-muted-foreground">
                 Predictive detection catches violations before breaches. Network-wide visibility for compliance teams.
               </p>
             </Card>
@@ -358,8 +358,8 @@ export default function LandingPage() {
             {/* Point 6 */}
             <Card className="p-6 border-l-4 border-l-[#1A1F71] hover:shadow-lg transition-all bg-white">
               <Shield className="w-10 h-10 text-[#1A1F71] mb-4" />
-              <h3 className="font-bold text-lg mb-2">VRM Integration</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="font-bold text-xl mb-2">VRM Integration</h3>
+              <p className="text-m text-muted-foreground">
                 Pushes rules directly to Visa Risk Manager. Detection to enforcement in seconds, not days.
               </p>
             </Card>
