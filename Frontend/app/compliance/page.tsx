@@ -800,7 +800,16 @@ export default function CompliancePage() {
                               }`}>
                                 {index + 1}.
                               </span>
-                              <span>{step}</span>
+                              <span className="flex-1">
+                                {typeof step === 'string' ? (
+                                  step
+                                ) : (
+                                  <span>
+                                    <span className="font-medium text-muted-foreground">[{step.phase}]</span>{' '}
+                                    {step.detail}
+                                  </span>
+                                )}
+                              </span>
                             </div>
                           ))}
                         </div>
@@ -827,7 +836,25 @@ export default function CompliancePage() {
                           <Wrench className="w-4 h-4" />
                           {finding.autoRemediated ? "AUTO-REMEDIATION SCHEDULED" : "MANUAL REMEDIATION REQUIRED"}
                         </p>
-                        <p className="text-sm">{finding.remediation}</p>
+                        {typeof finding.remediation === 'string' ? (
+                          <p className="text-sm">{finding.remediation}</p>
+                        ) : (
+                          <div className="text-sm space-y-1">
+                            <p><span className="font-medium">Action:</span> {finding.remediation.action}</p>
+                            {finding.remediation.assignee && (
+                              <p><span className="font-medium">Assignee:</span> {finding.remediation.assignee}</p>
+                            )}
+                            {finding.remediation.ticket && (
+                              <p><span className="font-medium">Ticket:</span> {finding.remediation.ticket}</p>
+                            )}
+                            {finding.remediation.scheduled && (
+                              <p><span className="font-medium">Scheduled:</span> {finding.remediation.scheduled}</p>
+                            )}
+                            {finding.remediation.completedAt && (
+                              <p className="text-[#10B981]"><span className="font-medium">Completed:</span> {finding.remediation.completedAt}</p>
+                            )}
+                          </div>
+                        )}
                         {finding.autoRemediated && (
                           <p className="text-xs text-muted-foreground mt-2">
                             Audit trail created | Evidence exported | Executes in 24 hrs unless overridden
