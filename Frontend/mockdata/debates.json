@@ -1,0 +1,241 @@
+{
+  "debates": [
+    {
+      "id": "DEB-2026-001",
+      "timestamp": "2026-01-05T09:45:00.000Z",
+      "regulationId": "RBI/2025-26/142",
+      "regulationTitle": "RBI Data Localization - Payment System Data Storage",
+      "source": "RBI",
+      "sourceUrl": "https://rbi.org.in/Scripts/NotificationUser.aspx",
+      "summary": "New RBI circular mandating all payment system operators to store complete payment data exclusively in India within 24 hours of processing",
+      "proposer": {
+        "agent": "Proposer Agent",
+        "position": "The circular requires IMMEDIATE localization of ALL payment data including transaction logs, customer credentials, and payment instrument details. Recommend blocking any cross-border data transfer and implementing real-time data mirroring to India-based servers.",
+        "reasoning": [
+          "RBI circular explicitly states 'entire data relating to payment systems' must be stored in India",
+          "Previous RBI enforcement actions show zero tolerance for data localization violations",
+          "Penalty of up to Rs. 1 crore per violation under Payment and Settlement Systems Act"
+        ],
+        "confidence": 92
+      },
+      "critic": {
+        "agent": "Critic Agent",
+        "position": "While data localization is mandatory, the circular allows for processing to occur abroad with a copy stored in India. Completely blocking cross-border transfer would disrupt international card network operations (Visa/Mastercard) which require real-time authorization from global servers.",
+        "reasoning": [
+          "RBI clarification dated 2019 allows processing abroad if data is deleted within 24 hours",
+          "Card network authorization requires millisecond latency - local-only would break transactions",
+          "Focus should be on 'storage' not 'processing' per RBI's own FAQ"
+        ],
+        "confidence": 88
+      },
+      "judge": {
+        "agent": "Judge Agent",
+        "verdict": "BALANCED INTERPRETATION",
+        "decision": "Allow real-time processing via international card networks. Mandate that all payment data be mirrored to India-based servers within 1 business day. Delete any data stored outside India within 24 hours of settlement. Implement audit trail for cross-border data flows.",
+        "controlId": "CTL-RBI-DL-001",
+        "requirement": "Payment data must be stored exclusively in India; cross-border processing allowed with 24-hour deletion",
+        "reasoning": [
+          "Balances operational necessity with regulatory compliance",
+          "Aligns with RBI's stated intent of data sovereignty",
+          "Provides clear implementation path without disrupting payment flows"
+        ]
+      },
+      "consensus": true,
+      "confidence": 94,
+      "status": "interpreting",
+      "priority": "high",
+      "affectedSystems": ["Payment Gateway", "Card Processing", "UPI Backend", "Transaction Database"],
+      "complianceDeadline": "2026-02-28"
+    },
+    {
+      "id": "DEB-2026-002",
+      "timestamp": "2026-01-04T14:30:00.000Z",
+      "regulationId": "DPDP/2025/CONSENT-01",
+      "regulationTitle": "DPDP Act - Consent Manager Framework Implementation",
+      "source": "DPDP Act",
+      "sourceUrl": "https://www.meity.gov.in/data-protection",
+      "summary": "MeitY notification on mandatory Consent Manager integration for all Data Fiduciaries processing personal data of Indian residents",
+      "proposer": {
+        "agent": "Proposer Agent",
+        "position": "DPDP Act Section 6 mandates explicit consent for all personal data processing. We must implement a Consent Manager that allows granular consent withdrawal at any time. Recommend blocking all data processing activities that lack documented consent.",
+        "reasoning": [
+          "DPDP Act treats consent as the primary lawful basis for processing",
+          "Penalties up to Rs. 250 crore for processing without valid consent",
+          "Data Principal rights include withdrawal of consent at any time"
+        ],
+        "confidence": 95
+      },
+      "critic": {
+        "agent": "Critic Agent",
+        "position": "Section 7 of DPDP Act provides for 'legitimate uses' that don't require consent - including fraud prevention, network security, and credit scoring. Blocking all processing without consent would break essential financial services and fraud detection systems.",
+        "reasoning": [
+          "Section 7(a) explicitly allows processing for 'prevention of fraud'",
+          "KYC processing is mandated by RBI - consent alone doesn't apply",
+          "Transaction monitoring for AML is a legal requirement under PMLA"
+        ],
+        "confidence": 91
+      },
+      "judge": {
+        "agent": "Judge Agent",
+        "verdict": "NUANCED IMPLEMENTATION",
+        "decision": "Implement Consent Manager for voluntary data collection (marketing, analytics). Exempt fraud prevention, KYC, and AML monitoring from consent requirements under Section 7. Create clear audit logs distinguishing consent-based vs legitimate-use processing.",
+        "controlId": "CTL-DPDP-CONSENT-001",
+        "requirement": "Consent Manager required for marketing/analytics; legitimate use exemption for fraud prevention and regulatory compliance",
+        "reasoning": [
+          "Respects DPDP Act's consent-first principle",
+          "Preserves essential financial crime prevention capabilities",
+          "Creates defensible position with clear documentation"
+        ]
+      },
+      "consensus": true,
+      "confidence": 93,
+      "status": "approved",
+      "priority": "high",
+      "affectedSystems": ["Customer Portal", "Mobile App", "Marketing Platform", "Analytics Engine"],
+      "complianceDeadline": "2026-03-31"
+    },
+    {
+      "id": "DEB-2026-003",
+      "timestamp": "2026-01-03T11:15:00.000Z",
+      "regulationId": "CERT-IN/2025/DIR-06",
+      "regulationTitle": "CERT-In 6-Hour Incident Reporting Mandate",
+      "source": "CERT-In",
+      "sourceUrl": "https://www.cert-in.org.in/Directions.jsp",
+      "summary": "CERT-In direction requiring all service providers to report cybersecurity incidents within 6 hours of detection",
+      "proposer": {
+        "agent": "Proposer Agent",
+        "position": "CERT-In Direction mandates reporting of 20+ incident types within 6 hours. This includes data breaches, malware attacks, and unauthorized access. Recommend implementing automated incident detection and immediate CERT-In notification pipeline.",
+        "reasoning": [
+          "6-hour window is extremely tight for manual reporting",
+          "Non-compliance can result in blocking of services",
+          "Automation is essential for meeting timeline"
+        ],
+        "confidence": 97
+      },
+      "critic": {
+        "agent": "Critic Agent",
+        "position": "While 6-hour reporting is mandatory, the direction allows for initial notification with details to follow. Over-reporting false positives could overwhelm CERT-In and create unnecessary regulatory scrutiny. Need threshold-based detection to filter noise.",
+        "reasoning": [
+          "CERT-In FAQ allows 'initial intimation' within 6 hours with details later",
+          "False positive reports create compliance overhead",
+          "Risk-based approach needed to prioritize genuine incidents"
+        ],
+        "confidence": 85
+      },
+      "judge": {
+        "agent": "Judge Agent",
+        "verdict": "AUTOMATED WITH HUMAN OVERSIGHT",
+        "decision": "Implement automated incident detection with severity classification. Auto-report high/critical incidents to CERT-In within 4 hours (buffer for review). Medium severity requires human confirmation within 6-hour window. Maintain detailed logs for all detections.",
+        "controlId": "CTL-CERT-INC-001",
+        "requirement": "Automated incident detection with 6-hour CERT-In reporting; severity-based escalation",
+        "reasoning": [
+          "Meets 6-hour mandate with time buffer",
+          "Reduces false positive noise through severity filtering",
+          "Maintains audit trail for regulatory defense"
+        ]
+      },
+      "consensus": true,
+      "confidence": 91,
+      "status": "approved",
+      "priority": "critical",
+      "affectedSystems": ["SIEM", "SOC Platform", "Incident Management", "Email Gateway"],
+      "complianceDeadline": "2026-01-31"
+    },
+    {
+      "id": "DEB-2026-004",
+      "timestamp": "2026-01-02T16:45:00.000Z",
+      "regulationId": "RBI/KYC/2025-26/AMD-03",
+      "regulationTitle": "RBI Video KYC Enhancement - Liveness Detection Mandate",
+      "source": "RBI KYC",
+      "sourceUrl": "https://rbi.org.in/Scripts/BS_ViewMasDirections.aspx",
+      "summary": "Amendment to Video-based Customer Identification Process (V-CIP) requiring AI-based liveness detection and deepfake prevention",
+      "proposer": {
+        "agent": "Proposer Agent",
+        "position": "RBI amendment mandates liveness detection to prevent deepfake fraud in Video KYC. Recommend immediate integration of certified liveness detection SDK and blocking all V-CIP without liveness verification.",
+        "reasoning": [
+          "Deepfake fraud in V-CIP has increased 340% in 2025",
+          "RBI circular explicitly requires 'technological measures to detect spoofing'",
+          "Non-compliant V-CIP completions will be invalidated"
+        ],
+        "confidence": 96
+      },
+      "critic": {
+        "agent": "Critic Agent",
+        "position": "While liveness detection is required, the amendment provides 90-day implementation window. Immediately blocking V-CIP would halt customer onboarding. Need phased rollout with fallback to physical KYC for edge cases.",
+        "reasoning": [
+          "90-day compliance window mentioned in circular",
+          "Physical KYC remains valid alternative",
+          "Some legitimate customers may fail liveness check (elderly, poor connectivity)"
+        ],
+        "confidence": 82
+      },
+      "judge": {
+        "agent": "Judge Agent",
+        "verdict": "PHASED IMPLEMENTATION",
+        "decision": "Phase 1 (Week 1-2): Integrate liveness SDK in shadow mode, collect metrics. Phase 2 (Week 3-6): Enable liveness with fallback to physical KYC. Phase 3 (Week 7-12): Mandatory liveness, physical KYC only for documented exceptions.",
+        "controlId": "CTL-KYC-LIVE-001",
+        "requirement": "AI-based liveness detection mandatory for V-CIP with documented exception process",
+        "reasoning": [
+          "Respects 90-day timeline",
+          "Provides fallback for edge cases",
+          "Creates audit trail for exceptions"
+        ]
+      },
+      "consensus": true,
+      "confidence": 89,
+      "status": "interpreting",
+      "priority": "high",
+      "affectedSystems": ["Video KYC Platform", "Onboarding App", "Customer Verification Service"],
+      "complianceDeadline": "2026-04-05"
+    },
+    {
+      "id": "DEB-2026-005",
+      "timestamp": "2026-01-01T10:00:00.000Z",
+      "regulationId": "NPCI/UPI/2025/LIMIT-01",
+      "regulationTitle": "NPCI UPI Transaction Limit Enhancement - High Value Payments",
+      "source": "NPCI/UPI",
+      "sourceUrl": "https://www.npci.org.in/what-we-do/upi/product-overview",
+      "summary": "NPCI circular increasing UPI transaction limit to Rs. 5 lakhs for specific categories with enhanced authentication requirements",
+      "proposer": {
+        "agent": "Proposer Agent",
+        "position": "Enhanced UPI limits require additional authentication beyond UPI PIN. Recommend implementing device binding verification, biometric confirmation, and transaction velocity checks for all high-value UPI payments.",
+        "reasoning": [
+          "Rs. 5 lakh transactions significantly increase fraud exposure",
+          "NPCI circular mandates 'additional factor of authentication'",
+          "Device binding prevents SIM swap fraud"
+        ],
+        "confidence": 88
+      },
+      "critic": {
+        "agent": "Critic Agent",
+        "position": "Over-engineering authentication will create friction and drive users to alternatives. NPCI circular mentions 'risk-based authentication' not blanket requirements. Need intelligent auth that balances security with user experience.",
+        "reasoning": [
+          "UPI success depends on frictionless experience",
+          "Trusted devices with transaction history need less auth",
+          "Risk scoring should determine auth level"
+        ],
+        "confidence": 84
+      },
+      "judge": {
+        "agent": "Judge Agent",
+        "verdict": "RISK-BASED AUTHENTICATION",
+        "decision": "Implement tiered authentication: Standard UPI PIN for transactions up to Rs. 1 lakh from trusted devices. Device binding + OTP for Rs. 1-3 lakh. Biometric + cooling period for Rs. 3-5 lakh. Real-time fraud scoring to escalate auth level dynamically.",
+        "controlId": "CTL-UPI-AUTH-001",
+        "requirement": "Risk-based authentication tiers for high-value UPI with fraud scoring integration",
+        "reasoning": [
+          "Balances security with user experience",
+          "Higher value = higher assurance level",
+          "Dynamic fraud scoring adds intelligence"
+        ]
+      },
+      "consensus": true,
+      "confidence": 87,
+      "status": "approved",
+      "priority": "medium",
+      "affectedSystems": ["UPI Gateway", "Fraud Detection", "Authentication Service", "Mobile App"],
+      "complianceDeadline": "2026-02-15"
+    }
+  ],
+  "lastUpdated": "2026-01-05T10:00:00.000Z",
+  "version": "1.0.0"
+}
