@@ -59,114 +59,56 @@ export default function DashboardPage() {
   const [lastUpdatedText, setLastUpdatedText] = useState("")
   const [lastUpdated, setLastUpdated] = useState(new Date())
 
-  // Get data from store
-  const storeFindings = store.getFindings()
-  const storeDebates = store.getDebates()
-  const storeSources = store.getSources()
-  const storeStats = store.getStats()
+  // Get data from backend
+  const [compliance, setCompliance] = useState<any>(null);
+  const [agents, setAgents] = useState<any[]>([]);
+  const [complianceTrend, setComplianceTrend] = useState<any[]>([]);
+  const [violations, setViolations] = useState<any[]>([]);
+  const [recentFindings, setRecentFindings] = useState<any[]>([]);
 
-  // Compute dashboard data from store
+  const iconMap: Record<string, any> = {
+  Watcher: Eye,
+  Interpreter: Brain,
+  Monitor: Search,
+  Remediator: Wrench,
+  Learning: BookOpen,
+};
+
+const colorMap: Record<string, string> = {
+  Watcher: "#1A1F71",
+  Interpreter: "#F7B600",
+  Monitor: "#10B981",
+  Remediator: "#F59E0B",
+  Learning: "#8B5CF6",
+};
+const agentsWithIcons = agents.map(agent => ({
+  ...agent,
+  icon: iconMap[agent.name] || Eye,
+  color: colorMap[agent.name] || "#1A1F71",
+  lastSync: agent.last_sync || agent.lastSync || '',
+}));
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/compliance").then(res => res.json()).then(setCompliance);
+    fetch("http://localhost:8000/api/system_liveness").then(res => res.json()).then(setAgents);
+    fetch("http://localhost:8000/api/compliance_trend").then(res => res.json()).then(setComplianceTrend);
+    fetch("http://localhost:8000/api/violations").then(res => res.json()).then(setViolations);
+    fetch("http://localhost:8000/api/recent_findings").then(res => res.json()).then(setRecentFindings);
+  }, []);
+
+  // Compute dashboard data from backend
   const dashboardData = useMemo(() => {
-    // Map findings to dashboard format
-    const findings: DashboardFinding[] = storeFindings.slice(0, 6).map(f => ({
-      id: f.id,
-      type: f.type,
-      source: f.source,
-      status: f.severity === "critical" ? "critical" : f.severity === "warning" ? "warning" : "success",
-      label: f.status === "open" ? "Open" : f.status === "fixing" ? "Fixing" : f.status === "reviewing" ? "Reviewing" : "Fixed",
-      timestamp: formatTimeAgo(f.timestamp)
-    }))
-
-    // Compute violation categories from findings
-    const pciCount = storeFindings.filter(f =>
-      f.requirement.toLowerCase().includes("pci") ||
-      f.type.toLowerCase().includes("card")
-    ).length
-
-    const dpdpCount = storeFindings.filter(f =>
-      f.requirement.toLowerCase().includes("dpdp") ||
-      f.type.toLowerCase().includes("aadhaar") ||
-      f.type.toLowerCase().includes("mobile")
-    ).length
-
-    const rbiCount = storeFindings.filter(f =>
-      f.requirement.toLowerCase().includes("rbi") ||
-      f.type.toLowerCase().includes("upi") ||
-      f.type.toLowerCase().includes("bank") ||
-      f.type.toLowerCase().includes("vpa")
-    ).length
-
-    const violationData = [
-      { name: "PCI DSS", value: pciCount || 2 },
-      { name: "DPDP/UIDAI", value: dpdpCount || 2 },
-      { name: "RBI/NPCI", value: rbiCount || 2 },
-    ]
-
-    // Compliance trend data (simulated for the past 5 days)
-    const baseScore = storeStats.complianceScore
-    const complianceData = [
-      { date: "Jan 1", score: Math.max(60, baseScore - 8) },
-      { date: "Jan 2", score: Math.max(60, baseScore - 5) },
-      { date: "Jan 3", score: Math.max(60, baseScore - 6) },
-      { date: "Jan 4", score: Math.max(60, baseScore - 2) },
-      { date: "Jan 5", score: baseScore },
-    ]
-
-    // Agent status based on actual store data
-    const agents: AgentStatus[] = [
-      {
-        name: "Watcher",
-        status: "active",
-        lastSync: "2 min ago",
-        items: `${storeStats.enabledSources} sources`,
-        icon: Eye,
-        color: "#1A1F71"
-      },
-      {
-        name: "Interpreter",
-        status: "active",
-        lastSync: "5 min ago",
-        items: `${storeStats.pendingDebates} pending`,
-        icon: Brain,
-        color: "#F7B600"
-      },
-      {
-        name: "Monitor",
-        status: "active",
-        lastSync: "1 min ago",
-        items: `${storeStats.totalFindings} findings`,
-        icon: Search,
-        color: "#10B981"
-      },
-      {
-        name: "Remediator",
-        status: "active",
-        lastSync: "8 min ago",
-        items: `${storeStats.fixedFindings} fixed`,
-        icon: Wrench,
-        color: "#F59E0B"
-      },
-      {
-        name: "Learning",
-        status: "active",
-        lastSync: "1 hr ago",
-        items: "92% accuracy",
-        icon: BookOpen,
-        color: "#8B5CF6"
-      },
-    ]
-
     return {
-      pciScore: storeStats.complianceScore,
-      criticalIssues: storeStats.criticalFindings,
-      atRisk: storeStats.warningFindings + storeStats.pendingDebates,
-      passingControls: storeStats.fixedFindings + storeStats.approvedDebates,
-      complianceData,
-      violationData,
-      findings,
-      agents
+      pciScore: compliance?.compliance_score ?? 0,
+      criticalIssues: compliance?.critical_issues ?? 0,
+      atRisk: compliance?.at_risk ?? 0,
+      passingControls: compliance?.passing_controls ?? 0,
+      complianceData: complianceTrend,
+      violationData: violations,
+      findings: recentFindings,
+      agents: agents
     }
-  }, [storeFindings, storeDebates, storeSources, storeStats])
+  }, [compliance, complianceTrend, violations, recentFindings, agents]);
 
   // Update timestamp on client side only to avoid hydration mismatch
   useEffect(() => {
@@ -649,7 +591,7 @@ export default function DashboardPage() {
           <h2 className="font-[family-name:var(--font-audiowide)] text-xl font-bold mb-6 pt-6 px-6">System Liveness (Continuous Operation)</h2>
           <Card className="p-6 bg-white/80 backdrop-blur mx-6 mb-6">
             <div className="space-y-4">
-              {dashboardData.agents.map((agent) => {
+              {agentsWithIcons.map((agent) => {
                 const Icon = agent.icon
                 return (
                   <div key={agent.name} className="relative p-4 bg-gradient-to-r from-white via-gray-50/50 to-white rounded-xl border hover:border-opacity-40 hover:shadow-lg transition-all duration-300 group overflow-hidden" style={{ borderColor: `${agent.color}30` }}>

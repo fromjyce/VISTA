@@ -61,7 +61,7 @@ def get_system_liveness():
         AgentStatus(name="Interpreter", status="active", last_sync="5 min ago", items="3 pending"),
         AgentStatus(name="Monitor", status="active", last_sync="1 min ago", items="10 findings"),
         AgentStatus(name="Remediator", status="active", last_sync="8 min ago", items="2 fixed"),
-        AgentStatus(name="Learning", status="active", last_sync="1 hr ago", items="92% accuracy"),
+        AgentStatus(name="Learning", status="active", last_sync="7 hr ago", items="92% accuracy"),
     ]
     return agents
 
