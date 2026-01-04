@@ -4,27 +4,6 @@
 
 **Hackathon:** VISA x Shaastra 2026 - 24 Hour AI Hackathon
 
----
-
-## LOOPHOLES IDENTIFIED & FIXED
-
-| # | Loophole in v1 | PS4 Requirement | Fix in v2 |
-|---|----------------|-----------------|-----------|
-| 1 | No "update control libraries" mechanism | Task 4.3: "update control libraries" | Added **Control Library Manager** with version control |
-| 2 | Weak adaptive behavior | "adapt behavior based on real-time environmental feedback" | Added **Adaptive Learning Engine** with feedback loops |
-| 3 | No Visa API integration | VISA Hackathon requirement | Added **Visa Risk Manager (VRM)** + **VCTC** integration |
-| 4 | Pre-coded dashboards, not "AI-generated" | Task 4.2: "AI-generated dashboards" | Added **Dynamic Dashboard Generator** using LLM |
-| 5 | No predictive behavioral insights | Task 3.2: "predictive behavioral insights" | Added **Predictive Analytics Module** |
-| 6 | No marketing/communications monitoring | Task 3.1: "marketing content, communications" | Added **Communications Scanner** |
-| 7 | Static PDF ingestion only | Task 1.3: "autonomously scanning regulatory changes" | Added **Regulatory Feed Monitor** (RSS/webhooks) |
-| 8 | Orchestrated agents (supervisor routes) | True autonomy requires self-triggering | Added **Autonomous Compliance Loop** |
-| 9 | No visible reasoning traces | Judges need to see AI thinking | Added **Live Reasoning Panel** |
-| 10 | No AML domain coverage | Task 1.1: "AML...domains" | Added **AML Rules Engine** |
-| 11 | No "conflicting controls" detection | Task 2.2: "identify conflicting or outdated controls" | Added **Control Conflict Analyzer** |
-| 12 | No systemic risk detection | Task 3.3: "identify systemic risks" | Added **Systemic Risk Correlator** |
-
----
-
 ## Table of Contents
 
 1. [Executive Summary](#1-executive-summary)
