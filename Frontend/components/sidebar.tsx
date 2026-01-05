@@ -38,7 +38,7 @@ export function Sidebar() {
           </div>
           <div>
             <span className="font-[family-name:var(--font-audiowide)] text-xl font-bold block">VISTA</span>
-            <span className="text-xs text-sidebar-primary">ComplianceGuard AI</span>
+            <span className="text-xs text-sidebar-primary">VISTA</span>
           </div>
         </Link>
 

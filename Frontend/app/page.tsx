@@ -382,11 +382,11 @@ export default function LandingPage() {
             <div className="flex flex-col items-center md:items-start">
               <div className="w-[120px] h-[120px] rounded-full bg-white flex items-center justify-center mb-4 shadow-md">
                 <Image
-                  src="/logo.png"
+                  src="/final_vista.png"
                   alt="VISTA Logo"
-                  width={140}
-                  height={140}
-                  className="rounded-full"
+                  width={75}
+                  height={75}
+                  className="items-center justify-center"
                 />
               </div>
               <h3 className="font-[family-name:var(--font-audiowide)] text-2xl font-bold mb-2">

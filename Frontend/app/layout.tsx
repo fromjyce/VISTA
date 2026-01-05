@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={audiowide.variable}>
       <head>
-        <title>ComplianceGuard AI - VISTA</title>
+        <title>VISTA</title>
         <meta name="description" content="Continuous, explainable compliance monitoring for Visa networks" />
         <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="apple-touch-icon" href="/logo.png" />

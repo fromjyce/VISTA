@@ -1,31 +1,77 @@
-# VISTA - Agentic AI-Enabled Continuous PCI/PII Compliance Platform
+# VISTA: Agentic AI-Enabled Continuous PCI/PII Compliance
 
-**Track:** RegTech | FinTech | Agentic AI | Generative AI | Risk & Compliance Automation
-
-**Hackathon:** VISA x Shaastra 2026 - 24 Hour AI Hackathon
-
-## Table of Contents
-
-1. [Executive Summary](#1-executive-summary)
-2. [PS4 Requirements - Word-for-Word Mapping](#2-ps4-requirements---word-for-word-mapping)
-3. [Core Innovation: Autonomous Compliance Loop](#3-core-innovation-autonomous-compliance-loop)
-4. [System Architecture](#4-system-architecture)
-5. [Agent Architecture - Self-Triggering Design](#5-agent-architecture---self-triggering-design)
-6. [Module Specifications](#6-module-specifications)
-7. [Visa API Integration](#7-visa-api-integration)
-8. [Live Reasoning Traces](#8-live-reasoning-traces)
-9. [Technology Stack](#9-technology-stack)
-10. [References](#10-references)
+**Team JNR**  
+Shiv Nadar University, Chennai
 
 ---
 
-## 1. Executive Summary
+## Problem
+Financial institutions face growing regulatory pressure (PCI DSS, GDPR, data-privacy laws), but compliance is still manual and point-in-time. Breaches take 197 days to identify, cost $6M+, and compliance workloads have risen 60% since 2020. Visa and partners are exposed to non-compliance, slow adaptation, and audit risk.
 
-### Solution Name: VISTA
+---
 
-### One-Line Description
+## Our Solution
+- **Autonomous, continuous compliance loop** using agentic AI
+- **AI-driven regulatory interpretation** (LLM + RAG)
+- **Automated control creation, updates, versioning** by agents
+- **Unified agent-based monitoring** across enterprise data sources
+- **Automatic audit-ready evidence generation** with reasoning traces
+- **Explainable agent reasoning** for every compliance decision
 
-> A **truly autonomous** agentic AI platform where self-triggering agents form a **continuous compliance loop**—detecting regulatory changes, scanning data, updating control libraries, and generating evidence—all without human intervention.
+---
+
+## Impact to VISA
+- Handles PCI DSS 4.0 (64+ new controls) and rapid regulatory change
+- Reduces operational burden and audit risk for Visa and clients
+- Provides real-time visibility and defensibility for compliance
+- Positions Visa as a leader in RegTech innovation
+
+---
+
+## Solution Architecture
+- **Event-driven, agent-based microservices** (Java/Spring Boot)
+- **Agents communicate via Kafka** (Watcher, Interpreter, Monitor, Remediator)
+- **Frontend:** Next.js dashboard, compliance loop, evidence export, "Ask Regulator" chat
+- **LLM:** Gemini API for regulatory interpretation, XAI, Q&A
+- **Datastore:** PostgreSQL, optional FAISS (Python RAG)
+
+---
+
+## Agent Architecture
+| Agent       | Role/Responsibility                                      | AI Used         |
+|-------------|----------------------------------------------------------|-----------------|
+| Watcher     | Polls regulations, emits events                          | No              |
+| Interpreter | Extracts controls, maps to schema                        | Gemini LLM      |
+| Monitor     | Scans data, detects violations (regex, rules)            | No              |
+| Remediator  | Masks/remediates, generates evidence, XAI explanations   | Gemini (XAI)    |
+
+All agents are autonomous, event-driven, and stateless except for required context.
+
+---
+
+## Tech Stack
+- **Backend:** Java 17+, Spring Boot, Apache Kafka
+- **Frontend:** Next.js (React), TailwindCSS
+- **Database:** PostgreSQL
+- **LLM:** Gemini API
+- **Vector Store:** FAISS (Python, optional)
+- **Infra:** Docker, docker-compose
+
+---
+
+## Demo Screens
+- **Dashboard:** Compliance score, risks, agent status
+- **Watcher:** Regulatory feed, AI debates, auto-trigger
+- **Compliance Loop:** Visual loop, live findings, remediation
+- **Ask Regulator:** Natural language Q&A, explainability
+- **Evidence Export:** PDF/JSON, audit-ready bundles
+
+---
+
+## Judge Sentence
+> “Our agents are not scripts or models — they are autonomous, event-driven services that interpret regulations, enforce deterministic compliance, and generate audit-ready evidence continuously.”
+
+---
 
 ### Key Differentiators (vs v1)
 

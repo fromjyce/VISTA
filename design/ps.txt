@@ -1,0 +1,58 @@
+Problem Statement 4: Agentic AI-Enabled Continuous  PCI/PII Compliance for 
+Financial Services Organizations 
+Track: RegTech, FinTech, Agentic AI, Generative AI, Risk & Compliance Automation 
+Objective: 
+Create an agentic AI-powered compliance platform built on autonomous, agent-
+based systems that can make decisions, plan tasks, and operate independently using 
+tools and data, without constant human supervision. The platform should pursue long-
+term compliance goals, break down complex regulatory objectives into manageable 
+steps, access multiple data sources, and adapt its behavior based on real-time 
+regulatory updates and operational feedback. 
+Description: 
+Financial services organizations operate in a dynamic regulatory environment where 
+requirements evolve rapidly across jurisdictions. Traditional compliance programs—
+largely manual and reactive—struggle to scale with regulatory volume, operational 
+complexity, and the pace of change. 
+This challenge invites participants to use Agentic AI to transform compliance operations 
+by: 
+1. Enabling autonomous regulatory (GDPR, CCPA, LGPD etc) interpretation, policy 
+mapping, and gap detection. 
+2. Deploying agent-based systems capable of monitoring large data flows—
+including transactions, customer communications, and internal documents—in 
+real time. 
+3. Allowing natural language interaction with regulations, policies, and compliance 
+findings. 
+4. Generating dynamic risk dashboards, remediation plans, and audit ready 
+evidence packages with minimal human intervention. 
+ 
+Tasks: 
+1. Regulatory Discovery and Interpretation: 
+• Identify publicly available regulatory updates, rulebooks, and supervisory 
+guidance across finance, conduct, AML, and data privacy domains. 
+• Analyze document structures, obligations, definitions, and required controls. 
+• Configure agents capable of autonomously scanning, parsing, and summarizing 
+regulatory changes. 
+2. Agentic Compliance Processing Strategy: 
+• Design an approach using autonomous agents, RAG pipelines, AI orchestration 
+layers, and large language models. 
+• Equip agents to interpret regulations, map them to internal policies, and identify 
+conflicting or outdated controls. 
+• Ensure that agents can independently operate tools (e.g., search APIs, 
+document repositories, workflow systems) to perform multi-step reasoning and 
+planning. 
+3. Continuous Monitoring, Insights, and Risk Detection: 
+• Deploy agents to monitor transactional data, marketing content, 
+communications, and operational logs in real time. 
+• Generate proactive alerts, anomaly detections, compliance risk heatmaps, and 
+predictive behavioral insights. 
+• Enable cross analysis across multiple regulatory domains to identify systemic 
+risks or overlapping obligations. 
+4. Interactive, Autonomous Compliance Assurance Platform: 
+• Build an intelligent compliance assistant that allows SMEs, auditors, and 
+regulators to query compliance findings in natural language. 
+• Create dynamic, AI-generated dashboards that visualize compliance posture, 
+regulatory mappings, agent-driven tasks, and remediation progress. 
+• Ensure agents can autonomously create evidence packages, update control 
+libraries, and recommend corrective actions—adapting behavior based on real-
+time environmental feedback. 
+ 
