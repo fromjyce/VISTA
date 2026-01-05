@@ -318,4 +318,133 @@ def ask_llm(request: Request):
 def get_chat_history():
     return chat_history[-20:]  # return last 20 messages
 
+# --- Regulatory Watcher Endpoints ---
+import random
+
+watcher_sources = [
+    {
+        "id": "src-rbi",
+        "name": "Reserve Bank of India Circulars",
+        "shortName": "RBI",
+        "enabled": True,
+        "lastCheck": None,
+        "changesDetected": 0,
+        "status": "uptodate"
+    },
+    {
+        "id": "src-dpdp",
+        "name": "DPDP Act Notifications",
+        "shortName": "DPDP",
+        "enabled": True,
+        "lastCheck": None,
+        "changesDetected": 0,
+        "status": "uptodate"
+    },
+    {
+        "id": "src-npci",
+        "name": "NPCI/UPI Guidelines",
+        "shortName": "NPCI/UPI",
+        "enabled": True,
+        "lastCheck": None,
+        "changesDetected": 0,
+        "status": "uptodate"
+    },
+    {
+        "id": "src-cert",
+        "name": "CERT-In Directions",
+        "shortName": "CERT-In",
+        "enabled": False,
+        "lastCheck": None,
+        "changesDetected": 0,
+        "status": "disabled"
+    }
+]
+
+watcher_debates = []
+
+@app.get("/api/watcher/sources")
+def get_watcher_sources():
+    return watcher_sources
+
+@app.get("/api/watcher/debates")
+def get_watcher_debates():
+    return watcher_debates
+
+@app.post("/api/watcher/run_check")
+def run_watcher_check():
+    # Simulate scan: update sources, possibly add a new debate
+    import datetime
+    now = datetime.datetime.utcnow().isoformat() + "Z"
+    for src in watcher_sources:
+        if src["enabled"]:
+            src["lastCheck"] = now
+            src["status"] = random.choice(["processing", "uptodate"])
+            src["changesDetected"] = random.randint(0, 3)
+        else:
+            src["status"] = "disabled"
+
+    # 60% chance to add a new debate
+    if random.random() > 0.4:
+        prompt = (
+            "Generate a JSON object for a new regulatory debate detected by an AI Watcher agent in India. "
+            "Fields: regulationId, regulationTitle, source, sourceUrl, summary, proposer (object with agent, position, reasoning, confidence), "
+            "critic (object with agent, position, reasoning, confidence), judge (object with agent, verdict, decision, controlId, requirement, reasoning), "
+            "consensus (bool), confidence (int), controlId, requirement, status (interpreting), priority (low/medium/high/critical), affectedSystems (list), complianceDeadline (date ISO), timestamp (ISO string). "
+            "Example: {\"regulationId\":\"RBI/2026-26/123\",...}"
+        )
+        result = call_groq(prompt)
+        try:
+            debate = json.loads(result)
+        except Exception:
+            debate = {
+                "regulationId": f"RBI/2026-26/{random.randint(100,999)}",
+                "regulationTitle": "RBI Tokenization Mandate - Card-on-File Extension",
+                "source": "RBI",
+                "sourceUrl": "https://rbi.org.in/Scripts/NotificationUser.aspx",
+                "summary": "Extension of tokenization mandate to include recurring payments and subscription services",
+                "proposer": {
+                    "agent": "Proposer Agent",
+                    "position": "All recurring payment tokens must be device-bound. Recommend blocking all non-tokenized recurring transactions immediately.",
+                    "reasoning": [
+                        "RBI circular mandates token-based processing for all CoF transactions",
+                        "Previous deadline was extended multiple times - no further extensions expected",
+                        "Penalty risk for continued non-compliance"
+                    ],
+                    "confidence": 94
+                },
+                "critic": {
+                    "agent": "Critic Agent",
+                    "position": "Device binding for recurring payments is impractical. Subscription renewals happen without user device interaction. Need server-to-server token validation.",
+                    "reasoning": [
+                        "Recurring payments are initiated by merchant, not customer device",
+                        "Device binding would break auto-renewal flows",
+                        "Industry practice allows merchant-initiated transactions with different token type"
+                    ],
+                    "confidence": 89
+                },
+                "judge": {
+                    "agent": "Judge Agent",
+                    "verdict": "PRACTICAL_IMPLEMENTATION",
+                    "decision": "Device-bound tokens for customer-initiated payments. Network tokens with merchant authentication for recurring/subscription payments. Implement audit trail for all token types.",
+                    "controlId": "CTL-RBI-TOKEN-001",
+                    "requirement": "Tokenization with device binding for interactive, network tokens for recurring payments",
+                    "reasoning": [
+                        "Balances security requirement with operational necessity",
+                        "Aligns with card network tokenization standards",
+                        "Provides clear audit trail for compliance verification"
+                    ]
+                },
+                "consensus": True,
+                "confidence": 92,
+                "controlId": "CTL-RBI-TOKEN-001",
+                "requirement": "Tokenization with device binding for interactive, network tokens for recurring payments",
+                "status": "interpreting",
+                "priority": "high",
+                "affectedSystems": ["Payment Gateway", "Subscription Service", "Token Vault"],
+                "complianceDeadline": "2026-03-31",
+                "timestamp": now
+            }
+        watcher_debates.append({"id": f"deb-{random.randint(1000,9999)}", **debate})
+    return {"sources": watcher_sources, "debates": watcher_debates}
+
 # To run the server, use: uvicorn backend-llm:app --reload

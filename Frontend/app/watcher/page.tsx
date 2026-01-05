@@ -1,6 +1,5 @@
 "use client"
 
-import { useState, useCallback } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -22,218 +21,64 @@ import {
   AlertTriangle,
   Loader2
 } from "lucide-react"
-import { useVistaStore, DebateEntry } from "@/lib/store"
+
+import { useState, useCallback, useEffect } from "react"
 
 export default function WatcherPage() {
-  const store = useVistaStore()
   const [isRunning, setIsRunning] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [expandedDebate, setExpandedDebate] = useState<string | null>(null)
   const [runningPhase, setRunningPhase] = useState<string>("")
 
-  const sources = store.getSources()
-  const debates = store.getDebates()
+  const [sources, setSources] = useState<any[]>([])
+  const [debates, setDebates] = useState<any[]>([])
+
+  // Load initial data
+  useEffect(() => {
+    const loadData = async () => {
+      const sourcesRes = await fetch("http://localhost:8000/api/watcher/sources")
+      const sourcesData = await sourcesRes.json()
+      setSources(sourcesData)
+
+      const debatesRes = await fetch("http://localhost:8000/api/watcher/debates")
+      const debatesData = await debatesRes.json()
+      // Only load pending debates on initial load
+      setDebates(debatesData.filter((d: any) => d.status === "interpreting"))
+    }
+    loadData()
+  }, [])
 
   // Simulate running compliance check
   const handleRunCheck = useCallback(async () => {
     setIsRunning(true)
-    const enabledSources = sources.filter(s => s.enabled)
 
     // Phase 1: Fetching from sources
     setRunningPhase("Initializing Watcher Agent...")
     await new Promise(r => setTimeout(r, 800))
 
-    for (const source of enabledSources) {
-      setRunningPhase(`Fetching from ${source.shortName}...`)
-      store.updateSourceStatus(source.id, "processing")
-      await new Promise(r => setTimeout(r, 600 + Math.random() * 400))
-    }
+    // Call backend run_check
+    setRunningPhase("Running AI Watcher scan...")
+    const res = await fetch("http://localhost:8000/api/watcher/run_check", { method: "POST" })
+    const data = await res.json()
 
-    // Phase 2: Analyzing changes
-    setRunningPhase("Analyzing regulatory changes...")
-    await new Promise(r => setTimeout(r, 1000))
+    // Filter out old approved/rejected debates and only add new ones
+    const newDebates = data.debates.filter((newD: any) => 
+      !debates.some(existingD => existingD.id === newD.id)
+    )
 
-    // Phase 3: AI Constitutional Debate (simulate finding a new regulation)
-    const shouldCreateDebate = Math.random() > 0.4 // 60% chance of finding something new
-
-    if (shouldCreateDebate) {
-      setRunningPhase("New regulation detected! Starting AI Constitutional Debate...")
-      await new Promise(r => setTimeout(r, 1200))
-
-      const newDebateData = generateMockDebate()
-      setRunningPhase(`PROPOSER analyzing ${newDebateData.regulationTitle}...`)
-      await new Promise(r => setTimeout(r, 1000))
-
-      setRunningPhase("CRITIC evaluating proposed interpretation...")
-      await new Promise(r => setTimeout(r, 1000))
-
-      setRunningPhase("JUDGE synthesizing final ruling...")
-      await new Promise(r => setTimeout(r, 800))
-
-      store.addDebate(newDebateData)
-    }
-
-    // Phase 4: Update all sources
-    setRunningPhase("Updating compliance ruleset...")
-    for (const source of enabledSources) {
-      const changes = Math.random() > 0.7 ? Math.floor(Math.random() * 3) + 1 : 0
-      store.updateSourceStatus(source.id, "uptodate", changes)
-    }
+    // Update sources and debates from backend
+    setSources(data.sources)
+    setDebates(prev => [...prev.filter((d: any) => d.status === "interpreting"), ...newDebates])
 
     setRunningPhase("Check complete!")
     await new Promise(r => setTimeout(r, 500))
 
     setIsRunning(false)
     setRunningPhase("")
-  }, [sources, store])
+  }, [])
 
-  // Generate India-based mock debate
-  const generateMockDebate = (): Omit<DebateEntry, "id" | "timestamp"> => {
-    const mockDebates = [
-      {
-        regulationId: `RBI/2026-26/${Date.now() % 1000}`,
-        regulationTitle: "RBI Tokenization Mandate - Card-on-File Extension",
-        source: "RBI",
-        sourceUrl: "https://rbi.org.in/Scripts/NotificationUser.aspx",
-        summary: "Extension of tokenization mandate to include recurring payments and subscription services",
-        proposer: {
-          agent: "Proposer Agent",
-          position: "All recurring payment tokens must be device-bound. Recommend blocking all non-tokenized recurring transactions immediately.",
-          reasoning: [
-            "RBI circular mandates token-based processing for all CoF transactions",
-            "Previous deadline was extended multiple times - no further extensions expected",
-            "Penalty risk for continued non-compliance"
-          ],
-          confidence: 94
-        },
-        critic: {
-          agent: "Critic Agent",
-          position: "Device binding for recurring payments is impractical. Subscription renewals happen without user device interaction. Need server-to-server token validation.",
-          reasoning: [
-            "Recurring payments are initiated by merchant, not customer device",
-            "Device binding would break auto-renewal flows",
-            "Industry practice allows merchant-initiated transactions with different token type"
-          ],
-          confidence: 89
-        },
-        judge: {
-          agent: "Judge Agent",
-          verdict: "PRACTICAL_IMPLEMENTATION",
-          decision: "Device-bound tokens for customer-initiated payments. Network tokens with merchant authentication for recurring/subscription payments. Implement audit trail for all token types.",
-          controlId: "CTL-RBI-TOKEN-001",
-          requirement: "Tokenization with device binding for interactive, network tokens for recurring payments",
-          reasoning: [
-            "Balances security requirement with operational necessity",
-            "Aligns with card network tokenization standards",
-            "Provides clear audit trail for compliance verification"
-          ]
-        },
-        consensus: true,
-        confidence: 92,
-        controlId: "CTL-RBI-TOKEN-001",
-        requirement: "Tokenization with device binding for interactive, network tokens for recurring payments",
-        status: "interpreting" as const,
-        priority: "high" as const,
-        affectedSystems: ["Payment Gateway", "Subscription Service", "Token Vault"],
-        complianceDeadline: "2026-03-31"
-      },
-      {
-        regulationId: `DPDP/2026/DPO-${Date.now() % 1000}`,
-        regulationTitle: "DPDP Act - Data Protection Officer Appointment",
-        source: "DPDP Act",
-        sourceUrl: "https://www.meity.gov.in/data-protection",
-        summary: "Significant Data Fiduciaries must appoint Data Protection Officers",
-        proposer: {
-          agent: "Proposer Agent",
-          position: "As per DPDP Act, we must immediately appoint a DPO with direct reporting to board. Block all new data processing until DPO is appointed.",
-          reasoning: [
-            "Section 10 mandates DPO for Significant Data Fiduciaries",
-            "Non-compliance can result in Rs. 250 crore penalty",
-            "DPO must be based in India"
-          ],
-          confidence: 96
-        },
-        critic: {
-          agent: "Critic Agent",
-          position: "The 'Significant Data Fiduciary' threshold is not yet defined by MeitY. Blocking processing is premature. Focus on identifying qualified candidate.",
-          reasoning: [
-            "SDF notification pending from government",
-            "Many organizations may not qualify as SDF",
-            "Current privacy officer can fulfill interim role"
-          ],
-          confidence: 85
-        },
-        judge: {
-          agent: "Judge Agent",
-          verdict: "PROACTIVE_PREPARATION",
-          decision: "Begin DPO search immediately. Designate interim privacy officer with DPO responsibilities. Document all data processing activities for future DPO review.",
-          controlId: "CTL-DPDP-DPO-001",
-          requirement: "DPO appointment preparation with interim privacy officer designation",
-          reasoning: [
-            "Proactive approach reduces compliance risk",
-            "Interim arrangement provides coverage",
-            "Documentation supports eventual DPO onboarding"
-          ]
-        },
-        consensus: true,
-        confidence: 90,
-        controlId: "CTL-DPDP-DPO-001",
-        requirement: "DPO appointment preparation with interim privacy officer designation",
-        status: "interpreting" as const,
-        priority: "high" as const,
-        affectedSystems: ["HR Systems", "Privacy Portal", "Data Governance"],
-        complianceDeadline: "2026-06-30"
-      },
-      {
-        regulationId: `NPCI/UPI/${Date.now() % 1000}`,
-        regulationTitle: "NPCI - UPI Lite X Offline Payments Enhancement",
-        source: "NPCI/UPI",
-        sourceUrl: "https://www.npci.org.in/",
-        summary: "New guidelines for offline UPI transactions with enhanced limits",
-        proposer: {
-          agent: "Proposer Agent",
-          position: "UPI Lite X allows Rs. 500 per transaction, Rs. 2000 daily limit offline. Recommend immediate implementation to capture market share.",
-          reasoning: [
-            "NPCI pushing for financial inclusion in low-connectivity areas",
-            "Competitive advantage for early adopters",
-            "Simplified merchant settlement for small transactions"
-          ],
-          confidence: 88
-        },
-        critic: {
-          agent: "Critic Agent",
-          position: "Offline transactions create reconciliation complexity. Fraud detection is limited without real-time validation. Need robust offline dispute resolution.",
-          reasoning: [
-            "Offline fraud detection is challenging",
-            "Settlement delays can impact merchants",
-            "Need secure local storage for transaction queue"
-          ],
-          confidence: 82
-        },
-        judge: {
-          agent: "Judge Agent",
-          verdict: "PHASED_ROLLOUT",
-          decision: "Phase 1: Enable for trusted merchants with good history. Phase 2: Expand to all merchants with offline fraud scoring. Implement 24-hour settlement guarantee.",
-          controlId: "CTL-UPI-OFFLINE-001",
-          requirement: "Phased UPI Lite X rollout with offline fraud detection",
-          reasoning: [
-            "Risk-based approach for new payment channel",
-            "Allows learning from initial deployment",
-            "Settlement guarantee builds merchant trust"
-          ]
-        },
-        consensus: true,
-        confidence: 86,
-        controlId: "CTL-UPI-OFFLINE-001",
-        requirement: "Phased UPI Lite X rollout with offline fraud detection",
-        status: "interpreting" as const,
-        priority: "medium" as const,
-        affectedSystems: ["UPI Gateway", "Fraud Detection", "Merchant Portal"],
-        complianceDeadline: "2026-04-30"
-      }
-    ]
-    return mockDebates[Math.floor(Math.random() * mockDebates.length)]
-  }
+  // Generate India-based mock debate (no longer used, kept for reference)
+  // const generateMockDebate = (): Omit<any, "id" | "timestamp"> => { ... }
 
   // Helper to get debate text (handles both string and object format)
   const getDebateText = (content: string | { position: string; reasoning?: string[] }): string => {
@@ -248,8 +93,9 @@ export default function WatcherPage() {
   }
 
   // Format time ago
-  const formatTimeAgo = (date: Date) => {
-    const seconds = Math.floor((Date.now() - date.getTime()) / 1000)
+  const formatTimeAgo = (date: Date | string) => {
+    const dateObj = typeof date === 'string' ? new Date(date) : date
+    const seconds = Math.floor((Date.now() - dateObj.getTime()) / 1000)
     if (seconds < 60) return "Just now"
     if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`
     if (seconds < 86400) return `${Math.floor(seconds / 3600)} hr ago`
@@ -258,16 +104,39 @@ export default function WatcherPage() {
 
   // Approve debate
   const handleApproveDebate = (id: string) => {
-    store.updateDebateStatus(id, "approved")
+    setDebates(debates.map((d: any) => d.id === id ? { ...d, status: "approved" } : d))
+    // Update corresponding source status to reflect approval
+    const debate = debates.find((d: any) => d.id === id)
+    if (debate) {
+      setSources(sources.map((s: any) => 
+        s.shortName === debate.source 
+          ? { ...s, status: "uptodate", changes: (s.changes || 0) + 1, lastCheck: new Date().toISOString() }
+          : s
+      ))
+    }
   }
 
   // Reject debate
   const handleRejectDebate = (id: string) => {
-    store.updateDebateStatus(id, "rejected")
+    setDebates(debates.map((d: any) => d.id === id ? { ...d, status: "rejected" } : d))
+    // Update corresponding source status to reflect rejection
+    const debate = debates.find((d: any) => d.id === id)
+    if (debate) {
+      setSources(sources.map((s: any) => 
+        s.shortName === debate.source 
+          ? { ...s, status: "error", changes: 0, lastCheck: new Date().toISOString() }
+          : s
+      ))
+    }
+  }
+
+  // Toggle source enabled
+  const handleToggleSource = (id: string) => {
+    setSources(sources.map((s: any) => s.id === id ? { ...s, enabled: !s.enabled } : s))
   }
 
   // Export debate log
-  const handleExportDebate = (debate: DebateEntry) => {
+  const handleExportDebate = (debate: any) => {
     const exportData = {
       ...debate,
       exportedAt: new Date().toISOString(),
@@ -377,7 +246,7 @@ export default function WatcherPage() {
                     </div>
                     <Switch
                       checked={source.enabled}
-                      onCheckedChange={() => store.toggleSource(source.id)}
+                      onCheckedChange={() => handleToggleSource(source.id)}
                     />
                   </div>
                 ))}
@@ -401,7 +270,7 @@ export default function WatcherPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {sources.filter(s => s.enabled).map((feed) => (
+                  {sources.filter((s: any) => s.enabled).map((feed: any) => (
                     <tr key={feed.id} className="hover:bg-gradient-to-r hover:from-[#1A1F71]/5 hover:to-transparent transition-colors duration-200">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
@@ -450,7 +319,7 @@ export default function WatcherPage() {
           </div>
 
           <div className="space-y-6">
-            {debates.map((debate) => (
+            {debates.filter((d: any) => d.status === "interpreting").map((debate: any) => (
               <Card
                 key={debate.id}
                 className={`relative overflow-hidden transition-all duration-300 ${
@@ -555,12 +424,12 @@ export default function WatcherPage() {
                           </p>
                           <p className="text-xs">{getDebateText(debate.proposer)}</p>
                           {typeof debate.proposer === 'object' && debate.proposer.reasoning && (
-                            <div className="mt-2 space-y-1">
-                              {debate.proposer.reasoning.map((r: string, i: number) => (
-                                <p key={i} className="text-xs text-muted-foreground">• {r}</p>
-                              ))}
-                            </div>
-                          )}
+                              <div className="mt-2 space-y-1">
+                                {debate.proposer.reasoning.map((r: string, i: number) => (
+                                  <p key={i} className="text-xs text-muted-foreground">• {r}</p>
+                                ))}
+                              </div>
+                            )}
                         </div>
 
                         {/* Critic */}
@@ -657,19 +526,19 @@ export default function WatcherPage() {
             <h3 className="font-[family-name:var(--font-audiowide)] text-lg font-bold mb-4">Watcher Statistics</h3>
             <div className="grid grid-cols-4 gap-4">
               <div className="p-4 bg-white rounded-lg border">
-                <p className="text-2xl font-bold text-[#1A1F71]">{store.getStats().totalDebates}</p>
-                <p className="text-xs text-muted-foreground">Total Debates</p>
+                <p className="text-2xl font-bold text-[#1A1F71]">{debates.filter((d: any) => d.status !== "rejected").length}</p>
+                <p className="text-xs text-muted-foreground">Active Debates</p>
               </div>
               <div className="p-4 bg-white rounded-lg border">
-                <p className="text-2xl font-bold text-[#8B5CF6]">{store.getStats().pendingDebates}</p>
+                <p className="text-2xl font-bold text-[#8B5CF6]">{debates.filter((d: any) => d.status === "interpreting").length}</p>
                 <p className="text-xs text-muted-foreground">Pending Review</p>
               </div>
               <div className="p-4 bg-white rounded-lg border">
-                <p className="text-2xl font-bold text-[#10B981]">{store.getStats().approvedDebates}</p>
+                <p className="text-2xl font-bold text-[#10B981]">{debates.filter((d: any) => d.status === "approved").length}</p>
                 <p className="text-xs text-muted-foreground">Approved</p>
               </div>
               <div className="p-4 bg-white rounded-lg border">
-                <p className="text-2xl font-bold text-[#F7B600]">{store.getStats().enabledSources}</p>
+                <p className="text-2xl font-bold text-[#F7B600]">{sources.filter((s: any) => s.enabled).length}</p>
                 <p className="text-xs text-muted-foreground">Active Sources</p>
               </div>
             </div>
