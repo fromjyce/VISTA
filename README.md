@@ -293,25 +293,7 @@ cd gateway
 mvn spring-boot:run
 ```
 
-### 5. RAG Model Setup 
-
-```bash
-cd RAG_MODEL
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure vector store and embeddings
-# Edit config.py for custom settings
-
-# Initialize vector store
-python -m vectorstore.init
-
-# Start RAG service (if standalone)
-python -m chain.serve
-```
-
-### 6. Environment Variables
+### 5. Environment Variables
 
 Create a `.env` file in `py_backend/`:
 
@@ -358,40 +340,6 @@ VISTA/
 │   ├── public/                # Static assets
 │   └── package.json
 │
-├── py_backend/                 # Python FastAPI Backend
-│   ├── main.py                # FastAPI entry point
-│   ├── config.py              # Configuration
-│   ├── agents/                # AI Agents
-│   │   ├── watcher.py         # Regulatory Watcher Agent
-│   │   ├── monitor.py         # Compliance Monitor Agent
-│   │   └── base.py            # Base agent class
-│   ├── ai/                    # AI/LLM integration
-│   │   ├── gemini.py          # Google Gemini client
-│   │   ├── debate.py          # Constitutional AI debate
-│   │   └── prompts.py         # Prompt templates
-│   ├── api/                   # API routes
-│   │   └── routes/            # Endpoint handlers
-│   ├── database/              # Database layer
-│   │   ├── db.py              # SQLite async client
-│   │   ├── models.py          # Data models
-│   │   └── schema.sql         # Database schema
-│   ├── detection/             # Compliance detection
-│   │   ├── pipeline.py        # Detection pipeline
-│   │   ├── patterns.py        # Regex patterns (PAN, Aadhaar, etc.)
-│   │   └── validators.py      # Validation logic
-│   ├── events/                # Event bus
-│   │   ├── bus.py             # Event dispatcher
-│   │   └── types.py           # Event types
-│   ├── xai/                   # Explainable AI
-│   │   ├── tracer.py          # Decision tracing
-│   │   └── export.py          # Evidence export
-│   ├── rag_code/              # RAG for chatbot
-│   │   ├── chain.py           # RAG chain
-│   │   ├── vector_store.py    # Vector database
-│   │   └── retriever.py       # Document retrieval
-│   ├── requirements.txt       # Python dependencies
-│   └── vista.db               # SQLite database
-│
 ├── vista-backend/              # Java Spring Boot Backend (Optional)
 │   ├── gateway/               # API Gateway
 │   ├── compliance-core/       # Core compliance services
@@ -400,18 +348,6 @@ VISTA/
 │   │   ├── evidence-service/  # Evidence generation
 │   │   └── audit-ledger/      # Audit logging
 │   └── pom.xml
-│
-├── RAG_MODEL/                  # RAG & LLM Integration
-│   ├── llm/                   # LLM providers (Gemini, OpenAI)
-│   ├── chain/                 # LangChain orchestration
-│   ├── retrieval/             # Document retrieval logic
-│   ├── vectorstore/           # FAISS/ChromaDB vector stores
-│   ├── embeddings/            # Sentence transformers
-│   ├── documents/             # Document loaders & processors
-│   ├── scraper/               # Web scraping for regulations
-│   ├── data/                  # Regulations & vector indices
-│   ├── config.py              # RAG configuration
-│   └── requirements.txt       # RAG dependencies
 │
 ├── docker/                     # Docker configuration
 │   └── Dockerfile.gateway
