@@ -15,8 +15,6 @@
 
 **Autonomous Agentic AI for Continuous PCI/PII Compliance**
 
-[Features](#key-features) • [Architecture](#architecture) • [Quick Start](#quick-start) • [Documentation](#documentation) • [Team](#team)
-
 </div>
 
 ---
