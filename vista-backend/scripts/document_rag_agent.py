@@ -66,17 +66,18 @@ class DocumentRAGAgent:
             set(
                 [
                     state.pages_as_base64_jpeg_images[doc.metadata["page_number"]]
-                    for doc in relevant_documents
+                    for doc in relevant_documents if "page_number" in doc.metadata
                 ]
             )
         )  # Avoid duplicates
 
-        logger.info(f"Responding to question {state.question}")
+        logger.info(f"Responding to compliance question: {state.question}")
         messages = (
             [{"mime_type": "image/jpeg", "data": base64_jpeg} for base64_jpeg in images]
             + [doc.page_content for doc in relevant_documents]
             + [
-                f"Answer this question using the context images and text elements only: {state.question}",
+                f"You are a compliance assistant for PCI DSS, DPDP Act, and similar regulations. Answer the user's question using only obligations, controls, and penalties from the indexed regulatory documents. Always cite the regulation, section, and control."
+                f" Question: {state.question}"
             ]
         )
 

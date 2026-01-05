@@ -9,23 +9,21 @@ from langgraph.graph import END, START, StateGraph
 from langgraph.types import Send
 from pydantic import BaseModel, Field
 
-from document_ai_agents.document_utils import extract_images_from_pdf
 from document_ai_agents.image_utils import pil_image_to_base64_jpeg
 from document_ai_agents.logger import logger
 from document_ai_agents.schema_utils import prepare_schema_for_gemini
 
 
-class DetectedLayoutItem(BaseModel):
-    element_type: Literal["Table", "Figure", "Image", "Text-block"] = Field(
-        ...,
-        description="Type of detected Item. Find Tables, figures and images. Use Text-Block for everything else, "
-        "be as exhaustive as possible. Return 10 Items at most.",
-    )
-    summary: str = Field(..., description="A detailed description of the layout Item.")
+class ComplianceItem(BaseModel):
+    section_title: str = Field(..., description="Section or clause title (e.g., 'Requirement 3.4.1', 'Section 8(6)')")
+    obligation: str = Field(..., description="Text of the compliance obligation or requirement.")
+    control: str = Field(..., description="Required control or safeguard (e.g., 'Encrypt PAN at rest', 'Mask Aadhaar').")
+    penalty: str = Field("", description="Penalty or consequence for non-compliance, if present.")
+    regulation: str = Field(..., description="Name of the regulation (e.g., 'PCI DSS 4.0', 'DPDP Act').")
 
 
-class LayoutElements(BaseModel):
-    layout_items: list[DetectedLayoutItem] = Field(default_factory=list)
+class ComplianceElements(BaseModel):
+    items: list[ComplianceItem] = Field(default_factory=list)
 
 
 class DocumentLayoutParsingState(BaseModel):
@@ -82,13 +80,10 @@ class DocumentParsingAgent:
             for i, base64_jpeg in enumerate(state.pages_as_base64_jpeg_images)
         ]
 
-    def find_layout_items(self, state: FindLayoutItemsInput):
-        logger.info(f"Processing page {state.page_number + 1}")
+    def find_compliance_items(self, state: FindLayoutItemsInput):
+        logger.info(f"Extracting compliance items from page {state.page_number + 1}")
         messages = [
-            f"Find and summarize all the relevant layout elements in this pdf page in the following format: "
-            f"{LayoutElements.model_json_schema()}. "
-            f"Tables should have at least two columns and at least two rows. "
-            f"The coordinates should overlap with each layout item.",
+            f"Extract all regulatory or compliance obligations, requirements, controls, and penalties from this page of a regulatory document (such as PCI DSS, DPDP, GDPR, RBI, etc.). For each, output a JSON object with: section_title, obligation, control, penalty (if present), and regulation name. Format your answer as: {ComplianceElements.model_json_schema()}.",
             {"mime_type": "image/jpeg", "data": state.base64_jpeg},
         ]
 
@@ -96,34 +91,36 @@ class DocumentParsingAgent:
         data = json.loads(result.text)
         documents = [
             Document(
-                page_content=x["summary"],
+                page_content=item["obligation"],
                 metadata={
                     "page_number": state.page_number,
-                    "element_type": x["element_type"],
+                    "section_title": item["section_title"],
+                    "control": item["control"],
+                    "penalty": item.get("penalty", ""),
+                    "regulation": item["regulation"],
                     "document_path": state.document_path,
                 },
             )
-            for x in data["layout_items"]
+            for item in data["items"]
         ]
 
-        logger.info(
-            f"Extracted {len(data['layout_items'])} layout elements from page {state.page_number + 1}."
-        )
+        logger.info(f"Extracted {len(data['items'])} compliance items from page {state.page_number + 1}.")
 
         return {"documents": documents}
 
     def build_agent(self):
         builder = StateGraph(DocumentLayoutParsingState)
         builder.add_node("get_images", self.get_images)
-        builder.add_node("find_layout_items", self.find_layout_items)
+        builder.add_node("find_compliance_items", self.find_compliance_items)
 
         builder.add_edge(START, "get_images")
         builder.add_conditional_edges("get_images", self.continue_to_find_layout_items)
-        builder.add_edge("find_layout_items", END)
+        builder.add_edge("find_compliance_items", END)
         self.graph = builder.compile()
 
 
 if __name__ == "__main__":
+    # Use a real regulatory PDF (e.g., PCI DSS 4.0, DPDP Act) in data/docs.pdf
     _state = DocumentLayoutParsingState(
         document_path=str(Path(__file__).parents[1] / "data" / "docs.pdf")
     )
@@ -132,7 +129,7 @@ if __name__ == "__main__":
 
     result_node1 = agent.get_images(_state)
     _state.pages_as_base64_jpeg_images = result_node1["pages_as_base64_jpeg_images"]
-    result_node2 = agent.find_layout_items(
+    result_node2 = agent.find_compliance_items(
         FindLayoutItemsInput(
             base64_jpeg=result_node1["pages_as_base64_jpeg_images"][0],
             page_number=0,
@@ -140,6 +137,11 @@ if __name__ == "__main__":
         )
     )
 
-    for item in result_node2["documents"]:
-        print(item.page_content)
-        print(item.metadata["element_type"])
+    for doc in result_node2["documents"]:
+        meta = doc.metadata
+        print(f"Section: {meta['section_title']}")
+        print(f"Obligation: {doc.page_content}")
+        print(f"Control: {meta['control']}")
+        print(f"Penalty: {meta['penalty']}")
+        print(f"Regulation: {meta['regulation']}")
+        print("---")

@@ -65,7 +65,7 @@ class DocumentQAAgent:
         self.build_agent()
 
     def answer_question(self, state: DocumentQAState):
-        logger.info(f"Responding to question '{state.question}'")
+        logger.info(f"Responding to compliance question '{state.question}'")
         assert (
             state.pages_as_base64_jpeg_images or state.pages_as_text
         ), "Input text or images"
@@ -80,7 +80,7 @@ class DocumentQAAgent:
                 + [{"text": state.question}]
                 + [
                     {
-                        "text": f"Use this schema for your answer: {self.answer_cot_schema}"
+                        "text": f"You are a compliance assistant for PCI DSS, DPDP Act, and similar regulations. Answer the user's question using only obligations, controls, and penalties extracted from the provided regulatory document pages. Always cite the regulation, section, and control in your answer. Provide a chain-of-thought rationale and relevant context. Use this schema for your answer: {self.answer_cot_schema}"
                     }
                 ],
             }
