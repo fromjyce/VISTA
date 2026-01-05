@@ -1,1271 +1,610 @@
-# VISTA: Agentic AI-Enabled Continuous PCI/PII Compliance
+# VISTA - Visa-aligned Intelligent System for Trust & Assurance
 
-**Team JNR**  
-Shiv Nadar University, Chennai
+<div align="center">
 
----
+[![Next.js](https://img.shields.io/badge/Next.js-16.0-black?logo=next.js)](https://nextjs.org/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.0-brightgreen?logo=spring)](https://spring.io/projects/spring-boot)
+[![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+[![LangChain](https://img.shields.io/badge/LangChain-0.1+-green?logo=chainlink)](https://langchain.com/)
+[![FAISS](https://img.shields.io/badge/FAISS-1.7.4-orange)](https://github.com/facebookresearch/faiss)
+[![Sentence Transformers](https://img.shields.io/badge/Sentence--Transformers-2.2+-yellow)](https://www.sbert.net/)
 
-## Problem
-Financial institutions face growing regulatory pressure (PCI DSS, GDPR, data-privacy laws), but compliance is still manual and point-in-time. Breaches take 197 days to identify, cost $6M+, and compliance workloads have risen 60% since 2020. Visa and partners are exposed to non-compliance, slow adaptation, and audit risk.
+**Autonomous Agentic AI for Continuous PCI/PII Compliance**
 
----
+[Features](#key-features) • [Architecture](#architecture) • [Quick Start](#quick-start) • [Documentation](#documentation) • [Team](#team)
 
-## Our Solution
-- **Autonomous, continuous compliance loop** using agentic AI
-- **AI-driven regulatory interpretation** (LLM + RAG)
-- **Automated control creation, updates, versioning** by agents
-- **Unified agent-based monitoring** across enterprise data sources
-- **Automatic audit-ready evidence generation** with reasoning traces
-- **Explainable agent reasoning** for every compliance decision
-
----
-
-## Impact to VISA
-- Handles PCI DSS 4.0 (64+ new controls) and rapid regulatory change
-- Reduces operational burden and audit risk for Visa and clients
-- Provides real-time visibility and defensibility for compliance
-- Positions Visa as a leader in RegTech innovation
+</div>
 
 ---
 
-## Solution Architecture
-- **Event-driven, agent-based microservices** (Java/Spring Boot)
-- **Agents communicate via Kafka** (Watcher, Interpreter, Monitor, Remediator)
-- **Frontend:** Next.js dashboard, compliance loop, evidence export, "Ask Regulator" chat
-- **LLM:** Gemini API for regulatory interpretation, XAI, Q&A
-- **Datastore:** PostgreSQL, optional FAISS (Python RAG)
+## Table of Contents
+
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+- [Technology Stack](#technology-stack)
+- [Quick Start](#quick-start)
+- [Project Structure](#project-structure)
+- [AI Agents](#ai-agents)
+- [RAG Model](#rag-model)
+- [API Documentation](#api-documentation)
+- [Screenshots](#screenshots)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [Team](#team)
+- [License](#license)
 
 ---
 
-## Agent Architecture
-| Agent       | Role/Responsibility                                      | AI Used         |
-|-------------|----------------------------------------------------------|-----------------|
-| Watcher     | Polls regulations, emits events                          | No              |
-| Interpreter | Extracts controls, maps to schema                        | Gemini LLM      |
-| Monitor     | Scans data, detects violations (regex, rules)            | No              |
-| Remediator  | Masks/remediates, generates evidence, XAI explanations   | Gemini (XAI)    |
+## Overview
 
-All agents are autonomous, event-driven, and stateless except for required context.
+**VISTA** is an **autonomous, agentic AI-powered compliance platform** designed for Visa's network-scale regulatory challenges. Unlike traditional compliance tools that require manual triggers, VISTA operates through a **continuous compliance loop** where AI agents autonomously detect regulatory changes, interpret obligations, scan data, remediate violations, and generate audit-ready evidence—24/7, without human intervention.
 
----
+### Built For
 
-## Tech Stack
-- **Backend:** Java 17+, Spring Boot, Apache Kafka
-- **Frontend:** Next.js (React), TailwindCSS
-- **Database:** PostgreSQL
-- **LLM:** Gemini API
-- **Vector Store:** FAISS (Python, optional)
-- **Infra:** Docker, docker-compose
+**Hackathon:** VISA × Shaastra 2026 - 24 Hour AI Hackathon  
+**Problem Statement:** PS4 - Agentic AI for Compliance Automation  
+**Team:** JNR
 
----
+### Core Innovation
 
-## Demo Screens
-- **Dashboard:** Compliance score, risks, agent status
-- **Watcher:** Regulatory feed, AI debates, auto-trigger
-- **Compliance Loop:** Visual loop, live findings, remediation
-- **Ask Regulator:** Natural language Q&A, explainability
-- **Evidence Export:** PDF/JSON, audit-ready bundles
+> **Behavioral Autonomy over Orchestration**  
+> Agents are not scripts or models—they are autonomous, event-driven services that interpret regulations, enforce deterministic compliance, and generate audit-ready evidence continuously.
 
----
-
-## Judge Sentence
-> “Our agents are not scripts or models — they are autonomous, event-driven services that interpret regulations, enforce deterministic compliance, and generate audit-ready evidence continuously.”
-
----
-
-### Key Differentiators (vs v1)
+### The Continuous Compliance Loop
 
 ```
-v1 (ORCHESTRATED)                    v2 (AUTONOMOUS)
-━━━━━━━━━━━━━━━━━━                   ━━━━━━━━━━━━━━━━━━
-
-User triggers scan                   Regulatory change detected (RSS)
-       │                                    │
-       ▼                                    ▼ (auto-trigger)
-Supervisor routes                    Interpreter re-interprets
-       │                                    │
-       ▼                                    ▼ (auto-trigger)
-Monitor scans                        Monitor re-scans affected data
-       │                                    │
-       ▼                                    ▼ (auto-trigger)
-Remediator fixes                     Control Library auto-updated
-       │                                    │
-       ▼                                    ▼ (auto-trigger)
-Report generated                     Evidence package auto-generated
-                                            │
-                                            ▼ (auto-trigger)
-                                     Visa VRM rules auto-pushed
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│   REGULATION  →  INTERPRET  →  SCAN  →  FIX  →  LEARN      │
+│       ↑                                            │        │
+│       └────────────────────────────────────────────┘        │
+│                    CONTINUOUS LOOP                          │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
 ```
+
+
 
 ---
 
-## 2. PS4 Requirements - Word-for-Word Mapping
+## Key Features
 
-### Objective Statement Mapping
+###  Autonomous AI Agents
 
-| PS4 Objective Phrase | Our Solution |
-|---------------------|--------------|
-| "agentic AI-powered compliance platform" | LangGraph multi-agent system with 5 specialized agents |
-| "autonomous, agent-based systems" | Self-triggering agents with event-driven architecture |
-| "make decisions" | Constitutional AI Debate Chamber for interpretation decisions |
-| "plan tasks" | Task Planner sub-module decomposes compliance goals |
-| "operate independently" | Autonomous Compliance Loop runs 24/7 without human triggers |
-| "without constant human supervision" | Human-in-loop only for HIGH_RISK decisions (>$100K impact) |
-| "pursue long-term compliance goals" | Goal-Oriented Agent with quarterly compliance targets |
-| "break down complex regulatory objectives into manageable steps" | Hierarchical Task Network (HTN) planner |
-| "access multiple data sources" | Unified Data Connector for DB, Files, APIs, Logs, Communications |
-| "adapt its behavior based on real-time regulatory updates" | Regulatory Feed Monitor + Adaptive Learning Engine |
-| "adapt its behavior based on...operational feedback" | Feedback Ingestion Loop + Model Fine-tuning Pipeline |
+| Agent | Purpose | Trigger | AI Used |
+|-------|---------|---------|---------|
+| **Watcher** | Monitors regulatory feeds (PCI SSC, GDPR, FinCEN, RBI, NPCI) | Every 6 hours | None (RSS polling) |
+| **Interpreter** | Debates interpretations using Constitutional AI | On new regulation | Gemini (safe) |
+| **Monitor** | Scans transactions, emails, logs for PCI/PII violations | On control update | None (deterministic) |
+| **Remediator** | Auto-generates fixes and evidence packages | On violation | Gemini (XAI only) |
+
+
+### India-Specific Compliance
+
+- **RBI Tokenization Mandates**
+- **DPDP Act (Data Protection Officer requirements)**
+- **NPCI UPI Lite X Guidelines**
+- **Aadhaar/PAN Card exposure detection**
 
 ---
 
-### Task 1: Regulatory Discovery and Interpretation
+## Architecture
 
-| Sub-Requirement | Exact PS4 Words | Solution Component | How It Works |
-|-----------------|-----------------|-------------------|--------------|
-| **1.1** | "Identify publicly available regulatory updates, rulebooks, and supervisory guidance across **finance, conduct, AML, and data privacy** domains" | **Regulatory Feed Monitor** | RSS feeds from: PCISSC, EUR-Lex, FinCEN, FCA, RBI. Covers: PCI DSS 4.0, GDPR, CCPA, LGPD, AML/BSA, FCA Conduct Rules |
-| **1.2** | "Analyze document structures, **obligations, definitions, and required controls**" | **Document Analyzer** + **Obligation Extractor** | NLP pipeline extracts: (1) OBLIGATION: "must encrypt", (2) DEFINITION: "PAN means...", (3) CONTROL: "AES-256 encryption" |
-| **1.3** | "Configure agents capable of **autonomously scanning, parsing, and summarizing** regulatory changes" | **Regulatory Watcher Agent** | Polling interval: 6 hours. Auto-parses new docs, summarizes via LLM, triggers downstream agents |
-
-#### Regulatory Feed Sources
+### High-Level System Design
 
 ```
-REGULATORY FEED MONITOR
-━━━━━━━━━━━━━━━━━━━━━━━
+┌─────────────────────────────────────────────────────────────────┐
+│                         FRONTEND (Next.js)                      │
+│  ┌──────────┬──────────┬──────────┬──────────┬──────────┐      │
+│  │Dashboard │ Watcher  │Compliance│   Ask    │  Export  │      │
+│  └──────────┴──────────┴──────────┴──────────┴──────────┘      │
+└────────────────────────┬────────────────────────────────────────┘
+                         │ REST API / WebSocket
+┌────────────────────────┴────────────────────────────────────────┐
+│                    PYTHON BACKEND (FastAPI)                     │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │                    API GATEWAY                           │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│  ┌──────────┬──────────┬──────────┬──────────┬──────────┐      │
+│  │ Watcher  │Interpret │ Monitor  │Remediate │ Learner  │      │
+│  │  Agent   │  Agent   │  Agent   │  Agent   │  Agent   │      │
+│  └──────────┴──────────┴──────────┴──────────┴──────────┘      │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │  Detection Engine | RAG Service | XAI Tracer | Events   │  │
+│  └──────────────────────────────────────────────────────────┘  │
+└────────────────────────┬────────────────────────────────────────┘
+                         │
+┌────────────────────────┴────────────────────────────────────────┐
+│                    JAVA BACKEND (Spring Boot)                   │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │  Gateway | Control Library | Compliance State | Audit    │  │
+│  └──────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+                         │
+┌────────────────────────┴────────────────────────────────────────┐
+│              DATA LAYER (SQLite + Vector Store)                 │
+│  ┌──────────┬──────────┬──────────┬──────────┬──────────┐      │
+│  │ Sources  │ Debates  │ Findings │ Controls │ Evidence │      │
+│  └──────────┴──────────┴──────────┴──────────┴──────────┘      │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-┌─────────────────────────────────────────────────────────────────────────┐
-│                         LIVE FEED SOURCES                               │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│  DATA PRIVACY                          FINANCIAL CONDUCT                │
-│  ┌─────────────────────┐               ┌─────────────────────┐          │
-│  │ GDPR Updates        │               │ FCA Handbook        │          │
-│  │ (EUR-Lex RSS)       │               │ (fca.org.uk/rss)    │          │
-│  ├─────────────────────┤               ├─────────────────────┤          │
-│  │ CCPA/CPRA Updates   │               │ SEC Guidance        │          │
-│  │ (oag.ca.gov)        │               │ (sec.gov/rss)       │          │
-│  ├─────────────────────┤               ├─────────────────────┤          │
-│  │ LGPD Updates        │               │ RBI Circulars       │          │
-│  │ (gov.br webhooks)   │               │ (rbi.org.in)        │          │
-│  └─────────────────────┘               └─────────────────────┘          │
-│                                                                         │
-│  PCI/PAYMENT SECURITY                  AML/CFT                          │
-│  ┌─────────────────────┐               ┌─────────────────────┐          │
-│  │ PCI SSC Updates     │               │ FinCEN Advisories   │          │
-│  │ (pcissc.org)        │               │ (fincen.gov/rss)    │          │
-│  ├─────────────────────┤               ├─────────────────────┤          │
-│  │ Card Scheme         │               │ FATF Guidance       │          │
-│  │ Bulletins           │               │ (fatf-gafi.org)     │          │
-│  └─────────────────────┘               └─────────────────────┘          │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-                    ┌───────────────────────────────┐
-                    │   CHANGE DETECTION ENGINE     │
-                    │                               │
-                    │  • Hash comparison (SHA-256)  │
-                    │  • Semantic diff (embeddings) │
-                    │  • Impact classification      │
-                    │                               │
-                    └───────────────────────────────┘
-                                    │
-                                    ▼ (AUTO-TRIGGER)
-                    ┌───────────────────────────────┐
-                    │   INTERPRETER AGENT           │
-                    │   (Re-analyze affected regs)  │
-                    └───────────────────────────────┘
+### Agent Communication Flow
+
+```
+┌─────────────┐
+│   WATCHER   │ Detects regulation change (RSS)
+└──────┬──────┘
+       │ Event: regulation.updated
+       ▼
+┌─────────────┐
+│ INTERPRETER │ AI Constitutional Debate
+└──────┬──────┘
+       │ Event: controls.updated
+       ▼
+┌─────────────┐
+│   MONITOR   │ Scans data with new rules
+└──────┬──────┘
+       │ Event: violation.detected
+       ▼
+┌─────────────┐
+│ REMEDIATOR  │ Masks data + generates evidence
+└──────┬──────┘
+       │ Event: evidence.generated
+       ▼
+┌─────────────┐
+│   LEARNER   │ Updates accuracy metrics
+└─────────────┘
 ```
 
 ---
 
-### Task 2: Agentic Compliance Processing Strategy
+## Technology Stack
 
-| Sub-Requirement | Exact PS4 Words | Solution Component | How It Works |
-|-----------------|-----------------|-------------------|--------------|
-| **2.1** | "Design an approach using **autonomous agents, RAG pipelines, AI orchestration layers, and large language models**" | **LangGraph** + **FAISS RAG** + **GPT-4o** | LangGraph for cyclic agent flows, FAISS for regulatory retrieval, GPT-4o for complex reasoning |
-| **2.2** | "Equip agents to interpret regulations, **map them to internal policies**, and identify **conflicting or outdated controls**" | **Policy Mapper** + **Control Conflict Analyzer** | Maps regulations → policies → controls. Detects: (1) Missing controls, (2) Outdated controls, (3) Conflicting controls |
-| **2.3** | "Ensure that agents can **independently operate tools** (e.g., search APIs, document repositories, workflow systems) to perform **multi-step reasoning and planning**" | **Tool Registry** + **HTN Planner** | Agents have tool access: RAG Search, DB Query, File Scan, Visa API, Jira/ServiceNow. HTN breaks goals into sub-tasks |
+### Frontend
 
-#### Control Conflict Detection
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **Next.js** | 16.0.10 | React framework with App Router |
+| **React** | 19.2.0 | UI library |
+| **TypeScript** | 5.0 | Type safety |
+| **Tailwind CSS** | 4.1.9 | Utility-first styling |
+| **shadcn/ui** | Latest | Component library (Radix UI) |
+| **Recharts** | 2.15.4 | Data visualization |
+| **Lucide React** | 0.454.0 | Icon library |
+| **jsPDF** | 4.0.0 | PDF generation |
+| **Zustand** | (via custom store) | State management |
 
+### Backend (Python)
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **FastAPI** | 0.109+ | High-performance API framework |
+| **Python** | 3.13 | Runtime |
+| **Uvicorn** | 0.27+ | ASGI server |
+| **Pydantic** | 2.5+ | Data validation |
+| **aiosqlite** | 0.19+ | Async SQLite |
+| **Google Gemini** | 1.0+ | AI/LLM integration |
+| **httpx** | 0.26+ | Async HTTP client |
+| **WebSockets** | 12.0 | Real-time communication |
+
+### Backend (Java - Optional)
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **Spring Boot** | 3.2.0 | Enterprise backend framework |
+| **Java** | 17 | Runtime |
+| **Spring Cloud** | 2023.0.0 | Microservices support |
+| **Maven** | 3.x | Build tool |
+
+### AI/ML & RAG
+
+- **Google Gemini API** - Constitutional AI debates, explainability
+- **LangChain** - RAG orchestration framework
+- **FAISS** - Vector similarity search
+- **Sentence Transformers** - Document embeddings (all-MiniLM-L6-v2)
+- **ChromaDB** - Alternative vector store
+
+### DevOps
+
+- **Docker** - Containerization
+- **Docker Compose** - Multi-container orchestration
+- **Git** - Version control
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+- **Node.js** 18+ and npm/pnpm
+- **Python** 3.13+
+- **Java** 17+ (optional, for Spring Boot backend)
+- **Git**
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/fromjyce/VISTA.git
+cd VISTA
 ```
-CONTROL CONFLICT ANALYZER
-━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Input: New regulation interpreted + Existing control library
+### 2. Frontend Setup
 
-Detection Types:
+```bash
+cd Frontend
+npm install
+# or
+pnpm install
 
-1. MISSING CONTROL
-   ┌─────────────────────────────────────────────────────────────┐
-   │ Regulation: PCI DSS 4.0 Req 3.4.1                           │
-   │ Requires: "Render PAN unreadable using cryptography"        │
-   │                                                             │
-   │ Control Library Check:                                      │
-   │ ❌ No control found for "PAN encryption at rest"            │
-   │                                                             │
-   │ → AUTO-ACTION: Add control CTL-2025-001 to library          │
-   └─────────────────────────────────────────────────────────────┘
+# Run development server
+npm run dev
 
-2. OUTDATED CONTROL
-   ┌─────────────────────────────────────────────────────────────┐
-   │ Existing Control: CTL-2020-015                              │
-   │ States: "Use TLS 1.0 for data in transit"                   │
-   │                                                             │
-   │ New Requirement: PCI DSS 4.0 Req 4.2.1                      │
-   │ States: "Use TLS 1.2 or higher"                             │
-   │                                                             │
-   │ → AUTO-ACTION: Deprecate CTL-2020-015, add CTL-2025-002     │
-   └─────────────────────────────────────────────────────────────┘
+# Build for production
+npm run build
+npm start
+```
 
-3. CONFLICTING CONTROLS
-   ┌─────────────────────────────────────────────────────────────┐
-   │ Control A (GDPR): CTL-2023-010                              │
-   │ States: "Delete customer data after 30 days"                │
-   │                                                             │
-   │ Control B (AML): CTL-2023-020                               │
-   │ States: "Retain transaction records for 5 years"            │
-   │                                                             │
-   │ CONFLICT DETECTED: Retention period contradiction           │
-   │                                                             │
-   │ → AUTO-ACTION: Create CTL-2025-003 with resolution:         │
-   │   "Retain transaction records 5 years, delete non-AML       │
-   │    customer PII after 30 days with data minimization"       │
-   └─────────────────────────────────────────────────────────────┘
+Frontend will be available at: **http://localhost:3000**
+
+### 3. Python Backend Setup
+
+```bash
+cd py_backend
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# Windows:
+.\venv\Scripts\Activate.ps1
+# Linux/Mac:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set up environment variables
+# Create .env file with:
+# GEMINI_API_KEY=your_api_key_here
+# HOST=localhost
+# PORT=8000
+
+# Run the server
+uvicorn main:app --reload
+```
+
+Backend API will be available at: **http://localhost:8000**  
+API Documentation: **http://localhost:8000/docs**
+
+### 4. Java Backend Setup (Optional)
+
+```bash
+cd vista-backend
+
+# Build with Maven
+mvn clean install
+
+# Run gateway service
+cd gateway
+mvn spring-boot:run
+```
+
+### 5. RAG Model Setup 
+
+```bash
+cd RAG_MODEL
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure vector store and embeddings
+# Edit config.py for custom settings
+
+# Initialize vector store
+python -m vectorstore.init
+
+# Start RAG service (if standalone)
+python -m chain.serve
+```
+
+### 6. Environment Variables
+
+Create a `.env` file in `py_backend/`:
+
+```env
+# AI Configuration
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Server Configuration
+HOST=localhost
+PORT=8000
+DEBUG=true
+
+# CORS
+CORS_ORIGINS=http://localhost:3000,http://localhost:3001
+
+# Database
+DATABASE_URL=sqlite:///./vista.db
+
+# Optional: Redis for event bus
+REDIS_URL=redis://localhost:6379
 ```
 
 ---
 
-### Task 3: Continuous Monitoring, Insights, and Risk Detection
-
-| Sub-Requirement | Exact PS4 Words | Solution Component | How It Works |
-|-----------------|-----------------|-------------------|--------------|
-| **3.1** | "Deploy agents to monitor **transactional data, marketing content, communications, and operational logs** in real time" | **Unified Data Scanner** | Scans: (1) Databases, (2) Files, (3) Emails/Chat via API, (4) Marketing PDFs/HTML, (5) Application logs |
-| **3.2** | "Generate **proactive alerts, anomaly detections, compliance risk heatmaps, and predictive behavioral insights**" | **Alert Engine** + **Anomaly Detector** + **Predictive Analytics Module** | ML-based anomaly detection, risk heatmaps, behavioral prediction using historical patterns |
-| **3.3** | "Enable **cross analysis across multiple regulatory domains** to identify **systemic risks or overlapping obligations**" | **Systemic Risk Correlator** + **Cross-Reg Mapper** | Correlates findings across PCI+GDPR+AML, identifies systemic patterns |
-
-#### Communications & Marketing Content Scanner
+## Project Structure
 
 ```
-COMMUNICATIONS SCANNER (NEW IN v2)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Data Sources:
-┌─────────────────────────────────────────────────────────────────────────┐
-│                                                                         │
-│  INTERNAL COMMUNICATIONS              MARKETING CONTENT                 │
-│  ┌─────────────────────┐               ┌─────────────────────┐          │
-│  │ Email (O365 API)    │               │ Website HTML        │          │
-│  │ • Customer emails   │               │ • Privacy policy    │          │
-│  │ • Support tickets   │               │ • Terms of service  │          │
-│  ├─────────────────────┤               ├─────────────────────┤          │
-│  │ Chat (Slack API)    │               │ Marketing PDFs      │          │
-│  │ • #support channel  │               │ • Brochures         │          │
-│  │ • Customer DMs      │               │ • Product sheets    │          │
-│  ├─────────────────────┤               ├─────────────────────┤          │
-│  │ Call Transcripts    │               │ Social Media        │          │
-│  │ (Whisper STT)       │               │ • Posts, Ads        │          │
-│  └─────────────────────┘               └─────────────────────┘          │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                       COMPLIANCE CHECKS                                  │
-│                                                                         │
-│  1. PII Exposure Check                                                  │
-│     • Credit card numbers in emails                                     │
-│     • SSN in support tickets                                            │
-│     • Customer addresses shared externally                              │
-│                                                                         │
-│  2. Marketing Compliance                                                │
-│     • GDPR consent language present?                                    │
-│     • "Unsubscribe" link in marketing emails?                           │
-│     • Accurate benefit claims? (no misleading)                          │
-│                                                                         │
-│  3. Conduct Risk                                                        │
-│     • Inappropriate advice detection                                    │
-│     • Unauthorized promises to customers                                │
-│     • Discriminatory language detection                                 │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
+VISTA/
+├── Frontend/                    # Next.js Frontend
+│   ├── app/                    # App Router pages
+│   │   ├── page.tsx           # Landing page
+│   │   ├── dashboard/         # Dashboard page
+│   │   ├── watcher/           # Regulatory Watcher page
+│   │   ├── compliance/        # Compliance Loop page
+│   │   ├── ask/               # Ask Regulator chatbot
+│   │   └── export/            # Evidence Export page
+│   ├── components/            # React components
+│   │   ├── sidebar.tsx        # Navigation sidebar
+│   │   └── ui/                # shadcn/ui components
+│   ├── lib/                   # Utilities
+│   │   ├── store.ts           # Zustand state management
+│   │   └── utils.ts           # Helper functions
+│   ├── mockdata/              # Sample data
+│   ├── public/                # Static assets
+│   └── package.json
+│
+├── py_backend/                 # Python FastAPI Backend
+│   ├── main.py                # FastAPI entry point
+│   ├── config.py              # Configuration
+│   ├── agents/                # AI Agents
+│   │   ├── watcher.py         # Regulatory Watcher Agent
+│   │   ├── monitor.py         # Compliance Monitor Agent
+│   │   └── base.py            # Base agent class
+│   ├── ai/                    # AI/LLM integration
+│   │   ├── gemini.py          # Google Gemini client
+│   │   ├── debate.py          # Constitutional AI debate
+│   │   └── prompts.py         # Prompt templates
+│   ├── api/                   # API routes
+│   │   └── routes/            # Endpoint handlers
+│   ├── database/              # Database layer
+│   │   ├── db.py              # SQLite async client
+│   │   ├── models.py          # Data models
+│   │   └── schema.sql         # Database schema
+│   ├── detection/             # Compliance detection
+│   │   ├── pipeline.py        # Detection pipeline
+│   │   ├── patterns.py        # Regex patterns (PAN, Aadhaar, etc.)
+│   │   └── validators.py      # Validation logic
+│   ├── events/                # Event bus
+│   │   ├── bus.py             # Event dispatcher
+│   │   └── types.py           # Event types
+│   ├── xai/                   # Explainable AI
+│   │   ├── tracer.py          # Decision tracing
+│   │   └── export.py          # Evidence export
+│   ├── rag_code/              # RAG for chatbot
+│   │   ├── chain.py           # RAG chain
+│   │   ├── vector_store.py    # Vector database
+│   │   └── retriever.py       # Document retrieval
+│   ├── requirements.txt       # Python dependencies
+│   └── vista.db               # SQLite database
+│
+├── vista-backend/              # Java Spring Boot Backend (Optional)
+│   ├── gateway/               # API Gateway
+│   ├── compliance-core/       # Core compliance services
+│   │   ├── control-library/   # Control definitions
+│   │   ├── compliance-state/  # State management
+│   │   ├── evidence-service/  # Evidence generation
+│   │   └── audit-ledger/      # Audit logging
+│   └── pom.xml
+│
+├── RAG_MODEL/                  # RAG & LLM Integration
+│   ├── llm/                   # LLM providers (Gemini, OpenAI)
+│   ├── chain/                 # LangChain orchestration
+│   ├── retrieval/             # Document retrieval logic
+│   ├── vectorstore/           # FAISS/ChromaDB vector stores
+│   ├── embeddings/            # Sentence transformers
+│   ├── documents/             # Document loaders & processors
+│   ├── scraper/               # Web scraping for regulations
+│   ├── data/                  # Regulations & vector indices
+│   ├── config.py              # RAG configuration
+│   └── requirements.txt       # RAG dependencies
+│
+├── docker/                     # Docker configuration
+│   └── Dockerfile.gateway
+├── docker-compose.yml          # Multi-container setup
+├── deliverables/               # Hackathon deliverables
+├── design/                     # Design documents
+├── README.md                   # Original README
+├── FINAL_README.md            # This file
+└── LICENSE
 ```
 
-#### Predictive Behavioral Insights
+---
+
+## AI Agents
+
+### 1. Watcher Agent
+
+**Purpose:** Monitors regulatory feeds for changes  
+**Trigger:** Scheduled (every 6 hours)  
+**AI Used:** None (RSS polling)
+
+**Sources Monitored:**
+- PCI SSC (Payment Card Industry Security Standards Council)
+- EUR-Lex (GDPR updates)
+- FinCEN (AML/BSA guidance)
+- RBI (Reserve Bank of India)
+- NPCI (National Payments Corporation of India)
+
+**Output:** `regulation.updated` event
+
+### 2. Interpreter Agent
+
+**Purpose:** Interprets regulations using Constitutional AI debate  
+**Trigger:** On `regulation.updated` event  
+**AI Used:** Google Gemini (safe, explainable)
+
+**Process:**
+1. **Proposer** suggests interpretation
+2. **Critic** challenges assumptions
+3. **Judge** synthesizes final ruling
+
+**Output:** `controls.updated` event with new compliance rules
+
+### 3. Monitor Agent
+
+**Purpose:** Scans data for PCI/PII violations  
+**Trigger:** On `controls.updated` or new data ingestion  
+**AI Used:** None (deterministic regex + Luhn algorithm)
+
+**Detection Patterns:**
+- Credit card numbers (PAN) - Luhn validation
+- Aadhaar numbers (12-digit UIDAI)
+- PAN cards (10-character alphanumeric)
+- UPI VPAs (virtual payment addresses)
+- Mobile numbers (unmasked)
+
+**Output:** `violation.detected` event
+
+### 4. Remediator Agent
+
+**Purpose:** Masks sensitive data and generates evidence  
+**Trigger:** On `violation.detected` event  
+**AI Used:** Google Gemini (for XAI explanations only)
+
+**Actions:**
+1. Mask sensitive data (e.g., `4532********1234`)
+2. Log decision with reasoning
+3. Generate evidence package (JSON/PDF)
+4. Push rules to Visa Risk Manager (simulated)
+
+**Output:** `evidence.generated` event
+
+### 5. Learner Agent
+
+**Purpose:** Improves detection accuracy from feedback  
+**Trigger:** On `evidence.generated` event  
+**AI Used:** Feedback loop + model fine-tuning
+
+**Metrics Tracked:**
+- Detection accuracy
+- False positive rate
+- Remediation success rate
+- Compliance score trend
+
+---
+
+## RAG Model
+
+The RAG (Retrieval-Augmented Generation) model powers the "Ask The Regulator" chatbot and provides intelligent compliance guidance.
+
+### Components
+
+| Component | Technology | Purpose |
+|-----------|-----------|---------|
+| **LLM Providers** | Google Gemini, OpenAI | Natural language understanding |
+| **Embeddings** | Sentence Transformers (all-MiniLM-L6-v2) | Document vectorization |
+| **Vector Store** | FAISS, ChromaDB | Similarity search |
+| **Orchestration** | LangChain | RAG pipeline management |
+| **Document Processing** | PyPDF, Unstructured, BeautifulSoup | Regulation parsing |
+| **Web Scraping** | Selenium, Playwright | Live regulatory feed scraping |
+
+### Configuration
+
+Key settings in `RAG_MODEL/config.py`:
+- **Embedding Model:** `sentence-transformers/all-MiniLM-L6-v2` (384 dimensions)
+- **Chunk Size:** 512 tokens with 50 token overlap
+- **Vector Store:** FAISS with cosine similarity
+- **LLM:** Google Gemini with temperature 0.7
+
+### Data Sources
+
+Regulatory documents from:
+- PCI DSS standards
+- GDPR/CCPA regulations
+- RBI circulars
+- NPCI guidelines
+- FinCEN guidance
+
+---
+
+## API Documentation
+
+### Base URL
 
 ```
-PREDICTIVE ANALYTICS MODULE (NEW IN v2)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+http://localhost:8000
+```
 
-Purpose: Predict compliance risks BEFORE they materialize
+### Key Endpoints
 
-Model Architecture:
-┌─────────────────────────────────────────────────────────────────────────┐
-│                                                                         │
-│  INPUT FEATURES                        PREDICTION TARGETS               │
-│  ┌─────────────────────┐               ┌─────────────────────┐          │
-│  │ Historical findings │               │ Risk Score (7 days) │          │
-│  │ per data source     │──────────────▶│ Probability: 0-1    │          │
-│  ├─────────────────────┤               ├─────────────────────┤          │
-│  │ Regulatory change   │               │ Likely Violations   │          │
-│  │ velocity            │──────────────▶│ [PCI_3.4, GDPR_32]  │          │
-│  ├─────────────────────┤               ├─────────────────────┤          │
-│  │ Remediation time    │               │ Remediation Effort  │          │
-│  │ patterns            │──────────────▶│ Hours: estimate     │          │
-│  ├─────────────────────┤               ├─────────────────────┤          │
-│  │ Data growth rate    │               │ Capacity Alert      │          │
-│  │                     │──────────────▶│ "Scan backlog in 3d"│          │
-│  └─────────────────────┘               └─────────────────────┘          │
-│                                                                         │
-│  Model: XGBoost Classifier + Time Series (Prophet)                      │
-│  Training: Historical compliance data (6 months)                        │
-│  Retraining: Weekly with new findings data                              │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
+#### Compliance Sources
 
-Example Prediction Output:
+```http
+GET /api/sources
+```
+
+Returns all monitored regulatory sources.
+
+#### AI Debates
+
+```http
+GET /api/debates
+POST /api/debates/{id}/approve
+POST /api/debates/{id}/reject
+```
+
+Manage AI Constitutional Debate outcomes.
+
+#### Findings
+
+```http
+GET /api/findings
+GET /api/findings/{id}
+POST /api/findings/{id}/fix
+```
+
+View and remediate compliance violations.
+
+#### Scan Data
+
+```http
+POST /api/scan
+```
+
+Manually trigger compliance scan on data.
+
+**Request Body:**
+```json
 {
-  "prediction_id": "PRED-2025-0042",
-  "generated_at": "2025-01-04T10:00:00Z",
-  "predictions": [
-    {
-      "data_source": "customer_support_emails",
-      "risk_score_7d": 0.78,
-      "likely_violations": ["GDPR_Art32", "PCI_DSS_3.4.1"],
-      "reasoning": "Support ticket volume increased 40%. Historical pattern
-                   shows PII exposure follows within 5 days.",
-      "recommended_action": "Increase scan frequency to 2x/day"
-    }
-  ]
+  "source": "customer_chat",
+  "data": "Customer PAN: ABCDE1234F, Card: 4532123456781234"
 }
 ```
 
----
+#### Statistics
 
-### Task 4: Interactive, Autonomous Compliance Assurance Platform
-
-| Sub-Requirement | Exact PS4 Words | Solution Component | How It Works |
-|-----------------|-----------------|-------------------|--------------|
-| **4.1** | "Build an intelligent compliance assistant that allows **SMEs, auditors, and regulators** to query compliance findings in **natural language**" | **Compliance Chat Assistant** | RAG-powered chat with role-based responses (SME gets technical, auditor gets evidence, regulator gets formal) |
-| **4.2** | "Create **dynamic, AI-generated dashboards** that visualize compliance posture, regulatory mappings, agent-driven tasks, and remediation progress" | **Dynamic Dashboard Generator** | LLM generates Plotly code based on user query. Dashboards are CREATED at runtime, not pre-coded |
-| **4.3** | "Ensure agents can autonomously **create evidence packages, update control libraries, and recommend corrective actions**—adapting behavior based on **real-time environmental feedback**" | **Evidence Generator** + **Control Library Manager** + **Adaptive Learning Engine** | Full autonomous loop with feedback ingestion |
-
-#### Dynamic Dashboard Generator (AI-Generated)
-
-```
-DYNAMIC DASHBOARD GENERATOR (NEW IN v2)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Problem with v1: Dashboards were pre-coded in Streamlit. PS4 says "AI-generated".
-
-Solution: LLM generates visualization code at runtime based on user request.
-
-Flow:
-┌─────────────────────────────────────────────────────────────────────────┐
-│                                                                         │
-│  User Request: "Show me a heatmap of PCI violations by department"      │
-│                                                                         │
-│                                    │                                    │
-│                                    ▼                                    │
-│  ┌─────────────────────────────────────────────────────────────────┐   │
-│  │                    DASHBOARD GENERATOR AGENT                     │   │
-│  │                                                                  │   │
-│  │  1. Parse user intent                                            │   │
-│  │  2. Query findings database                                      │   │
-│  │  3. Generate Plotly code via LLM                                 │   │
-│  │  4. Execute code safely (sandboxed)                              │   │
-│  │  5. Return visualization                                         │   │
-│  │                                                                  │   │
-│  └─────────────────────────────────────────────────────────────────┘   │
-│                                    │                                    │
-│                                    ▼                                    │
-│  Generated Code (by LLM):                                               │
-│  ┌─────────────────────────────────────────────────────────────────┐   │
-│  │  import plotly.express as px                                     │   │
-│  │  data = query_findings(regulation="PCI_DSS", group_by="dept")    │   │
-│  │  fig = px.imshow(data.pivot("dept","req","count"),               │   │
-│  │                  color_continuous_scale="Reds",                  │   │
-│  │                  title="PCI Violations by Department")           │   │
-│  │  return fig                                                      │   │
-│  └─────────────────────────────────────────────────────────────────┘   │
-│                                    │                                    │
-│                                    ▼                                    │
-│  Rendered Dashboard (truly AI-generated, not pre-coded)                 │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
+```http
+GET /api/stats
 ```
 
-#### Control Library Manager (Auto-Update)
+Returns dashboard statistics.
+
+#### WebSocket (Real-time Traces)
 
 ```
-CONTROL LIBRARY MANAGER (NEW IN v2)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Purpose: Agents autonomously ADD, UPDATE, DEPRECATE controls
-
-Control Library Schema:
-{
-  "control_id": "CTL-2025-001",
-  "version": 1,
-  "status": "active",  // active | deprecated | draft
-  "created_by": "interpreter_agent",
-  "created_at": "2025-01-04T10:30:00Z",
-
-  "regulation_source": {
-    "regulation": "PCI DSS 4.0",
-    "requirement": "3.4.1",
-    "text": "Render PAN unreadable anywhere it is stored"
-  },
-
-  "control_specification": {
-    "name": "PAN Encryption at Rest",
-    "description": "All PAN data must be encrypted using AES-256",
-    "implementation": "Database column encryption + file encryption",
-    "verification_method": "Scan for unencrypted PAN patterns"
-  },
-
-  "lifecycle": {
-    "effective_date": "2025-01-04",
-    "review_date": "2025-04-04",
-    "deprecated_date": null,
-    "superseded_by": null
-  },
-
-  "audit_trail": [
-    {
-      "action": "created",
-      "agent": "interpreter_agent",
-      "timestamp": "2025-01-04T10:30:00Z",
-      "reasoning": "New PCI DSS 4.0 requirement detected via RSS feed"
-    }
-  ]
-}
-
-Auto-Update Triggers:
-┌─────────────────────────────────────────────────────────────────────────┐
-│                                                                         │
-│  TRIGGER                           ACTION                               │
-│  ━━━━━━━                           ━━━━━━                               │
-│                                                                         │
-│  New regulation detected    ──▶    CREATE new control (draft)           │
-│                                    ──▶ Constitutional AI validates      │
-│                                    ──▶ Promote to active                │
-│                                                                         │
-│  Regulation updated         ──▶    UPDATE existing control version      │
-│                                    ──▶ Increment version number         │
-│                                    ──▶ Log change in audit_trail        │
-│                                                                         │
-│  Regulation repealed        ──▶    DEPRECATE control                    │
-│                                    ──▶ Set deprecated_date              │
-│                                    ──▶ Notify dependent policies        │
-│                                                                         │
-│  Conflict detected          ──▶    CREATE resolution control            │
-│                                    ──▶ Link conflicting controls        │
-│                                    ──▶ Flag for human review if HIGH    │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
+ws://localhost:8000/ws/traces
 ```
 
-#### Adaptive Learning Engine
-
-```
-ADAPTIVE LEARNING ENGINE (NEW IN v2)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Purpose: Agents LEARN from feedback to improve over time
-
-Feedback Sources:
-┌─────────────────────────────────────────────────────────────────────────┐
-│                                                                         │
-│  1. FALSE POSITIVE FEEDBACK                                             │
-│     User marks finding as "Not a violation"                             │
-│     ──▶ Adjust detection confidence thresholds                          │
-│     ──▶ Add to negative training examples                               │
-│                                                                         │
-│  2. REMEDIATION OUTCOME FEEDBACK                                        │
-│     Remediation marked "successful" or "failed"                         │
-│     ──▶ Update remediation recommendation ranking                       │
-│     ──▶ Prioritize successful remediation types                         │
-│                                                                         │
-│  3. INTERPRETATION CORRECTION                                           │
-│     Human corrects agent's regulation interpretation                    │
-│     ──▶ Fine-tune interpretation prompts                                │
-│     ──▶ Add to Constitutional AI training set                           │
-│                                                                         │
-│  4. SCAN RESULT VALIDATION                                              │
-│     Auditor validates/invalidates scan findings                         │
-│     ──▶ Adjust pattern matching rules                                   │
-│     ──▶ Update NER model weights                                        │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
-
-Adaptation Mechanism:
-┌─────────────────────────────────────────────────────────────────────────┐
-│                                                                         │
-│  FEEDBACK                              ADAPTATION                       │
-│     │                                                                   │
-│     ▼                                                                   │
-│  ┌─────────────────┐                                                    │
-│  │ Feedback Store  │                                                    │
-│  │ (SQLite)        │                                                    │
-│  └────────┬────────┘                                                    │
-│           │                                                             │
-│           ▼ (Batch: every 100 feedback items OR weekly)                 │
-│  ┌─────────────────┐                                                    │
-│  │ Learning Module │                                                    │
-│  │                 │                                                    │
-│  │ • Analyze       │                                                    │
-│  │   feedback      │                                                    │
-│  │   patterns      │                                                    │
-│  │                 │                                                    │
-│  │ • Update        │                                                    │
-│  │   thresholds    │──────▶  Detection Engine (confidence thresholds)   │
-│  │                 │                                                    │
-│  │ • Refine        │                                                    │
-│  │   prompts       │──────▶  Agent Prompts (few-shot examples)          │
-│  │                 │                                                    │
-│  │ • Retrain       │                                                    │
-│  │   models        │──────▶  NER Model (entity weights)                 │
-│  │                 │                                                    │
-│  └─────────────────┘                                                    │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
-```
+Streams live XAI reasoning traces.
 
 ---
 
-## 3. Core Innovation: Autonomous Compliance Loop
 
-### The "Self-Triggering" Design
 
-**Problem with v1:** Agents waited for Supervisor to route tasks. This is "orchestrated", not "autonomous".
-
-**Solution in v2:** Agents trigger EACH OTHER based on events. No central scheduler needed.
-
-```
-AUTONOMOUS COMPLIANCE LOOP
-━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-This loop runs CONTINUOUSLY (24/7) without human triggers.
-
-                    ┌─────────────────────────────────────────┐
-                    │         REGULATORY FEED MONITOR         │
-                    │                                         │
-                    │  Polls RSS feeds every 6 hours          │
-                    │  Detects: "PCI DSS 4.0.1 update"        │
-                    │                                         │
-                    └────────────────┬────────────────────────┘
-                                     │
-                                     │ EVENT: new_regulation_detected
-                                     │
-                                     ▼
-                    ┌─────────────────────────────────────────┐
-                    │          INTERPRETER AGENT              │
-                    │                                         │
-                    │  TRIGGER: Receives new_regulation event │
-                    │                                         │
-                    │  ACTIONS:                               │
-                    │  1. Parse regulatory document           │
-                    │  2. Run Constitutional AI Debate        │
-                    │  3. Extract new/updated obligations     │
-                    │  4. Update Control Library              │
-                    │                                         │
-                    │  EMITS: obligations_updated event       │
-                    │                                         │
-                    └────────────────┬────────────────────────┘
-                                     │
-                                     │ EVENT: obligations_updated
-                                     │
-                                     ▼
-                    ┌─────────────────────────────────────────┐
-                    │            MONITOR AGENT                │
-                    │                                         │
-                    │  TRIGGER: Receives obligations_updated  │
-                    │                                         │
-                    │  ACTIONS:                               │
-                    │  1. Identify affected data sources      │
-                    │  2. Re-scan with updated rules          │
-                    │  3. Generate new findings               │
-                    │  4. Calculate updated risk scores       │
-                    │                                         │
-                    │  EMITS: findings_generated event        │
-                    │                                         │
-                    └────────────────┬────────────────────────┘
-                                     │
-                                     │ EVENT: findings_generated
-                                     │
-                                     ▼
-                    ┌─────────────────────────────────────────┐
-                    │           REMEDIATOR AGENT              │
-                    │                                         │
-                    │  TRIGGER: Receives findings_generated   │
-                    │                                         │
-                    │  ACTIONS:                               │
-                    │  1. Generate remediation recommendations│
-                    │  2. Create evidence package             │
-                    │  3. Push rules to Visa VRM (if payment) │
-                    │  4. Update compliance dashboard         │
-                    │                                         │
-                    │  EMITS: remediation_complete event      │
-                    │                                         │
-                    └────────────────┬────────────────────────┘
-                                     │
-                                     │ EVENT: remediation_complete
-                                     │
-                                     ▼
-                    ┌─────────────────────────────────────────┐
-                    │          LEARNING AGENT (NEW)           │
-                    │                                         │
-                    │  TRIGGER: Receives remediation_complete │
-                    │                                         │
-                    │  ACTIONS:                               │
-                    │  1. Collect feedback metrics            │
-                    │  2. Update prediction models            │
-                    │  3. Adjust agent thresholds             │
-                    │  4. Log learning cycle                  │
-                    │                                         │
-                    │  LOOP CONTINUES...                      │
-                    │                                         │
-                    └─────────────────────────────────────────┘
-
-
-PARALLEL TRIGGERS (Can run simultaneously):
-
-┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│   Regulatory     │     │   Scheduled      │     │   User Query     │
-│   Feed Change    │     │   Scan (Daily)   │     │   (On-Demand)    │
-└────────┬─────────┘     └────────┬─────────┘     └────────┬─────────┘
-         │                        │                        │
-         └────────────────────────┼────────────────────────┘
-                                  │
-                                  ▼
-                    ┌─────────────────────────────────────────┐
-                    │           EVENT BUS (Redis)             │
-                    │                                         │
-                    │  Routes events to appropriate agents    │
-                    │  Ensures at-least-once delivery         │
-                    │  Prevents duplicate processing          │
-                    │                                         │
-                    └─────────────────────────────────────────┘
-```
-
----
-
-## 4. System Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────────┐
-│                      VISTA - System Architecture                   │
-├─────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                      │
-│  ┌────────────────────────────────────────────────────────────────────────────────┐ │
-│  │                            PRESENTATION LAYER                                   │ │
-│  │                                                                                 │ │
-│  │   ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐               │ │
-│  │   │   Chat UI       │  │   Dynamic       │  │   Reasoning     │               │ │
-│  │   │   (Role-Based)  │  │   Dashboards    │  │   Trace Panel   │               │ │
-│  │   │                 │  │   (AI-Generated)│  │   (LIVE)        │               │ │
-│  │   │ • SME View      │  │                 │  │                 │               │ │
-│  │   │ • Auditor View  │  │ • Heatmaps      │  │ • Agent logs    │               │ │
-│  │   │ • Regulator View│  │ • Trends        │  │ • Debate traces │               │ │
-│  │   └─────────────────┘  └─────────────────┘  └─────────────────┘               │ │
-│  │                                                                                 │ │
-│  │                              STREAMLIT + WebSocket                              │ │
-│  └────────────────────────────────────────────────────────────────────────────────┘ │
-│                                          │                                          │
-│                                          ▼                                          │
-│  ┌────────────────────────────────────────────────────────────────────────────────┐ │
-│  │                          EVENT-DRIVEN AGENT LAYER                               │ │
-│  │                                                                                 │ │
-│  │                         ┌─────────────────────┐                                 │ │
-│  │                         │     EVENT BUS       │                                 │ │
-│  │                         │      (Redis)        │                                 │ │
-│  │                         └──────────┬──────────┘                                 │ │
-│  │                                    │                                            │ │
-│  │   ┌────────────────────────────────┼────────────────────────────────┐          │ │
-│  │   │                                │                                │          │ │
-│  │   ▼                                ▼                                ▼          │ │
-│  │ ┌───────────────┐  ┌───────────────────────────┐  ┌───────────────┐           │ │
-│  │ │  REGULATORY   │  │       INTERPRETER         │  │    MONITOR    │           │ │
-│  │ │   WATCHER     │  │         AGENT             │  │     AGENT     │           │ │
-│  │ │               │  │                           │  │               │           │ │
-│  │ │ • RSS Polling │  │ ┌───────────────────────┐ │  │ • PII Scanner │           │ │
-│  │ │ • Change Det. │  │ │ CONSTITUTIONAL AI     │ │  │ • PCI Scanner │           │ │
-│  │ │ • Feed Parser │  │ │ DEBATE CHAMBER        │ │  │ • Comms Scan  │           │ │
-│  │ │               │  │ │                       │ │  │ • Log Scanner │           │ │
-│  │ └───────┬───────┘  │ │ Proposer → Critic →  │ │  │               │           │ │
-│  │         │          │ │ Judge                 │ │  │ • NER Model   │           │ │
-│  │         │          │ │                       │ │  │ • Validators  │           │ │
-│  │         │          │ └───────────────────────┘ │  │               │           │ │
-│  │         │          │                           │  └───────┬───────┘           │ │
-│  │         │          │ • Obligation Extractor    │          │                   │ │
-│  │         │          │ • Control Library Mgr     │          │                   │ │
-│  │         │          │ • Conflict Analyzer       │          │                   │ │
-│  │         │          └─────────────┬─────────────┘          │                   │ │
-│  │         │                        │                        │                   │ │
-│  │   ┌─────┴────────────────────────┼────────────────────────┴─────┐             │ │
-│  │   │                              │                              │             │ │
-│  │   ▼                              ▼                              ▼             │ │
-│  │ ┌───────────────┐  ┌───────────────────────────┐  ┌───────────────┐           │ │
-│  │ │  REMEDIATOR   │  │        LEARNING           │  │   DASHBOARD   │           │ │
-│  │ │    AGENT      │  │         AGENT             │  │   GENERATOR   │           │ │
-│  │ │               │  │                           │  │               │           │ │
-│  │ │ • Fix Recs    │  │ • Feedback Ingestion      │  │ • Query Parse │           │ │
-│  │ │ • Evidence Gen│  │ • Threshold Tuning        │  │ • Code Gen    │           │ │
-│  │ │ • Visa VRM    │  │ • Prediction Update       │  │ • Render      │           │ │
-│  │ │   Integration │  │ • Prompt Refinement       │  │               │           │ │
-│  │ │               │  │                           │  │               │           │ │
-│  │ └───────────────┘  └───────────────────────────┘  └───────────────┘           │ │
-│  │                                                                                 │ │
-│  │                               LangGraph Orchestration                           │ │
-│  └────────────────────────────────────────────────────────────────────────────────┘ │
-│                                          │                                          │
-│                                          ▼                                          │
-│  ┌────────────────────────────────────────────────────────────────────────────────┐ │
-│  │                            CORE SERVICES LAYER                                  │ │
-│  │                                                                                 │ │
-│  │  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐        │ │
-│  │  │    RAG    │ │  Control  │ │ Findings  │ │  Audit    │ │ Predictive│        │ │
-│  │  │  Pipeline │ │  Library  │ │   Store   │ │    Log    │ │ Analytics │        │ │
-│  │  │  (FAISS)  │ │  (SQLite) │ │ (SQLite)  │ │ (Append)  │ │  (ML)     │        │ │
-│  │  └───────────┘ └───────────┘ └───────────┘ └───────────┘ └───────────┘        │ │
-│  │                                                                                 │ │
-│  │  ┌───────────┐ ┌───────────┐ ┌───────────┐                                    │ │
-│  │  │    LLM    │ │  Feedback │ │   Visa    │                                    │ │
-│  │  │  Gateway  │ │   Store   │ │    API    │                                    │ │
-│  │  │ (GPT-4o)  │ │           │ │  Gateway  │                                    │ │
-│  │  └───────────┘ └───────────┘ └───────────┘                                    │ │
-│  │                                                                                 │ │
-│  └────────────────────────────────────────────────────────────────────────────────┘ │
-│                                          │                                          │
-│                                          ▼                                          │
-│  ┌────────────────────────────────────────────────────────────────────────────────┐ │
-│  │                          DATA INTEGRATION LAYER                                 │ │
-│  │                                                                                 │ │
-│  │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐                │ │
-│  │  │   Regulatory    │  │   Enterprise    │  │  Communications │                │ │
-│  │  │     Feeds       │  │      Data       │  │     Sources     │                │ │
-│  │  │                 │  │                 │  │                 │                │ │
-│  │  │ • PCI SSC RSS   │  │ • Databases     │  │ • O365 API      │                │ │
-│  │  │ • EUR-Lex RSS   │  │ • File Systems  │  │ • Slack API     │                │ │
-│  │  │ • FinCEN RSS    │  │ • Cloud Storage │  │ • Marketing CMS │                │ │
-│  │  │ • FCA Updates   │  │ • App Logs      │  │ • Call Transcripts│              │ │
-│  │  └─────────────────┘  └─────────────────┘  └─────────────────┘                │ │
-│  │                                                                                 │ │
-│  └────────────────────────────────────────────────────────────────────────────────┘ │
-│                                                                                      │
-└─────────────────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 5. Agent Architecture - Self-Triggering Design
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────────┐
-│                   VISTA - Self-Triggering Agent Architecture        │
-├─────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                      │
-│  EVENT FLOW (No Central Scheduler - Agents Trigger Each Other)                       │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━                        │
-│                                                                                      │
-│  ┌──────────────────────────────────────────────────────────────────────────────┐   │
-│  │                         EVENT BUS (Redis Pub/Sub)                             │   │
-│  │                                                                               │   │
-│  │  Channels:                                                                    │   │
-│  │  • regulatory_changes     • obligations_updated    • findings_generated       │   │
-│  │  • remediation_complete   • feedback_received      • dashboard_requested      │   │
-│  │                                                                               │   │
-│  └──────────────────────────────────────────────────────────────────────────────┘   │
-│       │              │              │              │              │                  │
-│       │ SUBSCRIBE    │ SUBSCRIBE    │ SUBSCRIBE    │ SUBSCRIBE    │ SUBSCRIBE       │
-│       ▼              ▼              ▼              ▼              ▼                  │
-│                                                                                      │
-│  ┌────────────┐  ┌────────────┐  ┌────────────┐  ┌────────────┐  ┌────────────┐    │
-│  │ REGULATORY │  │INTERPRETER │  │  MONITOR   │  │ REMEDIATOR │  │  LEARNING  │    │
-│  │  WATCHER   │  │   AGENT    │  │   AGENT    │  │   AGENT    │  │   AGENT    │    │
-│  │            │  │            │  │            │  │            │  │            │    │
-│  │ Listens:   │  │ Listens:   │  │ Listens:   │  │ Listens:   │  │ Listens:   │    │
-│  │ (timer)    │  │ regulatory │  │ obligations│  │ findings   │  │ remediation│    │
-│  │            │  │ _changes   │  │ _updated   │  │ _generated │  │ _complete  │    │
-│  │            │  │            │  │            │  │            │  │            │    │
-│  │ Emits:     │  │ Emits:     │  │ Emits:     │  │ Emits:     │  │ Emits:     │    │
-│  │ regulatory │  │ obligations│  │ findings   │  │ remediation│  │ thresholds │    │
-│  │ _changes   │  │ _updated   │  │ _generated │  │ _complete  │  │ _updated   │    │
-│  │            │  │            │  │            │  │            │  │            │    │
-│  └────────────┘  └────────────┘  └────────────┘  └────────────┘  └────────────┘    │
-│                                                                                      │
-│                                                                                      │
-│  AGENT INTERNALS                                                                     │
-│  ━━━━━━━━━━━━━━━                                                                     │
-│                                                                                      │
-│  ┌──────────────────────────────────────────────────────────────────────────────┐   │
-│  │                         INTERPRETER AGENT                                     │   │
-│  │                                                                               │   │
-│  │  ┌─────────────────────────────────────────────────────────────────────────┐ │   │
-│  │  │                   CONSTITUTIONAL AI DEBATE CHAMBER                       │ │   │
-│  │  │                                                                          │ │   │
-│  │  │   ┌──────────────┐      ┌──────────────┐      ┌──────────────┐          │ │   │
-│  │  │   │   PROPOSER   │      │    CRITIC    │      │    JUDGE     │          │ │   │
-│  │  │   │              │      │              │      │              │          │ │   │
-│  │  │   │ "Draft       │ ───▶ │ "Challenge   │ ───▶ │ "Synthesize  │          │ │   │
-│  │  │   │  conservative│      │  loopholes,  │      │  balanced    │          │ │   │
-│  │  │   │  policy"     │      │  over-       │      │  policy"     │          │ │   │
-│  │  │   │              │      │  restrictions│      │              │          │ │   │
-│  │  │   │              │ ◀─── │  "           │ ◀─── │              │          │ │   │
-│  │  │   │  (Iterate    │      │              │      │  (Max 3      │          │ │   │
-│  │  │   │   if needed) │      │              │      │   rounds)    │          │ │   │
-│  │  │   └──────────────┘      └──────────────┘      └──────────────┘          │ │   │
-│  │  │                                                                          │ │   │
-│  │  │   OUTPUT: Validated interpretation with reasoning trace                  │ │   │
-│  │  │                                                                          │ │   │
-│  │  └─────────────────────────────────────────────────────────────────────────┘ │   │
-│  │                                                                               │   │
-│  │  ┌─────────────────────────────────────────────────────────────────────────┐ │   │
-│  │  │                      CONTROL LIBRARY MANAGER                             │ │   │
-│  │  │                                                                          │ │   │
-│  │  │   Actions: CREATE | UPDATE | DEPRECATE | RESOLVE_CONFLICT                │ │   │
-│  │  │                                                                          │ │   │
-│  │  │   On CREATE:                                                             │ │   │
-│  │  │   1. Generate control from obligation                                    │ │   │
-│  │  │   2. Assign control_id (CTL-YYYY-NNN)                                    │ │   │
-│  │  │   3. Set status = "draft"                                                │ │   │
-│  │  │   4. Constitutional AI validates                                         │ │   │
-│  │  │   5. If validated, status = "active"                                     │ │   │
-│  │  │   6. Emit: control_created event                                         │ │   │
-│  │  │                                                                          │ │   │
-│  │  └─────────────────────────────────────────────────────────────────────────┘ │   │
-│  │                                                                               │   │
-│  └──────────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                      │
-│  ┌──────────────────────────────────────────────────────────────────────────────┐   │
-│  │                           MONITOR AGENT                                       │   │
-│  │                                                                               │   │
-│  │  Data Sources Supported:                                                      │   │
-│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐             │   │
-│  │  │ Databases   │ │ File Systems│ │ App Logs    │ │Communications│            │   │
-│  │  │ (SQL)       │ │ (CSV, JSON) │ │ (txt, json) │ │ (Email,Chat)│            │   │
-│  │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘             │   │
-│  │                                                                               │   │
-│  │  Detection Pipeline:                                                          │   │
-│  │  ┌───────────┐    ┌───────────┐    ┌───────────┐    ┌───────────┐            │   │
-│  │  │  Regex    │───▶│   NER     │───▶│ Validator │───▶│ Confidence│            │   │
-│  │  │  Engine   │    │  Model    │    │  (Luhn)   │    │  Scorer   │            │   │
-│  │  └───────────┘    └───────────┘    └───────────┘    └───────────┘            │   │
-│  │                                                                               │   │
-│  │  PII Types Detected:                                                          │   │
-│  │  • Credit Card (PAN) • CVV • SSN • Email • Phone • Names • Addresses          │   │
-│  │  • Bank Account • Passport • Driver License • Health ID                       │   │
-│  │                                                                               │   │
-│  └──────────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                      │
-│  ┌──────────────────────────────────────────────────────────────────────────────┐   │
-│  │                          REMEDIATOR AGENT                                     │   │
-│  │                                                                               │   │
-│  │  Remediation Actions:                                                         │   │
-│  │  1. Generate fix recommendations (RAG-powered)                                │   │
-│  │  2. Create evidence package (audit-ready)                                     │   │
-│  │  3. Push rules to Visa VRM (for payment violations)                           │   │
-│  │  4. Create Jira ticket (for workflow integration)                             │   │
-│  │  5. Update compliance dashboard                                               │   │
-│  │                                                                               │   │
-│  │  Evidence Package Structure:                                                  │   │
-│  │  evidence_package_YYYY-MM-DD/                                                 │   │
-│  │  ├── manifest.json                                                            │   │
-│  │  ├── executive_summary.md                                                     │   │
-│  │  ├── requirement_X.X.X/                                                       │   │
-│  │  │   ├── status.json                                                          │   │
-│  │  │   ├── findings.json                                                        │   │
-│  │  │   ├── remediation.md                                                       │   │
-│  │  │   └── reasoning_trace.json  ◀── LIVE TRACE                                │   │
-│  │  └── attestation.md                                                           │   │
-│  │                                                                               │   │
-│  └──────────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                      │
-└─────────────────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 6. Module Specifications
-
-### Module 1: Regulatory Feed Monitor (NEW)
-
-| Attribute | Specification |
-|-----------|---------------|
-| **Purpose** | Autonomously detect regulatory changes without human triggers |
-| **Feed Sources** | PCI SSC, EUR-Lex, FinCEN, FCA, OAG-CA, FATF |
-| **Polling Interval** | 6 hours |
-| **Change Detection** | SHA-256 hash comparison + semantic embedding diff |
-| **Output Event** | `regulatory_changes` → triggers Interpreter Agent |
-
-### Module 2: Constitutional AI Debate Chamber
-
-| Attribute | Specification |
-|-----------|---------------|
-| **Purpose** | Reduce hallucination through adversarial self-review |
-| **Agents** | Proposer (conservative), Critic (adversarial), Judge (balanced) |
-| **Max Rounds** | 3 iterations |
-| **Output** | Validated interpretation + reasoning trace |
-| **Confidence Metric** | Debate convergence score (0-1) |
-
-### Module 3: Control Library Manager (NEW)
-
-| Attribute | Specification |
-|-----------|---------------|
-| **Purpose** | Agents autonomously update control library |
-| **Operations** | CREATE, UPDATE, DEPRECATE, RESOLVE_CONFLICT |
-| **Version Control** | Incremental versioning with full audit trail |
-| **Auto-Triggers** | New regulation → CREATE, Regulation updated → UPDATE |
-| **Human Escalation** | Conflicts with >$100K impact flagged for review |
-
-### Module 4: Unified Data Scanner
-
-| Attribute | Specification |
-|-----------|---------------|
-| **Purpose** | Scan ALL data types mentioned in PS4 Task 3.1 |
-| **Data Types** | Transactions, Marketing, Communications, Logs |
-| **Connectors** | SQL, Files, O365, Slack, S3, REST APIs |
-| **Detection** | Regex + NER + Validators + Confidence Scoring |
-
-### Module 5: Predictive Analytics (NEW)
-
-| Attribute | Specification |
-|-----------|---------------|
-| **Purpose** | Generate "predictive behavioral insights" (PS4 3.2) |
-| **Model** | XGBoost + Prophet time series |
-| **Predictions** | 7-day risk score, likely violations, capacity alerts |
-| **Retraining** | Weekly with new findings data |
-
-### Module 6: Dynamic Dashboard Generator (NEW)
-
-| Attribute | Specification |
-|-----------|---------------|
-| **Purpose** | "AI-generated dashboards" (not pre-coded) |
-| **Mechanism** | LLM generates Plotly code from user query |
-| **Execution** | Sandboxed Python execution |
-| **Output** | Runtime-generated visualizations |
-
-### Module 7: Adaptive Learning Engine (NEW)
-
-| Attribute | Specification |
-|-----------|---------------|
-| **Purpose** | "Adapt behavior based on real-time feedback" |
-| **Feedback Sources** | False positives, remediation outcomes, interpretation corrections |
-| **Adaptations** | Threshold tuning, prompt refinement, model retraining |
-| **Batch Frequency** | Every 100 feedback items OR weekly |
-
----
-
-## 7. Visa API Integration
-
-### Why This Matters
-
-This is a **VISA hackathon**. Integration with Visa APIs demonstrates:
-1. Real-world applicability
-2. Understanding of sponsor ecosystem
-3. End-to-end compliance automation
-
-### Visa Risk Manager (VRM) Integration
-
-```
-VISA RISK MANAGER INTEGRATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-When VISTA detects a payment-related violation:
-
-1. DETECTION
-   Monitor Agent finds: "PAN exposed in transaction log"
-   Regulation: PCI DSS 3.4.1
-
-2. RULE GENERATION
-   Remediator Agent generates VRM rule:
-   {
-     "rule_id": "VRM-CG-2025-001",
-     "condition": "transaction.log.contains_pan == true",
-     "action": "BLOCK",
-     "alert_level": "HIGH"
-   }
-
-3. API CALL
-   POST /visariskmanager/v1/rules
-   Authorization: Bearer {visa_api_token}
-   Body: {rule_json}
-
-4. CONFIRMATION
-   VRM rule deployed to Visa network
-   Transactions matching rule will be flagged/blocked
-
-Flow Diagram:
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│  VISTA    │     │   Visa API      │     │  Visa Network   │
-│  Remediator     │────▶│   Gateway       │────▶│  (VRM Active)   │
-│  Agent          │     │                 │     │                 │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-```
-
-### Visa Transaction Controls (VCTC) Integration
-
-```
-VISA TRANSACTION CONTROLS INTEGRATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-When user feedback is needed for data cleanup:
-
-1. ANOMALY DETECTED
-   Monitor Agent finds: "Merchant name 'XYZ123 Corp' is unclear"
-
-2. VCTC NOTIFICATION
-   Push notification to cardholder via VCTC:
-   "We noticed a charge from 'XYZ123 Corp'. Is this correct?"
-
-3. USER RESPONSE
-   User confirms: "Yes, this is Starbucks"
-
-4. DATA CLEANUP
-   Learning Agent updates merchant mapping:
-   XYZ123 Corp → Starbucks
-
-This "human-in-the-loop" cleans data at the source.
-```
-
----
-
-## 8. Live Reasoning Traces
-
-### Purpose
-
-Judges need to SEE the AI thinking in real-time. This demonstrates true autonomy and transparency.
-
-### Implementation
-
-```
-LIVE REASONING TRACE PANEL
-━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-┌─────────────────────────────────────────────────────────────────────────┐
-│                      LIVE AGENT REASONING                               │
-│                      (WebSocket Real-Time Feed)                          │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│  [10:30:15] REGULATORY_WATCHER                                          │
-│  ├─ Polling EUR-Lex RSS feed...                                         │
-│  ├─ Detected change: GDPR Amendment 2025/001                            │
-│  └─ Emitting event: regulatory_changes                                  │
-│                                                                         │
-│  [10:30:16] INTERPRETER_AGENT                                           │
-│  ├─ Received: regulatory_changes event                                  │
-│  ├─ Loading document: GDPR_Amendment_2025_001.pdf                       │
-│  ├─ Starting Constitutional AI Debate...                                │
-│  │                                                                      │
-│  │  ┌─ PROPOSER [10:30:17]                                              │
-│  │  │  "New amendment requires explicit consent for biometric           │
-│  │  │   data. Propose blocking ALL biometric collection until           │
-│  │  │   consent mechanism implemented."                                 │
-│  │  │                                                                   │
-│  │  ├─ CRITIC [10:30:18]                                                │
-│  │  │  "Over-restriction. Amendment allows 'legitimate interest'        │
-│  │  │   exception for security purposes. Blocking ALL biometric         │
-│  │  │   would disable fraud detection systems."                         │
-│  │  │                                                                   │
-│  │  └─ JUDGE [10:30:19]                                                 │
-│  │     "RULING: Block consumer-facing biometric collection.             │
-│  │      Allow internal fraud detection biometrics under                 │
-│  │      legitimate interest with documentation requirement."            │
-│  │                                                                      │
-│  ├─ Debate converged in 1 round. Confidence: 0.94                       │
-│  ├─ Updating Control Library...                                         │
-│  │   - CREATE: CTL-2025-047 (Biometric Consent Control)                 │
-│  │   - UPDATE: CTL-2023-015 (Fraud Detection - add documentation)       │
-│  └─ Emitting event: obligations_updated                                 │
-│                                                                         │
-│  [10:30:20] MONITOR_AGENT                                               │
-│  ├─ Received: obligations_updated event                                 │
-│  ├─ Identifying affected data sources...                                │
-│  ├─ Re-scanning: customer_biometrics_table                              │
-│  ├─ Findings: 2 new violations detected                                 │
-│  └─ Emitting event: findings_generated                                  │
-│                                                                         │
-│  [10:30:22] REMEDIATOR_AGENT                                            │
-│  ├─ Received: findings_generated event                                  │
-│  ├─ Generating remediation for finding F-2025-0089                      │
-│  ├─ Creating evidence package...                                        │
-│  ├─ Pushing rule to Visa VRM (biometric transaction flag)               │
-│  └─ Dashboard updated. Compliance score: 94 → 91                        │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
-```
-
-### Technical Implementation
-
-```
-WebSocket Server (FastAPI):
-
-@app.websocket("/ws/reasoning")
-async def reasoning_websocket(websocket: WebSocket):
-    await websocket.accept()
-
-    # Subscribe to reasoning channel
-    pubsub = redis.pubsub()
-    pubsub.subscribe("agent_reasoning")
-
-    for message in pubsub.listen():
-        if message["type"] == "message":
-            await websocket.send_json({
-                "timestamp": datetime.now().isoformat(),
-                "agent": message["data"]["agent"],
-                "step": message["data"]["step"],
-                "content": message["data"]["content"]
-            })
-
-Agent Logging (in each agent):
-
-def log_reasoning(self, step: str, content: str):
-    redis.publish("agent_reasoning", json.dumps({
-        "agent": self.name,
-        "step": step,
-        "content": content
-    }))
-```
-
----
-
-## 9. Technology Stack
-
-### Core Stack
-
-| Layer | Component | Technology | Purpose |
-|-------|-----------|------------|---------|
-| **Orchestration** | Agent Framework | LangGraph | Cyclic workflows, event-driven agents |
-| **Event Bus** | Message Broker | Redis Pub/Sub | Agent-to-agent communication |
-| **AI/ML** | LLM (Primary) | GPT-4o-mini | Cost-effective reasoning |
-| **AI/ML** | LLM (Complex) | GPT-4o | Judge decisions, complex queries |
-| **AI/ML** | Embeddings | sentence-transformers/all-MiniLM-L6-v2 | Vector embeddings |
-| **AI/ML** | NER | spaCy (en_core_web_sm) | Named entity extraction |
-| **AI/ML** | Prediction | XGBoost + Prophet | Behavioral predictions |
-| **Storage** | Vector Store | FAISS | Similarity search |
-| **Storage** | Control Library | SQLite | Version-controlled controls |
-| **Storage** | Findings | SQLite | Scan results |
-| **Storage** | Feedback | SQLite | Learning data |
-| **Frontend** | Dashboard | Streamlit | Rapid UI |
-| **Frontend** | Live Traces | WebSocket | Real-time reasoning |
-| **Integration** | Visa APIs | REST | VRM, VCTC integration |
-
-### Dependencies
-
-```
-# Core Framework
-langchain>=0.1.0
-langgraph>=0.0.20
-langchain-openai>=0.0.5
-
-# Event Bus
-redis>=5.0.0
-
-# Vector Store & Embeddings
-faiss-cpu>=1.7.4
-sentence-transformers>=2.2.2
-
-# NLP
-spacy>=3.7.0
-
-# ML/Prediction
-xgboost>=2.0.0
-prophet>=1.1.0
-
-# Web Framework
-streamlit>=1.30.0
-fastapi>=0.109.0
-uvicorn>=0.27.0
-websockets>=12.0
-
-# Data Processing
-pandas>=2.0.0
-numpy>=1.24.0
-
-# Document Processing
-pypdf>=3.17.0
-beautifulsoup4>=4.12.0
-feedparser>=6.0.0  # RSS parsing
-
-# Communication APIs
-O365>=2.0.0  # Microsoft 365
-slack-sdk>=3.0.0
-
-# Utilities
-python-dotenv>=1.0.0
-pydantic>=2.5.0
-
-# Visualization
-plotly>=5.18.0
-```
-
----
-
-## 10. References
-
-### Regulatory Sources
-
-| Reference | URL | Domain |
-|-----------|-----|--------|
-| PCI Security Standards Council | https://www.pcisecuritystandards.org/ | PCI DSS |
-| EUR-Lex | https://eur-lex.europa.eu/ | GDPR |
-| California AG | https://oag.ca.gov/privacy/ccpa | CCPA |
-| FinCEN | https://www.fincen.gov/ | AML/BSA |
-| FCA Handbook | https://www.handbook.fca.org.uk/ | Conduct |
-| FATF | https://www.fatf-gafi.org/ | AML |
-
-### Technical References
-
-| Reference | URL | Usage |
-|-----------|-----|-------|
-| LangGraph | https://langchain-ai.github.io/langgraph/ | Agent orchestration |
-| Constitutional AI Paper | https://arxiv.org/abs/2212.08073 | Debate chamber design |
-| Visa Developer Portal | https://developer.visa.com/ | API integration |
-| Visa Risk Manager | https://developer.visa.com/capabilities/vrm | VRM API |
-
-### Industry Statistics
-
-| Statistic | Value | Source |
-|-----------|-------|--------|
-| Avg. data breach cost (financial) | $6.08M | IBM 2024 |
-| Time to identify breach | 197 days | IBM 2024 |
-| Compliance hours increase | 61% since 2020 | BPI Survey |
-| RegTech market by 2035 | $115.5B | Globe Newswire |
-
----
-
-## Summary: PS4 Requirements Coverage (v2 Fixed)
-
-| PS4 Requirement | v1 Status | v2 Status | Solution Component |
-|-----------------|-----------|-----------|-------------------|
-| Autonomous regulatory interpretation | Partial | **FIXED** | Constitutional AI + RSS Feeds |
-| Policy mapping and gap detection | Done | Done | Policy Mapper |
-| Monitor transactional data | Done | Done | Unified Scanner |
-| Monitor **marketing content** | **MISSING** | **FIXED** | Communications Scanner |
-| Monitor **communications** | **MISSING** | **FIXED** | O365/Slack Integration |
-| Monitor operational logs | Done | Done | Log Scanner |
-| Proactive alerts | Done | Done | Alert Engine |
-| Anomaly detections | Partial | Done | Anomaly Detector |
-| Compliance risk heatmaps | Done | Done | Dashboard |
-| **Predictive behavioral insights** | **MISSING** | **FIXED** | Predictive Analytics Module |
-| Cross-regulatory analysis | Partial | Done | Systemic Risk Correlator |
-| **Systemic risks** detection | **MISSING** | **FIXED** | Systemic Risk Correlator |
-| NL query compliance findings | Done | Done | Chat Interface |
-| **AI-generated dashboards** | **WEAK** | **FIXED** | Dynamic Dashboard Generator |
-| Visualize agent-driven tasks | Partial | Done | Live Reasoning Panel |
-| Remediation progress | Done | Done | Dashboard |
-| **Create evidence packages** | Done | Done | Evidence Generator |
-| **Update control libraries** | **MISSING** | **FIXED** | Control Library Manager |
-| Recommend corrective actions | Done | Done | Remediator Agent |
-| **Adapt based on real-time feedback** | **WEAK** | **FIXED** | Adaptive Learning Engine |
-| **Visa API integration** | **MISSING** | **FIXED** | VRM + VCTC Integration |
-| **Self-triggering agents** | **NO** | **FIXED** | Event Bus Architecture |
-| **Live reasoning traces** | **NO** | **FIXED** | WebSocket Panel |
-
----
-
-**Document Version:** 2.0 (Fixed)
-**Last Updated:** January 4, 2025
-**Prepared for:** VISA x Shaastra 2026 - 24 Hour AI Hackathon
