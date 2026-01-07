@@ -1,218 +1,202 @@
-# VISTA - Visa-aligned Intelligent System for Trust & Assurance
-
 <div align="center">
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.0-black?logo=next.js)](https://nextjs.org/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.0-brightgreen?logo=spring)](https://spring.io/projects/spring-boot)
-[![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react)](https://reactjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
-[![LangChain](https://img.shields.io/badge/LangChain-0.1+-green?logo=chainlink)](https://langchain.com/)
-[![FAISS](https://img.shields.io/badge/FAISS-1.7.4-orange)](https://github.com/facebookresearch/faiss)
-[![Sentence Transformers](https://img.shields.io/badge/Sentence--Transformers-2.2+-yellow)](https://www.sbert.net/)
+<table border="0" cellspacing="0" cellpadding="0" style="border: none;">
+<tr>
+<td align="left" width="120" style="padding-right: 20px; border: none;">
+<img src="design\Vista Logo.png" alt="VISTA Logo" width="100"/>
+</td>
+<td align="left" style="border: none; background: #1A1F71; padding: 20px 40px; border-radius: 8px;">
+<h1 style="color: white; margin: 0; font-size: 36px; font-weight: bold;">VISTA</h1>
+<h3 style="color: #F7B600; margin: 5px 0 0 0; font-size: 18px; font-weight: normal;">Visa-aligned Intelligent System for Trust & Assurance</h3>
+</td>
+</tr>
+</table>
+
 
 **Autonomous Agentic AI for Continuous PCI/PII Compliance**
+
+
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-brightgreen?logo=spring)](https://spring.io/projects/spring-boot)
+[![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js)](https://nextjs.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Python](https://img.shields.io/badge/Python-blue?logo=python)](https://www.python.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![LangChain](https://img.shields.io/badge/LangChain-green?logo=chainlink)](https://langchain.com/)
+[![FAISS](https://img.shields.io/badge/FAISS-orange)](https://github.com/facebookresearch/faiss)
+[![Gemini](https://img.shields.io/badge/Gemini-blue?logo=google)](https://deepmind.google/technologies/gemini/)
+
+
+**VISA × Shaastra 2026 | PS4 - Agentic AI for Compliance Automation | Team JNR**
 
 </div>
 
 ---
 
-## Table of Contents
+## The Problem
 
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Architecture](#architecture)
-- [Technology Stack](#technology-stack)
-- [Quick Start](#quick-start)
-- [Project Structure](#project-structure)
-- [AI Agents](#ai-agents)
-- [RAG Model](#rag-model)
-- [API Documentation](#api-documentation)
-- [Screenshots](#screenshots)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [Team](#team)
-- [License](#license)
+**Indian FinTechs face a compliance perfect storm:**
+
+| Regulatory Body | Challenge | Update Frequency |
+|----------------|-----------|------------------|
+| **RBI** | Data localization, tokenization mandates | Weekly circulars |
+| **DPDP Act** | Consent requirements, data protection officers | New legislation |
+| **PCI DSS** | 64 new requirements, continuous monitoring | Annual updates |
+| **CERT-In** | 6-hour incident reporting, 180-day log retention | Urgent mandates |
+| **NPCI** | UPI security, transaction monitoring | Regular updates |
+
+**Traditional compliance teams are drowning:**
+-  Manual regulation tracking across 10+ regulatory bodies
+-  Excel spreadsheets to scan for PAN/Aadhaar exposure
+-  48-72 hours to detect a single PCI violation
+-  2-3 weeks to prepare audit evidence packages
+-  40-60% false positive rates in detection tools
+
 
 ---
 
-## Overview
+## The Solution: VISTA
 
-**VISTA** is an **autonomous, agentic AI-powered compliance platform** designed for Visa's network-scale regulatory challenges. Unlike traditional compliance tools that require manual triggers, VISTA operates through a **continuous compliance loop** where AI agents autonomously detect regulatory changes, interpret obligations, scan data, remediate violations, and generate audit-ready evidence—24/7, without human intervention.
-
-### Built For
-
-**Hackathon:** VISA × Shaastra 2026 - 24 Hour AI Hackathon  
-**Problem Statement:** PS4 - Agentic AI for Compliance Automation  
-**Team:** JNR
+**VISTA** is an autonomous, agentic AI-powered compliance platform designed for Visa's network-scale regulatory challenges. Unlike traditional compliance tools that require manual triggers, VISTA operates through a continuous compliance loop where AI agents autonomously detect regulatory changes, interpret obligations, scan data, remediate violations, and generate audit-ready evidence 24/7, without human intervention.
 
 ### Core Innovation
 
 > **Behavioral Autonomy over Orchestration**  
-> Agents are not scripts or models—they are autonomous, event-driven services that interpret regulations, enforce deterministic compliance, and generate audit-ready evidence continuously.
+> Agents aren't scripts or models, they're autonomous, event-driven services that interpret regulations, enforce deterministic compliance, and generate audit-ready evidence continuously.
+
+## Architecture
 
 ### The Continuous Compliance Loop
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│   REGULATION  →  INTERPRET  →  SCAN  →  FIX  →  LEARN      │
-│       ↑                                            │        │
-│       └────────────────────────────────────────────┘        │
-│                    CONTINUOUS LOOP                          │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│                                                                  │
+│    REGULATION  →  INTERPRET  →  SCAN  →  FIX  →  LEARN         │
+│         ↑                                            ↓           │
+│         └────────────────────────────────────────────┘           │
+│                      CONTINUOUS LOOP                             │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
+### System Design
 
+<div align="center">
+<img src="design\Vista.png"/>
+</div>
+
+
+### Agent Flow
+
+<div align="center">
+<img src="design\Vista_agents.png"/>
+</div>
 
 ---
 
-## Key Features
+## AI Agents 
 
-###  Autonomous AI Agents
+### Autonomous Agent Architecture
 
-| Agent | Purpose | Trigger | AI Used |
-|-------|---------|---------|---------|
-| **Watcher** | Monitors regulatory feeds (PCI SSC, GDPR, FinCEN, RBI, NPCI) | Every 6 hours | None (RSS polling) |
-| **Interpreter** | Debates interpretations using Constitutional AI | On new regulation | Gemini (safe) |
-| **Monitor** | Scans transactions, emails, logs for PCI/PII violations | On control update | None (deterministic) |
-| **Remediator** | Auto-generates fixes and evidence packages | On violation | Gemini (XAI only) |
+<table>
+<tr>
+<th width="25%"> Watcher Agent</th>
+<th width="25%"> Interpreter Agent</th>
+<th width="25%"> Monitor Agent</th>
+<th width="25%"> Remediator Agent</th>
+</tr>
+<tr>
+<td valign="top">
 
+**Monitors regulatory feeds** (PCI SSC, RBI, NPCI, DPDP Act)
 
-### India-Specific Compliance
+**Trigger:** Every 6 hours
 
-- **RBI Tokenization Mandates**
-- **DPDP Act (Data Protection Officer requirements)**
-- **NPCI UPI Lite X Guidelines**
-- **Aadhaar/PAN Card exposure detection**
+**Tech:** Deterministic RSS/web scraping
 
----
+**Output:** `regulation.updated` event
 
-## Architecture
+</td>
+<td valign="top">
 
-### High-Level System Design
+**Interprets regulations** via Constitutional AI debate (Proposer → Critic → Judge)
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         FRONTEND (Next.js)                      │
-│  ┌──────────┬──────────┬──────────┬──────────┬──────────┐      │
-│  │Dashboard │ Watcher  │Compliance│   Ask    │  Export  │      │
-│  └──────────┴──────────┴──────────┴──────────┴──────────┘      │
-└────────────────────────┬────────────────────────────────────────┘
-                         │ REST API / WebSocket
-┌────────────────────────┴────────────────────────────────────────┐
-│                    PYTHON BACKEND (FastAPI)                     │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │                    API GATEWAY                           │  │
-│  └──────────────────────────────────────────────────────────┘  │
-│  ┌──────────┬──────────┬──────────┬──────────┬──────────┐      │
-│  │ Watcher  │Interpret │ Monitor  │Remediate │ Learner  │      │
-│  │  Agent   │  Agent   │  Agent   │  Agent   │  Agent   │      │
-│  └──────────┴──────────┴──────────┴──────────┴──────────┘      │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  Detection Engine | RAG Service | XAI Tracer | Events   │  │
-│  └──────────────────────────────────────────────────────────┘  │
-└────────────────────────┬────────────────────────────────────────┘
-                         │
-┌────────────────────────┴────────────────────────────────────────┐
-│                    JAVA BACKEND (Spring Boot)                   │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  Gateway | Control Library | Compliance State | Audit    │  │
-│  └──────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-                         │
-┌────────────────────────┴────────────────────────────────────────┐
-│              DATA LAYER (SQLite + Vector Store)                 │
-│  ┌──────────┬──────────┬──────────┬──────────┬──────────┐      │
-│  │ Sources  │ Debates  │ Findings │ Controls │ Evidence │      │
-│  └──────────┴──────────┴──────────┴──────────┴──────────┘      │
-└─────────────────────────────────────────────────────────────────┘
-```
+**Trigger:** On regulation change
 
-### Agent Communication Flow
+**Tech:** Google Gemini 2.5 Flash
 
-```
-┌─────────────┐
-│   WATCHER   │ Detects regulation change (RSS)
-└──────┬──────┘
-       │ Event: regulation.updated
-       ▼
-┌─────────────┐
-│ INTERPRETER │ AI Constitutional Debate
-└──────┬──────┘
-       │ Event: controls.updated
-       ▼
-┌─────────────┐
-│   MONITOR   │ Scans data with new rules
-└──────┬──────┘
-       │ Event: violation.detected
-       ▼
-┌─────────────┐
-│ REMEDIATOR  │ Masks data + generates evidence
-└──────┬──────┘
-       │ Event: evidence.generated
-       ▼
-┌─────────────┐
-│   LEARNER   │ Updates accuracy metrics
-└─────────────┘
-```
+**Output:** `controls.updated` event
+
+**Impact:** 80% ↓ hallucination
+
+</td>
+<td valign="top">
+
+**Detects PCI/PII violations** via 6-stage pipeline (Pattern → Validation → Context → Confidence → Mapping → Masking)
+
+**Trigger:** On new data
+
+**Tech:** Regex + Luhn/Verhoeff + Gemini context
+
+**Output:** `violation.detected` event
+
+**Precision:** 99.5%
+
+</td>
+<td valign="top">
+
+**Auto-remediates violations** (Mask → Policy Update → XAI Trace → Evidence PDF)
+
+**Trigger:** On violation
+
+**Tech:** Gemini (XAI only)
+
+**Masking:** Card `****-0366`, Aadhaar `****-7842`, PAN `AB***4F`
+
+**Output:** `evidence.generated` event
+
+</td>
+</tr>
+</table>
 
 ---
 
-## Technology Stack
+### RAG-Powered Compliance Assistant
 
-### Frontend
+<table>
+<tr>
+<td width="50%" valign="top">
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **Next.js** | 16.0.10 | React framework with App Router |
-| **React** | 19.2.0 | UI library |
-| **TypeScript** | 5.0 | Type safety |
-| **Tailwind CSS** | 4.1.9 | Utility-first styling |
-| **shadcn/ui** | Latest | Component library (Radix UI) |
-| **Recharts** | 2.15.4 | Data visualization |
-| **Lucide React** | 0.454.0 | Icon library |
-| **jsPDF** | 4.0.0 | PDF generation |
-| **Zustand** | (via custom store) | State management |
+**Architecture Components**
 
-### Backend (Python)
+| Layer | Technology |
+|-------|-----------|
+| **LLM** | Google Gemini 2.5 Flash |
+| **Embeddings** | Sentence Transformers (384-dim) |
+| **Vector Store** | FAISS (cosine similarity) |
+| **Orchestration** | LangChain |
+| **Processing** | PyPDF, Unstructured |
+| **Scraping** | Selenium, Playwright |
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **FastAPI** | 0.109+ | High-performance API framework |
-| **Python** | 3.13 | Runtime |
-| **Uvicorn** | 0.27+ | ASGI server |
-| **Pydantic** | 2.5+ | Data validation |
-| **aiosqlite** | 0.19+ | Async SQLite |
-| **Google Gemini** | 1.0+ | AI/LLM integration |
-| **httpx** | 0.26+ | Async HTTP client |
-| **WebSockets** | 12.0 | Real-time communication |
+</td>
+<td width="50%" valign="top">
 
-### Backend (Java - Optional)
+**Configuration & Sources**
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **Spring Boot** | 3.2.0 | Enterprise backend framework |
-| **Java** | 17 | Runtime |
-| **Spring Cloud** | 2023.0.0 | Microservices support |
-| **Maven** | 3.x | Build tool |
+- **Chunk Size:** 512 tokens (50 overlap)
+- **Retrieval:** MMR (diversity + relevance)
+- **Reranking:** Cross-encoder boosting
 
-### AI/ML & RAG
+**Indexed Data:**
+- PCI DSS v4.0 (250+ controls)
+- DPDP Act 2023, RBI Circulars
+- UIDAI, CERT-In, NPCI Guidelines
 
-- **Google Gemini API** - Constitutional AI debates, explainability
-- **LangChain** - RAG orchestration framework
-- **FAISS** - Vector similarity search
-- **Sentence Transformers** - Document embeddings (all-MiniLM-L6-v2)
-- **ChromaDB** - Alternative vector store
+**Purpose:** Answers compliance queries with cited regulatory sources (no hallucination)
 
-### DevOps
+</td>
+</tr>
+</table>
 
-- **Docker** - Containerization
-- **Docker Compose** - Multi-container orchestration
-- **Git** - Version control
 
 ---
 
@@ -220,12 +204,12 @@
 
 ### Prerequisites
 
-- **Node.js** 18+ and npm/pnpm
-- **Python** 3.13+
-- **Java** 17+ (optional, for Spring Boot backend)
+- **Node.js** and npm/pnpm
+- **Python**
+- **Java** (for Spring Boot backend)
 - **Git**
 
-### 1. Clone the Repository
+### 1. Clone Repository
 
 ```bash
 git clone https://github.com/fromjyce/VISTA.git
@@ -236,19 +220,16 @@ cd VISTA
 
 ```bash
 cd Frontend
-npm install
-# or
-pnpm install
+npm install  # or pnpm install
 
 # Run development server
 npm run dev
 
 # Build for production
-npm run build
-npm start
+npm run build && npm start
 ```
 
-Frontend will be available at: **http://localhost:3000**
+Frontend: **http://localhost:3000**
 
 ### 3. Python Backend Setup
 
@@ -258,29 +239,42 @@ cd py_backend
 # Create virtual environment
 python -m venv venv
 
-# Activate virtual environment
-# Windows:
+# Activate (Windows)
 .\venv\Scripts\Activate.ps1
-# Linux/Mac:
+# Activate (Linux/Mac)
 source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Set up environment variables
-# Create .env file with:
-# GEMINI_API_KEY=your_api_key_here
-# HOST=localhost
-# PORT=8000
+# Create .env file
+echo "GEMINI_API_KEY=your_api_key_here" > .env
+echo "HOST=localhost" >> .env
+echo "PORT=8000" >> .env
 
-# Run the server
+# Run server
 uvicorn main:app --reload
 ```
 
-Backend API will be available at: **http://localhost:8000**  
-API Documentation: **http://localhost:8000/docs**
+Backend API: **http://localhost:8000**  
+API Docs: **http://localhost:8000/docs**
 
-### 4. Java Backend Setup (Optional)
+### 4. RAG Model Setup
+
+```bash
+cd RAG_MODEL
+pip install -r requirements.txt
+
+# Index regulatory documents
+python main.py index
+
+# Start RAG API server
+python main.py api --port 8080
+```
+
+RAG API: **http://localhost:8080**
+
+### 5. Java Backend
 
 ```bash
 cd vista-backend
@@ -293,252 +287,150 @@ cd gateway
 mvn spring-boot:run
 ```
 
-### 5. Environment Variables
+---
 
-Create a `.env` file in `py_backend/`:
+## Technology Stack
 
-```env
-# AI Configuration
-GEMINI_API_KEY=your_gemini_api_key_here
+### Frontend Layer
 
-# Server Configuration
-HOST=localhost
-PORT=8000
-DEBUG=true
+| Technology | Purpose |
+|------------|---------|
+| **Next.js** | React framework with App Router |
+| **React** | UI library |
+| **TypeScript** | Type safety |
+| **Tailwind CSS** | Utility-first styling |
+| **shadcn/ui** | Component library (Radix UI primitives) |
+| **Recharts** | Data visualization |
+| **Lucide React** | Icon library |
+| **jsPDF** | PDF evidence generation |
+| **Zustand** | Lightweight state management |
 
-# CORS
-CORS_ORIGINS=http://localhost:3000,http://localhost:3001
+### Python Backend
 
-# Database
-DATABASE_URL=sqlite:///./vista.db
+| Technology | Purpose |
+|------------|---------|
+| **FastAPI** | High-performance async API framework |
+| **Python** | Runtime |
+| **Uvicorn** | ASGI server |
+| **Pydantic** | Data validation and serialization |
+| **aiosqlite** | Async SQLite database |
+| **Google Gemini** | LLM integration (Constitutional AI) |
+| **httpx** | Async HTTP client |
+| **WebSockets** | Real-time communication |
 
-# Optional: Redis for event bus
-REDIS_URL=redis://localhost:6379
-```
+### AI/ML & RAG
+
+| Technology | Purpose |
+|-----------|---------|
+| **Google Gemini** | Constitutional AI debates, XAI explanations |
+| **LangChain** | RAG orchestration and chain management |
+| **FAISS** | Vector similarity search (Facebook AI) |
+| **Sentence Transformers** | Document embeddings |
+| **ChromaDB** | Alternative vector store |
+| **PyPDF** | PDF document parsing |
+| **Unstructured** | Structured data extraction |
+| **BeautifulSoup** | HTML parsing for web scraping |
+| **Selenium/Playwright** | Dynamic web scraping |
+
+### Java Backend 
+
+| Technology | Purpose |
+|------------|---------|
+| **Spring Boot** | Enterprise backend framework |
+| **Java** | Runtime |
+| **Apache Kafka** | Event-driven messaging |
+| **Spring Cloud** | Microservices support |
+| **Maven** | Build tool |
+| **PostgreSQL** | Relational database |
+
+### DevOps & Infrastructure
+
+- **Docker** - Containerization
+- **Docker Compose** - Multi-container orchestration
+- **Git** - Version control
+- **Ansible** (for policy deployment)
 
 ---
 
-## Project Structure
+##  Project Structure
 
 ```
 VISTA/
 ├── Frontend/                    # Next.js Frontend
 │   ├── app/                    # App Router pages
 │   │   ├── page.tsx           # Landing page
-│   │   ├── dashboard/         # Dashboard page
-│   │   ├── watcher/           # Regulatory Watcher page
-│   │   ├── compliance/        # Compliance Loop page
-│   │   ├── ask/               # Ask Regulator chatbot
-│   │   └── export/            # Evidence Export page
+│   │   ├── dashboard/         # Compliance dashboard
+│   │   ├── watcher/           # Regulatory watcher
+│   │   ├── compliance/        # Continuous compliance loop
+│   │   ├── ask/               # RAG-powered chatbot
+│   │   └── export/            # Evidence export
 │   ├── components/            # React components
-│   │   ├── sidebar.tsx        # Navigation sidebar
+│   │   ├── sidebar.tsx        # Navigation
 │   │   └── ui/                # shadcn/ui components
-│   ├── lib/                   # Utilities
-│   │   ├── store.ts           # Zustand state management
+│   ├── lib/
+│   │   ├── store.ts           # Zustand state
 │   │   └── utils.ts           # Helper functions
-│   ├── mockdata/              # Sample data
-│   ├── public/                # Static assets
-│   └── package.json
+│   └── public/
+│       └── logo.png           # VISTA logo
 │
-├── vista-backend/              # Java Spring Boot Backend (Optional)
+├── py_backend/                 # Python FastAPI Backend
+│   ├── agents/                # AI Agents
+│   │   ├── watcher.py
+│   │   ├── interpreter.py
+│   │   ├── monitor.py
+│   │   └── remediator.py
+│   ├── detection/             # Detection Engine
+│   │   ├── patterns.py        # Regex patterns
+│   │   ├── validators.py      # Luhn/Verhoeff
+│   │   ├── context.py         # LLM context analysis
+│   │   └── confidence.py      # Multi-factor scoring
+│   ├── xai/                   # Explainability
+│   │   ├── tracer.py          # Reasoning chains
+│   │   └── evidence.py        # Evidence generation
+│   ├── api/                   # REST API
+│   │   ├── routes.py
+│   │   └── websocket.py
+│   ├── database/              # Database layer
+│   │   ├── models.py
+│   │   └── repository.py
+│   └── events/                # Event bus
+│       └── bus.py
+│
+├── RAG_MODEL/                  # RAG System
+│   ├── scraper/               # Regulatory scrapers
+│   │   ├── rbi_scraper.py
+│   │   ├── pci_scraper.py
+│   │   └── dpdp_scraper.py
+│   ├── vectorstore/           # FAISS integration
+│   ├── retrieval/             # Retrieval + reranking
+│   ├── chain/                 # LangChain Q&A chains
+│   ├── llm/                   # Gemini integration
+│   └── data/
+│       ├── regulations/       # Scraped documents
+│       └── vectorstore/       # FAISS index
+│
+├── vista-backend/              # Java Spring Boot (Optional)
 │   ├── gateway/               # API Gateway
-│   ├── compliance-core/       # Core compliance services
-│   │   ├── control-library/   # Control definitions
+│   ├── compliance-core/       # Core services
+│   │   ├── control-library/   # Compliance controls
 │   │   ├── compliance-state/  # State management
-│   │   ├── evidence-service/  # Evidence generation
 │   │   └── audit-ledger/      # Audit logging
 │   └── pom.xml
 │
 ├── docker/                     # Docker configuration
-│   └── Dockerfile.gateway
-├── docker-compose.yml          # Multi-container setup
 ├── deliverables/               # Hackathon deliverables
-├── design/                     # Design documents
-├── README.md                   # Original README
-├── FINAL_README.md            # This file
+├── README.md                   # This file
 └── LICENSE
 ```
 
 ---
 
-## AI Agents
+##  Demo Snapshots
 
-### 1. Watcher Agent
+![alt text](design/demo1.png)
 
-**Purpose:** Monitors regulatory feeds for changes  
-**Trigger:** Scheduled (every 6 hours)  
-**AI Used:** None (RSS polling)
-
-**Sources Monitored:**
-- PCI SSC (Payment Card Industry Security Standards Council)
-- EUR-Lex (GDPR updates)
-- FinCEN (AML/BSA guidance)
-- RBI (Reserve Bank of India)
-- NPCI (National Payments Corporation of India)
-
-**Output:** `regulation.updated` event
-
-### 2. Interpreter Agent
-
-**Purpose:** Interprets regulations using Constitutional AI debate  
-**Trigger:** On `regulation.updated` event  
-**AI Used:** Google Gemini (safe, explainable)
-
-**Process:**
-1. **Proposer** suggests interpretation
-2. **Critic** challenges assumptions
-3. **Judge** synthesizes final ruling
-
-**Output:** `controls.updated` event with new compliance rules
-
-### 3. Monitor Agent
-
-**Purpose:** Scans data for PCI/PII violations  
-**Trigger:** On `controls.updated` or new data ingestion  
-**AI Used:** None (deterministic regex + Luhn algorithm)
-
-**Detection Patterns:**
-- Credit card numbers (PAN) - Luhn validation
-- Aadhaar numbers (12-digit UIDAI)
-- PAN cards (10-character alphanumeric)
-- UPI VPAs (virtual payment addresses)
-- Mobile numbers (unmasked)
-
-**Output:** `violation.detected` event
-
-### 4. Remediator Agent
-
-**Purpose:** Masks sensitive data and generates evidence  
-**Trigger:** On `violation.detected` event  
-**AI Used:** Google Gemini (for XAI explanations only)
-
-**Actions:**
-1. Mask sensitive data (e.g., `4532********1234`)
-2. Log decision with reasoning
-3. Generate evidence package (JSON/PDF)
-4. Push rules to Visa Risk Manager (simulated)
-
-**Output:** `evidence.generated` event
-
-### 5. Learner Agent
-
-**Purpose:** Improves detection accuracy from feedback  
-**Trigger:** On `evidence.generated` event  
-**AI Used:** Feedback loop + model fine-tuning
-
-**Metrics Tracked:**
-- Detection accuracy
-- False positive rate
-- Remediation success rate
-- Compliance score trend
+![alt text](design/demo2.png)
 
 ---
-
-## RAG Model
-
-The RAG (Retrieval-Augmented Generation) model powers the "Ask The Regulator" chatbot and provides intelligent compliance guidance.
-
-### Components
-
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **LLM Providers** | Google Gemini, OpenAI | Natural language understanding |
-| **Embeddings** | Sentence Transformers (all-MiniLM-L6-v2) | Document vectorization |
-| **Vector Store** | FAISS, ChromaDB | Similarity search |
-| **Orchestration** | LangChain | RAG pipeline management |
-| **Document Processing** | PyPDF, Unstructured, BeautifulSoup | Regulation parsing |
-| **Web Scraping** | Selenium, Playwright | Live regulatory feed scraping |
-
-### Configuration
-
-Key settings in `RAG_MODEL/config.py`:
-- **Embedding Model:** `sentence-transformers/all-MiniLM-L6-v2` (384 dimensions)
-- **Chunk Size:** 512 tokens with 50 token overlap
-- **Vector Store:** FAISS with cosine similarity
-- **LLM:** Google Gemini with temperature 0.7
-
-### Data Sources
-
-Regulatory documents from:
-- PCI DSS standards
-- GDPR/CCPA regulations
-- RBI circulars
-- NPCI guidelines
-- FinCEN guidance
-
----
-
-## API Documentation
-
-### Base URL
-
-```
-http://localhost:8000
-```
-
-### Key Endpoints
-
-#### Compliance Sources
-
-```http
-GET /api/sources
-```
-
-Returns all monitored regulatory sources.
-
-#### AI Debates
-
-```http
-GET /api/debates
-POST /api/debates/{id}/approve
-POST /api/debates/{id}/reject
-```
-
-Manage AI Constitutional Debate outcomes.
-
-#### Findings
-
-```http
-GET /api/findings
-GET /api/findings/{id}
-POST /api/findings/{id}/fix
-```
-
-View and remediate compliance violations.
-
-#### Scan Data
-
-```http
-POST /api/scan
-```
-
-Manually trigger compliance scan on data.
-
-**Request Body:**
-```json
-{
-  "source": "customer_chat",
-  "data": "Customer PAN: ABCDE1234F, Card: 4532123456781234"
-}
-```
-
-#### Statistics
-
-```http
-GET /api/stats
-```
-
-Returns dashboard statistics.
-
-#### WebSocket (Real-time Traces)
-
-```
-ws://localhost:8000/ws/traces
-```
-
-Streams live XAI reasoning traces.
-
----
-
 
 
