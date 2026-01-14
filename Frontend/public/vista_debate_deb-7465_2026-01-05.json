@@ -1,0 +1,55 @@
+{
+  "id": "deb-7465",
+  "regulationId": "RBI/2026-26/541",
+  "regulationTitle": "RBI Tokenization Mandate - Card-on-File Extension",
+  "source": "RBI",
+  "sourceUrl": "https://rbi.org.in/Scripts/NotificationUser.aspx",
+  "summary": "Extension of tokenization mandate to include recurring payments and subscription services",
+  "proposer": {
+    "agent": "Proposer Agent",
+    "position": "All recurring payment tokens must be device-bound. Recommend blocking all non-tokenized recurring transactions immediately.",
+    "reasoning": [
+      "RBI circular mandates token-based processing for all CoF transactions",
+      "Previous deadline was extended multiple times - no further extensions expected",
+      "Penalty risk for continued non-compliance"
+    ],
+    "confidence": 94
+  },
+  "critic": {
+    "agent": "Critic Agent",
+    "position": "Device binding for recurring payments is impractical. Subscription renewals happen without user device interaction. Need server-to-server token validation.",
+    "reasoning": [
+      "Recurring payments are initiated by merchant, not customer device",
+      "Device binding would break auto-renewal flows",
+      "Industry practice allows merchant-initiated transactions with different token type"
+    ],
+    "confidence": 89
+  },
+  "judge": {
+    "agent": "Judge Agent",
+    "verdict": "PRACTICAL_IMPLEMENTATION",
+    "decision": "Device-bound tokens for customer-initiated payments. Network tokens with merchant authentication for recurring/subscription payments. Implement audit trail for all token types.",
+    "controlId": "CTL-RBI-TOKEN-001",
+    "requirement": "Tokenization with device binding for interactive, network tokens for recurring payments",
+    "reasoning": [
+      "Balances security requirement with operational necessity",
+      "Aligns with card network tokenization standards",
+      "Provides clear audit trail for compliance verification"
+    ]
+  },
+  "consensus": true,
+  "confidence": 92,
+  "controlId": "CTL-RBI-TOKEN-001",
+  "requirement": "Tokenization with device binding for interactive, network tokens for recurring payments",
+  "status": "approved",
+  "priority": "high",
+  "affectedSystems": [
+    "Payment Gateway",
+    "Subscription Service",
+    "Token Vault"
+  ],
+  "complianceDeadline": "2026-03-31",
+  "timestamp": "2026-01-05T01:31:01.546464Z",
+  "exportedAt": "2026-01-05T01:33:31.285Z",
+  "format": "VISTA Regulatory Debate Log"
+}
